@@ -17,6 +17,13 @@ from typing import Any
 import numpy as np
 
 
+@dataclass
+class _NullManifest:
+    """Mantém a interface de AuditManifest sem persistir nada."""
+
+    groundtruth_metrics: dict | None = None
+
+
 @dataclass(slots=True)
 class AttemptArtifacts:
     """Versão sentinela de AttemptArtifacts — não aponta para arquivos reais."""
@@ -43,6 +50,7 @@ class AuditRecorder:
         clean_previous: bool = True,
     ) -> None:
         self.input_slug = input_path.stem
+        self.manifest = _NullManifest()
 
     def set_format_detection(self, detection: dict) -> None:
         pass
