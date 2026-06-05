@@ -24,7 +24,8 @@ build/
 !.env.example
 
 # Credenciais Google Cloud Vision (nunca na imagem)
-secrets/
+secrets/*
+!secrets/.gitkeep
 *.json
 !ocr_engine/config/*.json
 !ocr_engine/config/presets/**/*.json

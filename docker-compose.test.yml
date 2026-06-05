@@ -1,0 +1,28 @@
+services:
+
+  api-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://test_user:test_pass@db-test:5432/test_db"
+      SECRET_KEY: "test-secret-key-apenas-para-ci"
+      GOOGLE_APPLICATION_CREDENTIALS: ""
+    depends_on:
+      db-test:
+        condition: service_healthy
+    command: >
+      sh -c "alembic upgrade head &&
+             python -m pytest tests/ -v --tb=short"
+
+  db-test:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_pass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d test_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
