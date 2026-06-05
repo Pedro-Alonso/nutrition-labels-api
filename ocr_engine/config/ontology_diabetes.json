@@ -1,0 +1,2970 @@
+{
+  "sacarose": {
+    "classe": "acucar_simples",
+    "risco": "ALTO",
+    "indice_glicemico": 65,
+    "fisiopatologia": "Dissacarídeo (glicose+frutose). IG ~65. Induz pico glicêmico rápido e sobrecarga das células β do pâncreas. A fração frutose alimenta lipogênese de novo hepática, agravando resistência insulínica no DM2.",
+    "alerta": "Açúcar comum. Eleva glicemia rapidamente (IG 65). Evitar ou compensar com insulina.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "acucar",
+      "acucar",
+      "acucar",
+      "sacarose",
+      "sucrose",
+      "sugar",
+      "acucar cristal",
+      "acucar cristal",
+      "acucar refinado",
+      "acucar refinado",
+      "acucar branco",
+      "acucar branco",
+      "acucar mascavo",
+      "acucar mascavo",
+      "acucar demerara",
+      "acucar demerara",
+      "acucar organico",
+      "acucar organico",
+      "acucar de cana",
+      "acucar de cana",
+      "acucar invertido",
+      "acucar invertido",
+      "inverted sugar",
+      "cane sugar",
+      "raw sugar",
+      "acucar liquido",
+      "acucar liquido",
+      "xarope de sacarose",
+      "acucar de confeiteiro",
+      "acucar de confeiteiro",
+      "acucar impalpavel",
+      "acucar impalpavel",
+      "acucar de baunilha",
+      "acucar de baunilha"
+    ],
+    "referencias": [
+      "Scapin et al. (UFSC 2021) DOI:10.1017/S136898002000305X",
+      "Asquini da Costa G.L. (FSP/USP 2020) TCC Nutrição — sub-amostra Cardionutri n=252: sacarose ≤5% VET (SBD 2019)",
+      "'açúcares ocultos' em ultraprocessados incluem açúcar invertido, xarope de glicose, mascavo, demerara, orgânico, melado, mel",
+      "produtos diet/light podem conter frutose, maltodextrina ou amido — não são seguros sem avaliação individual"
+    ]
+  },
+  "glicose": {
+    "classe": "acucar_simples",
+    "risco": "ALTO",
+    "indice_glicemico": 100,
+    "fisiopatologia": "Monossacarídeo de referência (IG = 100 por definição). Absorção intestinal imediata via transportadores SGLT1/GLUT2. Eleva glicemia mais rapidamente que qualquer outro carboidrato. Presente em xaropes industriais e como produto de hidrólise de amidos.",
+    "alerta": "Absorção imediata (IG 100). Eleva glicemia mais rápido que o açúcar comum. Presente em xaropes industriais.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "glicose",
+      "glucose",
+      "dextrose",
+      "xarope de glicose",
+      "solucao de glicose",
+      "glucose syrup",
+      "corn syrup",
+      "xarope de milho",
+      "d glicose",
+      "d glucose",
+      "grape sugar"
+    ],
+    "referencias": [
+      "Livesey et al. Am J Clin Nutr DOI:10.3945/ajcn.2008.26842"
+    ]
+  },
+  "maltose": {
+    "classe": "acucar_simples",
+    "risco": "ALTO",
+    "indice_glicemico": 105,
+    "fisiopatologia": "Dissacarídeo de duas unidades de glicose. IG ~105. Hidrolisado rapidamente por maltases intestinais, gerando glicose pura. Presente em malte de cevada e xaropes de cereais.",
+    "alerta": "Rico em maltose — eleva glicemia rapidamente (IG ~105). Presente em malte e xaropes de cereais.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "maltose",
+      "malte",
+      "maltado",
+      "malted",
+      "malt",
+      "xarope de malte",
+      "extrato de malte",
+      "malt extract",
+      "malt syrup",
+      "malte de cevada",
+      "barley malt",
+      "malte de trigo",
+      "wheat malt"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Tabela 1: maltose listada como dissacarídeo",
+      "hidrolisada a glicose pura — RDS)"
+    ]
+  },
+  "mel": {
+    "classe": "acucar_simples",
+    "risco": "ALTO",
+    "indice_glicemico": 58,
+    "fisiopatologia": "Mistura de frutose (~38%) e glicose (~31%) com traços de sacarose. IG variável (55-65 dependendo da flora). Metabolicamente equivalente à sacarose; a fração frutose contribui para lipogênese hepática. Não é uma alternativa segura para DM.",
+    "alerta": "Mel natural, mas rico em frutose e glicose (~69%). Não é opção segura para diabéticos.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "mel",
+      "mel de abelha",
+      "honey",
+      "mel puro",
+      "mel silvestre",
+      "mel organico",
+      "mel organico"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (fração frutose: lipogênese hepática, ↓leptina, ↓insulina — Tappy & Lé 2010 Physiol Rev, apud Aller 2011)",
+      "Scapin et al. (UFSC 2021) DOI:10.1017/S136898002000305X"
+    ]
+  },
+  "melaco": {
+    "classe": "acucar_simples",
+    "risco": "ALTO",
+    "indice_glicemico": 55,
+    "fisiopatologia": "Subproduto do refino de cana. Contém sacarose, glicose e frutose em proporções variáveis (~60% açúcares totais). IG moderado (~55) mas alta carga glicêmica pelo volume habitual de consumo.",
+    "alerta": "Subproduto da cana. Alto teor de açúcares simples. Não adequado para controle glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "melaco",
+      "melaco",
+      "melado",
+      "blackstrap molasses",
+      "caldo de cana",
+      "garapa",
+      "rapadura"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (açúcares simples: glicose+frutose+sacarose — mesmo mecanismo lipogênico e glicêmico)",
+      "Scapin et al. (UFSC 2021) DOI:10.1017/S136898002000305X"
+    ]
+  },
+  "lactose": {
+    "classe": "acucar_simples",
+    "risco": "MODERADO",
+    "indice_glicemico": 46,
+    "fisiopatologia": "Dissacarídeo (galactose+glicose) de absorção mais lenta que sacarose (IG ~46). Requer enzima lactase; intolerantes não a absorvem. Em diabéticos, contribui para carga de carboidratos do leite mas com impacto glicêmico moderado.",
+    "alerta": "Açúcar natural do leite. Impacto glicêmico moderado (IG ~46). Contar na carga de carboidratos.",
+    "nota_clinica": "Presente naturalmente em produtos lácteos. Contar nos carboidratos totais da porção.",
+    "sinonimos": [
+      "lactose",
+      "lactase",
+      "leite",
+      "leite integral",
+      "leite desnatado",
+      "leite semidesnatado",
+      "leite em po",
+      "leite condensado",
+      "leite evaporado",
+      "milk",
+      "whole milk",
+      "skim milk",
+      "nonfat milk",
+      "leite de vaca",
+      "leite bovino",
+      "solidos de leite",
+      "solidos lacteos",
+      "milk solids"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Bowen et al. 2006 J Clin Endocrinol Metab, apud Aller: saciedade e ingestão energética menores após lactose vs. glicose — consistente com IG 46 menor)"
+    ]
+  },
+  "caramelo": {
+    "classe": "acucar_simples",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Produto da caramelização (pirólise) de açúcares (sacarose, glicose, frutose) pelo calor. Como ingrediente, o 'caramelo' em rótulos refere-se principalmente ao corante caramelo (E150a-E150d) — processado industrialmente a partir de glicose ou sacarose com amônia ou sulfito. Contém açúcares residuais e compostos de Maillard. O impacto glicêmico varia: E150a (caramelo simples) mantém estrutura de açúcar; formas E150c/d são mais processadas. Em quantidades de aditivo, a carga glicêmica é baixa — o risco é do contexto (produto doce/ultraprocessado).",
+    "alerta": "Caramelo como corante: baixa carga glicêmica na dose de aditivo. Em receitas/doces, é açúcar aquecido — impacto ALTO.",
+    "nota_clinica": "Distinguir: 'caramelo' como corante (E150, dose de mg) vs. 'caramelo' como ingrediente principal em balas/doces (dose de g = ALTO risco glicêmico).",
+    "sinonimos": [
+      "caramelo",
+      "caramel",
+      "corante caramelo",
+      "caramel color",
+      "e150",
+      "e150a",
+      "e150b",
+      "e150c",
+      "e150d",
+      "caramelo simples",
+      "caramelo de sulfito caustico",
+      "caramelo de amonia",
+      "burnt sugar"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: corantes e aditivos em ultraprocessados",
+      "p.39-40)",
+      "Scapin et al. (UFSC 2021) DOI:10.1017/S136898002000305X (açúcares disfarçados em rótulos)"
+    ]
+  },
+  "frutose": {
+    "classe": "frutose_industrial",
+    "risco": "ALTO",
+    "indice_glicemico": 19,
+    "fisiopatologia": "Monossacarídeo com IG nominalmente baixo (19-25), mas metabolizado quase exclusivamente no fígado via frutoquinase, evadindo o controle da fosfofrutoquinase. Ativa lipogênese de novo (DNL), gera triglicerídeos e VLDL, induz DHGNA e agrava resistência insulínica hepática (HOMA-IR). Pior que a glicose para o DM2 em consumo crônico.",
+    "alerta": "Apesar do baixo IG, é metabolizada no fígado e causa resistência à insulina e esteatose hepática. Alto risco a longo prazo.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "frutose",
+      "fructose",
+      "levulose",
+      "laevulose"
+    ],
+    "referencias": [
+      "Asquini da Costa G.L. (FSP/USP 2020) TCC Nutrição — sub-amostra Cardionutri ReBec RBR-2vfhfv, n=252 (85 DM2, 167 controles): frutose sem mecanismo de feedback negativo hepatocitário → ↑DNL, ↑TAG (DM2: 162 vs 120 mg/dL), ↑VLDL1, ↑LDL pequena e densa, ↓HDL (DM2: 33,8 vs 38,1 mg/dL)",
+      "consumo >1,69% VET associado a ↓APO-B apenas quando proveniente de frutas in natura (não industrial)",
+      "SBD 2019 Quadro 2: frutose 'Não recomendado adicionar aos alimentos'",
+      "Ho et al. (Univ. Rutgers)",
+      "Laville M. PMC3257742",
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: frutose industrial e HFCS como marcadores de ultraprocessamento",
+      "p.39-40)"
+    ]
+  },
+  "xarope_de_milho_rico_em_frutose": {
+    "classe": "frutose_industrial",
+    "risco": "ALTO",
+    "indice_glicemico": 58,
+    "fisiopatologia": "Mistura de glicose e frutose (~42-55% frutose) produzida por isomerização enzimática de amido de milho. Combina o pico glicêmico imediato da glicose com os efeitos lipogênicos hepáticos crônicos da frutose. Associado à epidemia de DM2 e DHGNA em estudos populacionais.",
+    "alerta": "Xarope de alto risco: combina pico de glicemia imediata com dano hepático crônico por frutose.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "hfcs",
+      "xarope de milho rico em frutose",
+      "high fructose corn syrup",
+      "xarope de frutose de milho",
+      "xarope de glicose frutose",
+      "glucose fructose syrup",
+      "isoglucose"
+    ],
+    "referencias": [
+      "Asquini da Costa G.L. (FSP/USP 2020) sub-amostra Cardionutri ReBec RBR-2vfhfv",
+      "Ho et al. (Univ. Rutgers)"
+    ]
+  },
+  "xarope_de_agave": {
+    "classe": "frutose_industrial",
+    "risco": "ALTO",
+    "indice_glicemico": 13,
+    "fisiopatologia": "Contém 55-90% de frutose (SBD NT 2024-2025) — proporção muito superior ao HFCS (~55%). IG baixo engana; a carga frutósica é extremamente alta. Uso crescente em produtos 'naturais' e 'orgânicos' como substituto do açúcar, com marketing enganoso para diabéticos.",
+    "alerta": "Altíssimo teor de frutose (75-90%). IG baixo é enganoso — causa dano hepático severo. Não é opção segura.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "xarope de agave",
+      "agave syrup",
+      "agave nectar",
+      "nectar de agave",
+      "nectar de agave"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "Asquini da Costa (FSP/USP 2020)",
+      "Ho et al. (Univ. Rutgers)"
+    ]
+  },
+  "suco_concentrado_de_fruta": {
+    "classe": "frutose_industrial",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Néctares e sucos concentrados de maçã, uva ou pêra são usados como edulcorantes 'naturais' em produtos ultraprocessados. Contêm frutose livre e glicose em concentrações equivalentes ao açúcar refinado, com o mesmo impacto metabólico.",
+    "alerta": "Concentrado de fruta usado como açúcar disfarçado. Mesmo impacto glicêmico que frutose industrial.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "suco de maca concentrado",
+      "suco de maca concentrado",
+      "suco de uva concentrado",
+      "suco de pera concentrado",
+      "suco de maca evaporado",
+      "suco de uva evaporado",
+      "apple juice concentrate",
+      "grape juice concentrate",
+      "fruit juice concentrate",
+      "nectar concentrado",
+      "nectar concentrado"
+    ],
+    "referencias": [
+      "Scapin et al. (UFSC 2021) DOI:10.1017/S136898002000305X",
+      "SBD Edulcorantes NT 2024-2025"
+    ]
+  },
+  "maltodextrina": {
+    "classe": "polimero_glucidico",
+    "risco": "ALTO",
+    "indice_glicemico": 100,
+    "fisiopatologia": "Oligossacarídeo obtido por hidrólise parcial de amido de milho/trigo/mandioca. Ligações α(1→4) e α(1→6) são clivadas fulminantemente pela α-amilase intestinal, liberando glicose pura de forma súbita. IG próximo a 100% do padrão glicose (≈100). Amplamente usada em produtos 'Zero Açúcar' e suplementos esportivos por neutralidade de sabor e aprovação ANVISA como veículo de edulcorantes. NÃO confundir com maltodextrina resistente (fibra, BENEFICO).",
+    "alerta": "IG ~100, equivalente ao próprio açúcar. Aparece em produtos 'diet' e 'zero'. Eleva glicemia abruptamente.",
+    "nota_clinica": "Presente em muitos produtos 'Zero Açúcar' — não confundir com opção segura. Atenção: existe também a 'maltodextrina resistente', que é uma fibra com efeito oposto.",
+    "sinonimos": [
+      "maltodextrina",
+      "maltodextrin",
+      "maltodextrina de milho",
+      "maltodextrina de trigo",
+      "maltodextrina de batata",
+      "maltodextrina de mandioca",
+      "corn maltodextrin",
+      "wheat maltodextrin"
+    ],
+    "referencias": [
+      "Livesey & Tagami. Am J Clin Nutr 2009",
+      "89:114-25 DOI:10.3945/ajcn.2008.26842 (nota: refere-se à maltodextrina resistente — IG da maltodextrina comum ≈100% glicose padrão citado como controle no mesmo estudo)",
+      "RBNE DOI:10.26773/rbne.v14i84"
+    ]
+  },
+  "dextrina": {
+    "classe": "polimero_glucidico",
+    "risco": "ALTO",
+    "indice_glicemico": 95,
+    "fisiopatologia": "Polímero de glicose com menor grau de polimerização que a maltodextrina. Obtido por hidrólise ácida ou enzimática de amido. Digestão muito rápida; comportamento glicêmico similar à maltodextrina. 'Milho dextrinado' é a forma mais encontrada em rótulos brasileiros.",
+    "alerta": "Polímero de glicose de digestão rápida. Impacto glicêmico alto, similar à maltodextrina.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "dextrina",
+      "dextrin",
+      "milho dextrinado",
+      "dextrina de milho",
+      "dextrina de trigo",
+      "amido dextrinado",
+      "amido soluvel",
+      "amido soluvel de milho"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Tabela 1: maltodextrins = oligossacarídeos alfa-glucano — mesma classe, digestão RDS)"
+    ]
+  },
+  "amido_hidrolisado": {
+    "classe": "polimero_glucidico",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Amido parcialmente quebrado por ácido ou enzimas. Inclui xaropes de glucose de alta DE (Dextrose Equivalente). Quanto maior a DE, mais próximo do comportamento de glicose pura.",
+    "alerta": "Amido parcialmente digerido industrialmente. Alta velocidade de conversão em glicose.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "amido hidrolisado",
+      "hydrolyzed starch",
+      "xarope de amido",
+      "amido parcialmente hidrolisado",
+      "polimero de glicose",
+      "polimero de glicose",
+      "glucose polymer"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (RDS: rapidamente digerido no duodeno e intestino proximal → elevação rápida de glicemia",
+      "starch hydrolysates de alta DE = comportamento equivalente à glicose)"
+    ]
+  },
+  "extrato_de_malte": {
+    "classe": "polimero_glucidico",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em maltose e dextrinas de malte. Produzido por germinação controlada e secagem de cevada. Usado como edulcorante e flavorizante. Comportamento glicêmico alto pela predominância de maltose (IG ~105).",
+    "alerta": "Extrato de malte é rico em açúcares de alto IG. Eleva glicemia rapidamente.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "extrato de malte",
+      "malt extract",
+      "extrato de cevada maltada",
+      "malte de cevada",
+      "barley malt extract",
+      "malted barley"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (maltose como dissacarídeo hidrolisado a glicose pura — Tabela 1 e mecanismo RDS)"
+    ]
+  },
+  "farinha_de_trigo": {
+    "classe": "amido_refinado",
+    "risco": "ALTO",
+    "indice_glicemico": 70,
+    "fisiopatologia": "Farinha branca obtida por moagem e refinamento do grão de trigo, removendo o farelo e o gérmen ricos em fibra e micronutrientes. Alto IG (~70). Rápida conversão em glicose no intestino delgado. A enriquecimento obrigatório com ferro e ácido fólico (ANVISA) não altera o perfil glicêmico.",
+    "alerta": "Farinha branca: alto IG (~70), pobre em fibras. Eleva glicemia rapidamente. Preferir versão integral.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "farinha de trigo",
+      "farinha de trigo branca",
+      "farinha branca",
+      "farinha de trigo refinada",
+      "wheat flour",
+      "farinha de trigo enriquecida",
+      "farinha de trigo enriquecida com ferro e acido folico",
+      "farinha de trigo tipo 1",
+      "farinha de trigo tipo 2",
+      "semolina",
+      "semola",
+      "semolina de trigo",
+      "semola de trigo",
+      "durum wheat flour",
+      "farinha de semola",
+      "semoule"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Kristensen et al. 2010 Appetite, apud Aller: refined wheat bread vs. wholegrain — maior glicemia pós-prandial",
+      "RDS → hiperinsulinemia)",
+      "Ells et al. 2005 Br J Nutr (RDS mechanism)"
+    ]
+  },
+  "amido_de_milho": {
+    "classe": "amido_refinado",
+    "risco": "ALTO",
+    "indice_glicemico": 85,
+    "fisiopatologia": "Amido purificado extraído do endosperma do milho. IG elevado (~85) quando gelatinizado (cozido). Usado como espessante em molhos, cremes e produtos industrializados. Frequentemente confundido com maisena em formulações.",
+    "alerta": "Amido de milho tem alto IG quando processado. Conta como carboidrato de rápida absorção.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "amido de milho",
+      "corn starch",
+      "maisena",
+      "amido de milho modificado",
+      "maizena",
+      "fecule de mais",
+      "maize starch"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (pregelatinized potato/corn starch = RDS",
+      "corn pasta RAG 89% vs. UCCS 28% — Anderson et al. 2010 Am J Clin Nutr, apud Aller)",
+      "Seal et al. 2003 Br J Nutr (RDS corn starch rapid glucose)"
+    ]
+  },
+  "amido_modificado": {
+    "classe": "amido_refinado",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Amido quimicamente ou fisicamente modificado para melhorar propriedades tecnológicas (viscosidade, estabilidade). O processo aumenta a digestibilidade versus o amido nativo, resultando em IG ainda mais alto. Inclui: amido pregelatinizado, amido reticulado, amido oxidado.",
+    "alerta": "Amido modificado: mais digerível que amido nativo. Alto IG. Eleva glicemia rapidamente.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "amido modificado",
+      "modified starch",
+      "amido de milho modificado",
+      "amido de batata modificado",
+      "amido pregelatinizado",
+      "fecule modifiee",
+      "fecula modificada",
+      "starch modified",
+      "amido de tapioca modificado",
+      "amido de mandioca modificado"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (amido pregelatinizado = 0 g RS/kg — RDS puro",
+      "Heijnen et al. 1995 Br J Nutr, apud Aller)"
+    ]
+  },
+  "fecula_de_batata": {
+    "classe": "amido_refinado",
+    "risco": "ALTO",
+    "indice_glicemico": 85,
+    "fisiopatologia": "Amido puro extraído da batata. IG ~85 cru, mas cozido e resfriado pode formar amido resistente (IG menor). Em produtos industrializados, geralmente usado na forma gelatinizada (IG alto).",
+    "alerta": "Fécula de batata: alto IG em produtos industrializados. Eleva glicemia significativamente.",
+    "nota_clinica": "Atenção: batata crua/verde-banana contêm RS2 (amido resistente granular) — mas fécula industrializada é gelatinizada (IG alto).",
+    "sinonimos": [
+      "fecula de batata",
+      "fecula de batata",
+      "potato starch",
+      "batata amido",
+      "amido de batata"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Tabela 2: raw potato = RS2 resistente",
+      "pregelatinized potato starch = 0 g RS/kg = RDS — Heijnen et al. 1995 apud Aller)",
+      "Annison & Topping 1994 Annu Rev Nutr"
+    ]
+  },
+  "farinha_de_arroz": {
+    "classe": "amido_refinado",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": 72,
+    "fisiopatologia": "Farinha obtida do arroz branco polido. IG ~72. Sem glúten, frequentemente usada em formulações 'sem glúten' como substituto da farinha de trigo. O perfil glicêmico é similar ou ligeiramente pior que o do trigo.",
+    "alerta": "Farinha de arroz: IG ~72. Comum em produtos 'sem glúten' mas não é opção de baixo impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "farinha de arroz",
+      "rice flour",
+      "farinha de arroz branca",
+      "farinha de arroz integral"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (RDS: refined rice-based foods — Schroeder et al. 2009 Appetite, apud Aller)"
+    ]
+  },
+  "farinha_de_mandioca": {
+    "classe": "amido_refinado",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": 65,
+    "fisiopatologia": "Obtida da raiz de mandioca desidratada e moída. IG ~65. Usada em tapioca, farinha de tapioca e polvilho. Processamentos diferentes (fermentação) podem reduzir ligeiramente o IG.",
+    "alerta": "Farinha de mandioca / tapioca: impacto glicêmico moderado-alto. Contar como carboidrato.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "farinha de mandioca",
+      "tapioca",
+      "farinha de tapioca",
+      "polvilho",
+      "polvilho doce",
+      "polvilho azedo",
+      "cassava flour",
+      "tapioca starch",
+      "amido de mandioca",
+      "mandioca"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (amidos refinados RDS: rápida elevação glicêmica",
+      "mecanismo genérico aplicável à farinha de mandioca/tapioca)"
+    ]
+  },
+  "xilitol": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 13,
+    "fisiopatologia": "Poliol de 5 carbonos extraído de bétula (birch) ou milho. IG ~13. Absorção intestinal lenta e passiva; insulino-independente. Não provoca pico glicêmico agudo. Doses acima de 20-30g/dia causam efeito osmótico laxativo. Possui efeito anticariogênico comprovado. Fornece 2.4 kcal/g (vs 4 kcal/g da sacarose).",
+    "alerta": "Edulcorante com baixo impacto glicêmico (IG 13). Em grandes quantidades pode causar diarreia.",
+    "nota_clinica": "Para DM1: se a porção contiver >5g de polióis totais, desconte 50% dos gramas de poliol da contagem total de carboidratos (Manual SBD 2024).",
+    "sinonimos": [
+      "xilitol",
+      "xylitol",
+      "birch sugar",
+      "acucar de betula",
+      "acucar de betula"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "sorbitol": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 9,
+    "fisiopatologia": "Poliol de 6 carbonos produzido por redução catalítica da glicose. IG ~9. Absorção lenta; em parte fermentado pela microbiota colônica. Forte efeito osmótico laxativo já a partir de 10-15g. Sensibilidade individual alta. Fornece 2.6 kcal/g.",
+    "alerta": "Poliol de baixo IG (9). Pode causar desconforto intestinal e diarreia em doses moderadas.",
+    "nota_clinica": "Para DM1: se a porção contiver >5g de polióis totais, desconte 50% dos gramas de poliol da contagem total de carboidratos.",
+    "sinonimos": [
+      "sorbitol",
+      "sorbitol",
+      "glucitol",
+      "e420"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "maltitol": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 36,
+    "fisiopatologia": "Poliol derivado da maltose por hidrogenação. IG ~36 — o mais alto entre os polióis comuns. Impacto glicêmico clinicamente significativo, especialmente em DM1. Frequentemente presente em chocolates e balas 'diet'. Pode induzir resposta insulínica parcial. Fornece 2.1 kcal/g.",
+    "alerta": "IG ~36 — o mais alto entre os polióis. Chocolates 'diet' frequentemente contêm maltitol: não são seguros sem compensação.",
+    "nota_clinica": "Para DM1: o IG elevado do maltitol (36) exige atenção especial. Além do desconto de 50%, monitorar glicemia pós-prandial ao consumir produtos com maltitol.",
+    "sinonimos": [
+      "maltitol",
+      "maltitol",
+      "maltitol syrup",
+      "xarope de maltitol",
+      "e965"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "isomalte": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 9,
+    "fisiopatologia": "Dissacarídeo poliol produzido da sacarose via isomerização. IG ~9. Absorção muito lenta. Bem tolerado em doses até 20g/dia. Usado em balas, chocolates e gomas. Fornece 2.0 kcal/g.",
+    "alerta": "Poliol de baixo IG (9). Bem tolerado mas conta na carga de carboidratos.",
+    "nota_clinica": "Para DM1: desconte 50% dos gramas de isomalte se porção total de polióis >5g. Não confundir com isomaltulose (carboidrato diferente, IG ~32).",
+    "sinonimos": [
+      "isomalte",
+      "isomalt",
+      "e953",
+      "isomaltulose"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "eritritol": {
+    "classe": "poliol",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Poliol de 4 carbonos obtido por fermentação. IG ≈ 0. Absorvido no intestino delgado (~90%) e excretado inalterado pela urina — não chega ao cólon em quantidades significativas. Não causa efeito osmótico laxativo nas doses habituais. Único poliol clinicamente classificável como seguro em termos glicêmicos e gastrointestinais. Fornece 0.2 kcal/g.",
+    "alerta": "Eritritol: IG zero, não causa diarreia nas doses habituais. O mais seguro entre os polióis.",
+    "nota_clinica": "Eritritol é exceção entre polióis: não requer o desconto de 50% na prática clínica por não elevar glicemia. Confirmar com profissional de saúde.",
+    "sinonimos": [
+      "eritritol",
+      "erythritol",
+      "e968"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "lactitol": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 6,
+    "fisiopatologia": "Poliol derivado da lactose por hidrogenação. IG ~6. Fermentado pela microbiota colônica, produzindo AGCC (ácidos graxos de cadeia curta). Efeito bifidogênico positivo, mas pode causar flatulência e diarreia. Usado em chocolates e produtos de panificação. Fornece 2.0 kcal/g.",
+    "alerta": "Poliol de baixo IG (6). Pode causar flatulência. Conta na carga de carboidratos com desconto.",
+    "nota_clinica": "Para DM1: desconte 50% dos gramas de lactitol se porção total de polióis >5g.",
+    "sinonimos": [
+      "lactitol",
+      "lactitol monohydrate",
+      "e966",
+      "lactulose"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "glicerina": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 5,
+    "fisiopatologia": "Triol (glicerol) de 3 carbonos. IG ~5. Metabolizado no fígado via gliconeogênese, podendo elevar levemente a glicose em consumo excessivo. Em pequenas doses (usadas como umectante em produtos alimentícios), o impacto glicêmico é mínimo.",
+    "alerta": "Glicerina/glicerol: baixo impacto glicêmico em doses normais. Contar na carga de carboidratos.",
+    "nota_clinica": "Para DM1: desconte 50% dos gramas de glicerina se porção total de polióis >5g.",
+    "sinonimos": [
+      "glicerina",
+      "glicerol",
+      "glycerin",
+      "glycerol",
+      "e422",
+      "vegetable glycerin",
+      "glicerina vegetal"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "manitol": {
+    "classe": "poliol",
+    "risco": "MODERADO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Poliol de 6 carbonos obtido por redução da manose ou frutose. IG = 0, II = 0 — não é metabolizado por humanos: excretado inalterado pela urina (Msomi et al. 2021). Muito baixa absorção intestinal; a maior parte chega ao cólon. Forte efeito osmótico laxativo; limiar ~20g/dia. Fornece 1.6 kcal/g.",
+    "alerta": "Poliol de IG zero — não eleva glicemia. Forte efeito laxativo acima de 20g. Contar na carga de carboidratos.",
+    "nota_clinica": "Para DM1: desconte 50% dos gramas de manitol se porção total de polióis >5g.",
+    "sinonimos": [
+      "manitol",
+      "mannitol",
+      "e421"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024) — regra dos polióis: >5g/porção → desconto 50% para dose de insulina rápida/ultrarrápida",
+      "Msomi, Erukainure & Islam 2021 (J Food Drug Anal) DOI:10.38212/2224-6614.3107"
+    ]
+  },
+  "sucralose": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Derivado clorado da sacarose; 600x mais doce. Não é metabolizado (excretado inalterado). Sem impacto na glicemia aguda. Coorte NutriNet-Santé (Debras et al. Diabetes Care 2023, n=105.588, mediana 9 anos): HR 1.34 (IC95% 1.07-1.69) para DM2 com consumo ≥10 mg/dia. Perturbação dose-dependente da microbiota intestinal documentada em modelos animais e humanos.",
+    "alerta": "Acalórico, sem impacto glicêmico imediato. Uso dentro do limite ANVISA é autorizado pela SBD.",
+    "nota_clinica": "Autorizado pela SBD (2024-2025). IDA ANVISA: 15 mg/kg/dia (≈1050 mg/dia para adulto 70 kg). Evidências de longo prazo ainda controversas — monitorar literatura.",
+    "sinonimos": [
+      "sucralose",
+      "sucralose",
+      "e955",
+      "splenda"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "Debras et al. Diabetes Care 2023 DOI:10.2337/dc23-0206"
+    ]
+  },
+  "aspartame": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Dipeptídeo (fenilalanina + ácido aspártico + metanol). 200x mais doce que sacarose. Metabolizado em produtos naturais do metabolismo proteico; fenilalanina resultante é tóxica em fenilcetonúria (PKU). Sem impacto glicêmico direto. Coorte NutriNet-Santé (Debras et al. 2023): HR 1.63 para DM2 nos consumidores mais expostos vs não consumidores (evidência observacional prospectiva).",
+    "alerta": "Acalórico, sem efeito na glicemia. Contraindicado para fenilcetonúricos (contém fenilalanina).",
+    "nota_clinica": "Contraindicado em fenilcetonúria (PKU). IDA: 40 mg/kg/dia (≈2800 mg/dia para adulto 70 kg). Na gestação: SBD NT recomenda precaução — preferir stevia ou sucralose. Rótulo obrigatório: 'contém fenilalanina'.",
+    "sinonimos": [
+      "aspartame",
+      "aspartamo",
+      "e951",
+      "nutrasweet",
+      "equal",
+      "nutrasweet"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "Debras et al. Diabetes Care 2023 DOI:10.2337/dc23-0206",
+      "Gupta A. et al. PMC11233937"
+    ]
+  },
+  "acessulfame_k": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Sal de potássio do ácido 6-metil-1,2,3-oxatiazina-4(3H)-ona 2,2-dióxido. 200x mais doce. Excretado inalterado. Usado em combinação com sucralose ou aspartame para mascarar amargor. Sem impacto glicêmico agudo. Coorte NutriNet-Santé (Debras et al. 2023): HR 1.70 (IC95% 1.27-2.26) para DM2 — associação mais forte dentre os NNS avaliados no estudo.",
+    "alerta": "Edulcorante acalórico sem impacto glicêmico agudo. Associação observacional com DM2 a longo prazo.",
+    "nota_clinica": "IDA ANVISA: 15 mg/kg/dia (≈1050 mg/dia para adulto 70 kg). Evidências observacionais de longo prazo apontam risco aumentado — preferir stevia ou eritritol como alternativas quando possível.",
+    "sinonimos": [
+      "acessulfame k",
+      "acessulfame de potassio",
+      "acesulfame k",
+      "acesulfame potassium",
+      "e950",
+      "ace k"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "Debras et al. Diabetes Care 2023 DOI:10.2337/dc23-0206"
+    ]
+  },
+  "sacarina": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Primeiro edulcorante sintético (descoberto 1879). 300-500x mais doce. Excretada inalterada. Sabor metálico residual. Sem impacto glicêmico. Estudos históricos em ratos com doses maciças levantaram hipóteses de carcinogenicidade canceladas pela IARC. Coorte NutriNet-Santé (Debras et al. 2023): tendência de associação com DM2, sem significância estatística robusta no modelo principal.",
+    "alerta": "Edulcorante clássico, sem impacto glicêmico. Aprovada pela ANVISA dentro dos limites de IDA.",
+    "nota_clinica": "Contraindicado para portadores de HAS (formulações com sódio adicionado). IDA: 5 mg/kg/dia (≈350 mg/dia para adulto 70 kg).",
+    "sinonimos": [
+      "sacarina",
+      "sacarina sodica",
+      "saccharin",
+      "sodium saccharin",
+      "e954"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "Debras et al. Diabetes Care 2023 DOI:10.2337/dc23-0206"
+    ]
+  },
+  "ciclamato": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "30-50x mais doce que sacarose. Frequentemente combinado com sacarina para minimizar aftertaste. Metabolizado parcialmente pela microbiota em ciclohexilamina — metabólito monitorado em estudos de toxicologia. Banido nos EUA mas aprovado pela ANVISA. Não foi avaliado na coorte NutriNet-Santé (não aprovado na França).",
+    "alerta": "Edulcorante de uso aprovado no Brasil. Sem impacto glicêmico imediato.",
+    "nota_clinica": "Contraindicado para portadores de HAS. Evitar na gestação (precaução por estudos experimentais com ciclohexilamina em modelos animais). IDA: 11 mg/kg/dia (≈770 mg/dia para adulto 70 kg).",
+    "sinonimos": [
+      "ciclamato",
+      "ciclamato de sodio",
+      "ciclamato sodico",
+      "sodium cyclamate",
+      "cyclamate",
+      "e952"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025"
+    ]
+  },
+  "neotame": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Derivado do aspartame sem fenilalanina livre. 7.000-13.000x mais doce que sacarose. Usado em concentrações ínfimas. Sem impacto glicêmico. Aprovado ANVISA e FDA.",
+    "alerta": "Edulcorante muito potente, sem impacto glicêmico. Uso seguro dentro dos limites.",
+    "nota_clinica": "IDA: 2 mg/kg/dia. Diferentemente do aspartame, o neotame é seguro para fenilcetonúricos (não libera fenilalanina livre nas doses de uso).",
+    "sinonimos": [
+      "neotame",
+      "neotame",
+      "e961"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025"
+    ]
+  },
+  "advantame": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Derivado do aspartame/vanilina. 20.000x mais doce que sacarose. Aprovado FDA (2014) e EFSA. Doses de uso ínfimas. Sem impacto glicêmico.",
+    "alerta": "Edulcorante aprovado. Sem impacto glicêmico. Usado em quantidades muito pequenas.",
+    "nota_clinica": "IDA: 5 mg/kg/dia (EFSA/FDA). Raro nos rótulos brasileiros.",
+    "sinonimos": [
+      "advantame",
+      "e969"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "EFSA ANSES 2014 DOI:10.2903/j.efsa.2014.3585"
+    ]
+  },
+  "stevia": {
+    "classe": "edulcorante_natural",
+    "risco": "SEGURO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Glicosídeos de esteviol extraídos das folhas de Stevia rebaudiana. 200-350x mais doce que sacarose. Não metabolizados para açúcar. IG = 0. A SBD recomenda como substituto seguro do açúcar no contexto do DM. Sem efeitos adversos documentados nas doses habituais. JECFA/EFSA definiram IDA de 4 mg/kg/dia de equivalentes de esteviol.",
+    "alerta": "Adoçante natural com IG zero. Recomendado pela SBD como alternativa segura ao açúcar para diabéticos.",
+    "nota_clinica": "Edulcorante de primeira escolha da SBD NT 2024-2025 no DM. IDA: 4 mg/kg/dia (equivalentes de esteviol). Aprovado ANVISA como aditivo alimentar (IN 7/2012).",
+    "sinonimos": [
+      "stevia",
+      "estevia",
+      "steviol",
+      "stevioside",
+      "stevia rebaudiana",
+      "glicosideos de esteviol",
+      "glucosideos de esteviol",
+      "glycosides de steviol",
+      "e960",
+      "rebaudioside a",
+      "reb a",
+      "rebaudiosideo",
+      "rebiana"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "JECFA 2008 (GRAS)",
+      "Geuns JMC. Phytochemistry 2003",
+      "64:913-21 DOI:10.1016/S0031-9422(03)00426-6"
+    ]
+  },
+  "taumatina": {
+    "classe": "edulcorante_natural",
+    "risco": "SEGURO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Proteína extraída do fruto Thaumatococcus daniellii. 2.000-3.000x mais doce que sacarose. Metabolizada como proteína comum (4 kcal/g mas em doses ínfimas → negligível). Aprovada ANVISA e EFSA. Sem impacto glicêmico. Usada como realçador de sabor em microquantidades.",
+    "alerta": "Adoçante proteico natural, sem impacto glicêmico. Uso seguro para diabéticos.",
+    "nota_clinica": "IDA não especificada (considerada segura nas doses de uso pela JECFA). Aprovado EFSA como aditivo E957.",
+    "sinonimos": [
+      "taumatina",
+      "thaumatin",
+      "e957"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "JECFA 1985",
+      "EFSA ANS Panel 2011 EFSA Journal 9(10):2354"
+    ]
+  },
+  "monk_fruit": {
+    "classe": "edulcorante_natural",
+    "risco": "SEGURO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Extrato do fruto Siraitia grosvenorii (Luo Han Guo). 150-250x mais doce. Os mogrosídeos responsáveis pelo dulçor não são metabolizados. IG = 0. Aprovado FDA (GRAS 2010) e crescentemente disponível no Brasil em produtos importados. Estudos preliminares sugerem propriedades antioxidantes e possível efeito protetor em ilhotas pancreáticas.",
+    "alerta": "Adoçante natural de fruta-monge. IG zero, sem impacto glicêmico.",
+    "nota_clinica": "FDA GRAS (2010). Não listado explicitamente como aditivo pela ANVISA até 2024 — presente em produtos importados. Verificar regularidade do produto no Brasil.",
+    "sinonimos": [
+      "monk fruit",
+      "fruta do monge",
+      "luo han guo",
+      "mogrosideos",
+      "mogroside",
+      "monk fruit extract"
+    ],
+    "referencias": [
+      "SBD Edulcorantes NT 2024-2025",
+      "FDA GRAS Notice GRN 301 (2010)"
+    ]
+  },
+  "allulose": {
+    "classe": "edulcorante_natural",
+    "risco": "SEGURO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Monossacarídeo raro (C-3 epímero da D-frutose). Encontrado naturalmente em trigo, figos e passas em quantidades vestigiais. Absorvido no intestino delgado (~70%) mas não metabolizado — excretado inalterado na urina. Fornece 0.4 kcal/g (vs 4 kcal/g da sacarose). IG ≈ 0. Estudos mostram que inibe a α-glicosidase intestinal e reduz a hiperglicemia pós-prandial. FDA GRAS aprovado (2019); disponível no Brasil via produtos importados.",
+    "alerta": "Edulcorante natural de nova geração. IG zero, 0.4 kcal/g. Sem impacto glicêmico; pode reduzir pico pós-prandial.",
+    "nota_clinica": "FDA GRAS (2019). Não aprovado como aditivo alimentar pela ANVISA até 2024 — presente apenas em produtos importados. Pode aparecer rotulado como 'D-psicose' (nome IUPAC alternativo) ou 'alulosa'.",
+    "sinonimos": [
+      "allulose",
+      "alulose",
+      "d allulose",
+      "d psicose",
+      "psicose",
+      "rare sugar",
+      "alulosa"
+    ],
+    "referencias": [
+      "FDA GRAS Notice GRN 761 (2019)",
+      "Han et al. Nutrients 2018 DOI:10.3390/nu10020168",
+      "SBD Edulcorantes NT 2024-2025"
+    ]
+  },
+  "gordura_trans": {
+    "classe": "gordura_trans",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Ácidos graxos trans produzidos por hidrogenação catalítica parcial de óleos vegetais. A isomerização geométrica das ligações duplas (cis→trans) torna a molécula resistente às lipases pancreáticas. Reduz drasticamente o HDL-C (colesterol 'bom') e eleva o LDL oxidado, promovendo aterogênese acelerada. Em diabéticos, a disfunção endotelial resultante amplifica o risco cardiovascular já aumentado pela hiperglicemia crônica. Banida progressivamente pela ANVISA (RDC 481/2021), mas ainda presente em produtos com validade anterior.",
+    "alerta": "Gordura trans: proibida no Brasil desde 2021 mas ainda pode aparecer em produtos antigos. Eleva risco cardíaco gravemente.",
+    "nota_clinica": "Gordura trans banida desde jan/2023: ANVISA RDC 632/2022 proibiu produção, importação e uso de óleos parcialmente hidrogenados. Pode aparecer em produtos com validade anterior. Limite residual: 0,2g/porção (RDC 481/2021).",
+    "sinonimos": [
+      "gordura trans",
+      "trans fat",
+      "gordura vegetal parcialmente hidrogenada",
+      "oleo vegetal parcialmente hidrogenado",
+      "oleo vegetal parcialmente hidrogenado",
+      "partially hydrogenated oil",
+      "partially hydrogenated vegetable oil",
+      "margarina vegetal",
+      "gordura hidrogenada",
+      "gordura vegetal hidrogenada",
+      "shortening hydrogenated"
+    ],
+    "referencias": [
+      "ANVISA RDC 481/2021",
+      "ANVISA RDC 632/2022",
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: gorduras trans em ultraprocessados — p.39-41",
+      "leia o rótulo\" como ferramenta de defesa do consumidor)\""
+    ]
+  },
+  "gordura_interesterificada": {
+    "classe": "gordura_interesterificada",
+    "risco": "ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Produzida por interesterificação termo-enzimática de misturas de gorduras saturadas (estearina de palma, gordura inteiramente hidrogenada) com óleos insaturados. Reposiciona aleatoriamente os ácidos graxos no esqueleto do glicerol, gerando enriquecimento anômalo na posição sn-2 com ácidos graxos saturados — perfil oposto ao encontrado em gorduras naturais. Estudos em roedores (PMC11143230) documentam: supressão das enzimas de β-oxidação mitocondrial, esteatose hepática micro e macrovesicular, elevação de IL-6 e agravamento do HOMA-IR. Substituta silenciosa da gordura trans nos rótulos; identificada simplesmente como 'gordura vegetal'.",
+    "alerta": "Substituta da gordura trans nos produtos modernos. Eleva risco de resistência à insulina e esteatose hepática. Classificada como ALTO risco sistêmico.",
+    "nota_clinica": "'Gordura vegetal' nos rótulos modernos provavelmente é interesterificada. Tratar com a mesma cautela da gordura trans.",
+    "sinonimos": [
+      "gordura interesterificada",
+      "gordura vegetal",
+      "creme vegetal",
+      "creme vegetal industrial",
+      "mistura de gorduras vegetais",
+      "oleo interesterificado",
+      "oleo interesterificado",
+      "interesterified fat",
+      "interesterified oil",
+      "blend de gorduras",
+      "gordura vegetal fracionada",
+      "oleo de palma interesterificado"
+    ],
+    "referencias": [
+      "Coutinho A.A.M. (UERJ 2021)",
+      "Izar et al. SBC-DA Arq Bras Cardiol",
+      "PMC11143230",
+      "PMC6412707",
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: 'gordura vegetal' como marcador de ultraprocessamento",
+      "p.39-40)"
+    ]
+  },
+  "gordura_de_palma": {
+    "classe": "gordura_saturada",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Óleo extraído do fruto da palmeira Elaeis guineensis. Rico em ácido palmítico (~44%) e oleico (~39%). O ácido palmítico é um potente indutor de lipotoxicidade em células β pancreáticas e hepatócitos. Associado à resistência insulínica em dietas ricas em gordura saturada. Diferente da gordura trans, mas com impacto metabólico desfavorável no DM2.",
+    "alerta": "Gordura de palma: alto teor de gordura saturada (ácido palmítico). Associada à resistência à insulina em consumo excessivo.",
+    "nota_clinica": "Substituir por gorduras insaturadas quando possível.",
+    "sinonimos": [
+      "gordura de palma",
+      "oleo de palma",
+      "oleo de palma",
+      "palm oil",
+      "palm fat",
+      "palm kernel oil",
+      "palmiste",
+      "oleo de palmiste",
+      "estearina de palma"
+    ],
+    "referencias": [
+      "EFSA 2016 DOI:10.2903/j.efsa.2016.4426",
+      "Mancini et al. Nutr Metab Cardiovasc Dis 2015 DOI:10.1016/j.numecd.2015.04.008"
+    ]
+  },
+  "gordura_de_coco": {
+    "classe": "gordura_saturada",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em ácidos graxos de cadeia média (AGCM — C8:0, C10:0, C12:0). Amplamente promovido como 'saudável' por marketing. Contém ~92% de gordura saturada. Evidências científicas não suportam benefício cardiovascular; diretrizes SBC e AHA desencorajam o consumo regular. Em diabéticos, dietas ricas em gordura saturada associam-se à piora da sensibilidade insulínica.",
+    "alerta": "Óleo de coco tem alta gordura saturada. Marketing 'saudável' não é suportado pelas diretrizes médicas. Consumo moderado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "gordura de coco",
+      "oleo de coco",
+      "oleo de coco",
+      "coconut oil",
+      "coconut fat",
+      "coco"
+    ],
+    "referencias": [
+      "Sacks FM et al. Circulation 2017 DOI:10.1161/CIR.0000000000000510 (AHA Presidential Advisory: coconut oil ↑LDL-C — não recomendado como óleo culinário primário)",
+      "Eyres L et al. Nutr Rev 2016 DOI:10.1093/nutrit/nuw002 (revisão sistemática: gordura saturada do coco vs. outras fontes — efeito desfavorável no LDL-C)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (gorduras saturadas < 7% VCT — FORTE/ALTA)"
+    ]
+  },
+  "manteiga": {
+    "classe": "gordura_saturada",
+    "risco": "MODERADO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Gordura láctea com ~63% de ácidos graxos saturados. Contém vitaminas lipossolúveis (A, D, K2) e ácido butírico (efeito bifidogênico). Impacto cardiovascular mais neutro que a margarina trans. Em diabéticos, uso moderado; o perfil glicêmico não é diretamente alterado, mas gordura saturada contribui para resistência insulínica em excesso.",
+    "alerta": "Manteiga: gordura saturada natural. Uso moderado. Menor risco que gorduras trans/interesterificadas.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "manteiga",
+      "butter",
+      "manteiga sem sal",
+      "manteiga clarificada",
+      "ghee",
+      "manteiga de leite"
+    ],
+    "referencias": [
+      "Pimpin L et al. PLOS One 2016 DOI:10.1371/journal.pone.0148505 (meta-análise: consumo de manteiga — associação neutra com DM2 e mortalidade, fraca associação positiva com DCV)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (Recomendações dietéticas FORTE/ALTA: gorduras saturadas < 7% VCT",
+      "poli-insaturadas 5-10% VCT",
+      "monoinsaturadas 15% VCT — Seção 6.1.3)"
+    ]
+  },
+  "oleo_de_soja": {
+    "classe": "gordura_insaturada",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em ácidos graxos poli-insaturados (PUFA) ômega-6 (linoleico, ~54%). Relação ômega-6:ômega-3 desfavorável em consumo excessivo (pró-inflamatório). Não eleva glicemia. Neutro para o perfil glicêmico; o debate clínico é sobre o equilíbrio ômega-6/ômega-3.",
+    "alerta": "Óleo de soja: não eleva glicemia. Rico em ômega-6; consumo equilibrado com fontes de ômega-3.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "oleo de soja",
+      "oleo de soja",
+      "soybean oil",
+      "soy oil"
+    ],
+    "referencias": [
+      "Harris WS et al. Circulation 2009 DOI:10.1161/CIRCULATIONAHA.108.191627 (AHA Science Advisory: PUFAs ômega-6 → ↓LDL-C, ↓risco DCV",
+      "óleo de soja como principal fonte ômega-6 da dieta brasileira)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (Recomendações dietéticas FORTE/ALTA: gorduras saturadas < 7% VCT",
+      "poli-insaturadas 5-10% VCT",
+      "monoinsaturadas 15% VCT — Seção 6.1.3)"
+    ]
+  },
+  "oleo_de_canola": {
+    "classe": "gordura_insaturada",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em ácido oleico (~60%, monoinsaturado) e com relação ômega-6:ômega-3 favorável (~2:1). Não eleva glicemia. Considerado neutro/positivo para saúde cardiovascular nas diretrizes atuais.",
+    "alerta": "Óleo de canola: não eleva glicemia. Perfil de gorduras favorável para saúde cardiovascular.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "oleo de canola",
+      "oleo de canola",
+      "canola oil",
+      "colza",
+      "oleo de colza",
+      "rapeseed oil",
+      "canola"
+    ],
+    "referencias": [
+      "Lin L et al. Nutr Rev 2013 DOI:10.1111/nure.12033 (revisão: óleo de canola — MUFA ~60%, relação ω6:ω3 ~2:1, ↓LDL-C vs. gorduras saturadas",
+      "perfil lipídico mais favorável entre os óleos vegetais comuns)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (Recomendações dietéticas FORTE/ALTA: gorduras saturadas < 7% VCT",
+      "poli-insaturadas 5-10% VCT",
+      "monoinsaturadas 15% VCT — Seção 6.1.3)"
+    ]
+  },
+  "azeite": {
+    "classe": "gordura_insaturada",
+    "risco": "BENEFICO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em ácido oleico (~70-80%) e polifenóis antioxidantes. Melhora sensibilidade insulínica e reduz marcadores inflamatórios. Dieta mediterrânea com azeite associada à menor incidência de DM2 e melhor controle glicêmico.",
+    "alerta": "Azeite de oliva: benéfico para diabéticos. Melhora sensibilidade à insulina. Preferir extra-virgem.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "azeite",
+      "azeite de oliva",
+      "olive oil",
+      "azeite extra virgem",
+      "azeite extravirgem",
+      "extra virgin olive oil",
+      "evoo"
+    ],
+    "referencias": [
+      "Estruch R et al. NEJM 2013 DOI:10.1056/NEJMoa1200303 (PREDIMED, n=7.447: dieta mediterrânea com azeite extra-virgem → RR 0.70 DCV",
+      "↓incidência DM2 e ↑sensibilidade insulínica)",
+      "Guasch-Ferré M et al. JACC 2020 DOI:10.1016/j.jacc.2019.11.028 (análise PREDIMED Plus: ↑consumo azeite → ↓mortalidade total e cardiovascular)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (azeite de oliva citado como fonte preferencial de monoinsaturados — Seção 6.1.3 e 9.3.2)"
+    ]
+  },
+  "oleo_de_palma": {
+    "classe": "gordura_saturada",
+    "risco": "MODERADO-ALTO",
+    "indice_glicemico": null,
+    "fisiopatologia": "~50% de ácidos graxos saturados (principalmente ácido palmítico C16:0). Um dos óleos mais utilizados globalmente na indústria alimentícia. Eleva LDL-C de forma comparável a outras gorduras saturadas. Dietas ricas em ácido palmítico associam-se à piora da resistência insulínica e ao aumento do risco cardiovascular. Presente em grande parte dos ultraprocessados sob o nome 'gordura vegetal'.",
+    "alerta": "Óleo de palma: alto teor de gordura saturada. Presente em ultraprocessados como 'gordura vegetal'. Consumo deve ser limitado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "oleo de palma",
+      "oleo de palma",
+      "palm oil",
+      "gordura de palma",
+      "palm fat",
+      "palmiste",
+      "oleo de palmiste",
+      "palm kernel oil",
+      "dende",
+      "azeite de dende",
+      "dende",
+      "palma"
+    ],
+    "referencias": [
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (gorduras saturadas < 7% VCT — FORTE/ALTA",
+      "Seção 6.1.3)",
+      "Sacks FM et al. Circulation 2017 DOI:10.1161/CIR.0000000000000510 (AHA Presidential Advisory: ácido palmítico ↑LDL-C — substituição por PUFA ↓risco DCV)"
+    ]
+  },
+  "oleo_de_girassol": {
+    "classe": "gordura_insaturada",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rico em ácidos graxos poli-insaturados ômega-6 (ácido linoleico, ~68%). Perfil similar ao óleo de soja. Relação ômega-6:ômega-3 muito desfavorável (~200:1) — relevante em consumo excessivo (pró-inflamatório). Não eleva glicemia diretamente.",
+    "alerta": "Óleo de girassol: não eleva glicemia. Rico em ômega-6; equilibrar com fontes de ômega-3.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "oleo de girassol",
+      "oleo de girassol",
+      "sunflower oil",
+      "girassol",
+      "sunflower seed oil"
+    ],
+    "referencias": [
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (poli-insaturadas 5-10% VCT — Seção 6.1.3)",
+      "Harris WS et al. Circulation 2009 DOI:10.1161/CIRCULATIONAHA.108.191627 (AHA Science Advisory: PUFAs ômega-6 → ↓LDL-C",
+      "relação ω6:ω3 desfavorável no girassol convencional)"
+    ]
+  },
+  "amendoim_e_oleaginosas": {
+    "classe": "gordura_insaturada",
+    "risco": "BENEFICO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Oleaginosas (amendoim, amêndoa, avelã, nozes, castanhas) são ricas em gorduras insaturadas (MUFA e PUFA), fibras, proteínas vegetais, magnésio e vitamina E. IG muito baixo (~15-20). Meta-análises mostram associação com menor risco de DM2 e melhora do perfil lipídico. Porcão recomendada: 30g/dia (~punhado). Amendoim é leguminosa (não oleaginosa stricto sensu) mas tem perfil nutricional similar.",
+    "alerta": "Oleaginosas: benéficas para diabéticos. Baixo IG, gordura boa, saciedade. Atenção ao sódio em versões salgadas.",
+    "nota_clinica": "Versões salgadas/açucaradas (amendoim crocante, granola) alteram o perfil — avaliar o produto completo, não só a oleaginosa.",
+    "sinonimos": [
+      "amendoim",
+      "amendoa",
+      "amendoa",
+      "avela",
+      "avela",
+      "noz",
+      "nozes",
+      "castanha",
+      "castanha de caju",
+      "castanha do para",
+      "castanha do brasil",
+      "macadamia",
+      "pistache",
+      "peca",
+      "peca",
+      "peanut",
+      "almond",
+      "hazelnut",
+      "walnut",
+      "cashew",
+      "brazil nut",
+      "pecan",
+      "macadamia nut",
+      "pasta de amendoim",
+      "manteiga de amendoim",
+      "peanut butter",
+      "almond butter",
+      "tahine",
+      "gergelim",
+      "semente",
+      "sementes",
+      "seeds",
+      "seed",
+      "semente de chia",
+      "chia seeds",
+      "chia",
+      "semente de linhaca",
+      "linhaca",
+      "linhaca",
+      "flaxseed",
+      "semente de abobora",
+      "semente de girassol",
+      "sunflower seeds",
+      "pepitas"
+    ],
+    "referencias": [
+      "Guasch-Ferré M et al. JACC 2020 DOI:10.1016/j.jacc.2019.11.028 (oleaginosas e dieta mediterrânea — ↓mortalidade cardiovascular)",
+      "Rached FH et al. Diretriz Brasileira de Dislipidemias e Prevenção da Aterosclerose – 2025. Arq Bras Cardiol. 2025",
+      "122(9):e20250640 DOI:10.36660/abc.20250640 (nozes e oleaginosas como fontes de gorduras insaturadas — Seção 6.1.3)"
+    ]
+  },
+  "aveia": {
+    "classe": "cereal_integral",
+    "risco": "BAIXO",
+    "indice_glicemico": 55,
+    "fisiopatologia": "Rico em beta-glucana solúvel — fibra que forma gel viscoso no intestino, retardando absorção de glicose e reduzindo pico pós-prandial. IG ~55 (flocos) a ~69 (farinha fina). Efeito bifidogênico. Meta-análises mostram redução de HbA1c com consumo regular em DM2.",
+    "alerta": "Aveia: fibra beta-glucana reduz pico glicêmico. IG moderado (~55). Benéfica para DM2 em porções adequadas.",
+    "nota_clinica": "Contar carboidratos da aveia normalmente. O benefício é na velocidade de absorção, não na quantidade de carbo.",
+    "sinonimos": [],
+    "referencias": [
+      "aveia|oat|oats|aveia em flocos|rolled oats|oatmeal|farinha de aveia|oat flour|aveia integral"
+    ]
+  },
+  "trigo_integral": {
+    "classe": "cereal_integral",
+    "risco": "MODERADO",
+    "indice_glicemico": 69,
+    "fisiopatologia": "Grão inteiro com farelo (fibra, B1, B3), gérmen (vitamina E, ácidos graxos) e endosperma. IG ~69 — menor que farinha branca (70) por presença da fibra. A estrutura celular intacta retarda a ação amilásica. Porém em produtos industrializados com 'farinha de trigo integral', o moinho pode reduzir granulometria e perder benefício.",
+    "alerta": "Trigo integral: IG ligeiramente menor que farinha branca. Melhor opção que refinado, mas ainda conta como carbo.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "trigo integral",
+      "whole wheat",
+      "whole grain wheat",
+      "farinha de trigo integral",
+      "whole wheat flour",
+      "grao de trigo integral",
+      "germ of wheat"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Kristensen et al. 2010 Appetite, apud Aller: wholegrain wheat bread maior saciedade vs. refined",
+      "whole grain wheat SDS — slower but complete digestion, Tabela 2)"
+    ]
+  },
+  "arroz_integral": {
+    "classe": "cereal_integral",
+    "risco": "MODERADO",
+    "indice_glicemico": 66,
+    "fisiopatologia": "Grão com farelo e gérmen preservados. IG ~66 versus ~72 do arroz branco. O farelo retarda digestão. Rico em magnésio, que participa da sinalização insulínica. Estudos associam substituição de arroz branco por integral à redução de incidência de DM2.",
+    "alerta": "Arroz integral: IG menor que branco (~66 vs ~72). Melhor opção, ainda assim contar como carboidrato.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "arroz integral",
+      "brown rice",
+      "whole grain rice",
+      "arroz parboilizado",
+      "parboiled rice"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (cereais integrais SDS: digestão lenta e completa — Tabela 2",
+      "whole grains associados a ↓risco DM2 e síndrome metabólica)"
+    ]
+  },
+  "quinoa": {
+    "classe": "cereal_integral",
+    "risco": "BAIXO",
+    "indice_glicemico": 53,
+    "fisiopatologia": "Pseudocereal de alto valor proteico (~14%) e com todos os aminoácidos essenciais. IG ~53. Baixo teor de amido versus cereais convencionais. Rico em fibras, magnésio e zinco — micronutrientes relevantes no manejo do DM.",
+    "alerta": "Quinoa: IG baixo (~53) e alta proteína. Boa opção de carboidrato para diabéticos.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "quinoa",
+      "quinua",
+      "quinoa grain"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (princípios gerais: alimentos de baixo IG → menor resposta insulínica, saciedade prolongada",
+      "whole grains e legumes recomendados)"
+    ]
+  },
+  "cevada": {
+    "classe": "cereal_integral",
+    "risco": "BAIXO",
+    "indice_glicemico": 28,
+    "fisiopatologia": "IG muito baixo (~28 em grão inteiro). Rico em beta-glucana, similar à aveia. Raramente consumido como grão no Brasil; mais comum como malte em cervejas e pães de malte. O centeio (rye) também tem IG baixo (~41-65 dependendo da forma) e beta-glucana; frequentemente agrupado com cevada em formulações.",
+    "alerta": "Cevada e centeio: IG baixo, ricos em fibra beta-glucana. Boas opções quando disponíveis.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "cevada",
+      "barley",
+      "cevada perlada",
+      "pearl barley",
+      "centeio",
+      "rye",
+      "farinha de centeio",
+      "rye flour",
+      "centeio integral",
+      "whole rye",
+      "rye bread"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Keogh et al. 2007 Eur J Clin Nutr, apud Aller: barley high amylose + soluble fiber SDS — sem efeito termogênico diferenciado mas melhora glicemia",
+      "Schroeder et al. 2009 Appetite: whole grain high-fiber barley)"
+    ]
+  },
+  "inulina": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Frutano de cadeia longa extraído principalmente da chicória. Não digerível por enzimas humanas; fermentado pela microbiota produzindo AGCC. Efeito prebiótico significativo (estimula Bifidobacterium). Reduz pico glicêmico pós-prandial ao retardar esvaziamento gástrico e absorção de glicose.",
+    "alerta": "Fibra prebiótica benéfica. Não eleva glicemia. Melhora microbiota e controle glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "fibra",
+      "fibras",
+      "fibra alimentar",
+      "fibra dietetica",
+      "fibra soluvel",
+      "fibra insoluvel",
+      "dietary fiber",
+      "dietary fibre",
+      "inulina",
+      "inulin",
+      "chicory inulin",
+      "inulina de chicoria",
+      "inulina de chicoria",
+      "fructooligosaccharide",
+      "fos"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Tarini & Wolever 2010 Appl Physiol Nutr Metab, apud Aller: inulin ↑GLP-1 aos 30min, ↓grelina às 4.5-6h → saciedade",
+      "↑AGCC → ↓ácidos graxos livres pós-prandiais)"
+    ]
+  },
+  "fos": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Frutooligossacarídeos — cadeias curtas de frutose. Também chamados de oligofrutose. Prebióticos bifidogênicos. Não digerível; fermentado no cólon. Impacto glicêmico nulo. Frequentemente associados à inulina nos rótulos.",
+    "alerta": "Fibra prebiótica. Sem impacto glicêmico. Benéfica para microbiota intestinal.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "fos",
+      "frutooligossacarideos",
+      "frutooligossacarideos",
+      "fructooligosaccharides",
+      "oligofrutose",
+      "oligofructose"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (non-alpha-glucan oligosaccharides — Tabela 1",
+      "fermentação colônica → AGCC → ↑saciedade, ↑GLP-1)"
+    ]
+  },
+  "pectina": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Polissacarídeo de galacturonato presente em frutas cítricas e maçãs. Forma gel aquoso viscoso que retarda absorção de glicose e colesterol. Amplamente estudada para redução do pico pós-prandial. Usada como geleificante (E440) em produtos industriais.",
+    "alerta": "Pectina: fibra solúvel que retarda absorção de açúcar. Benéfica para controle glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "pectina",
+      "pectin",
+      "e440",
+      "pectina citrica",
+      "citrus pectin",
+      "apple pectin"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (non-starch polysaccharides — pectins",
+      "fibras solúveis viscosas retardam esvaziamento gástrico e absorção de glicose → benefício glicêmico)"
+    ]
+  },
+  "goma_guar": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Galactomanana extraída das sementes de guar (Cyamopsis tetragonoloba). Fibra solúvel de alta viscosidade. Reduz pico glicêmico pós-prandial por retardo do esvaziamento gástrico. Meta-análises confirmam redução de glicemia em jejum e HbA1c.",
+    "alerta": "Goma guar: fibra solúvel com benefício comprovado para controle glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "goma guar",
+      "guar gum",
+      "e412"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Trinick et al. 1986 Clin Sci, apud Aller: guar melhora tolerância à glicose na segunda refeição — 'second-meal effect')"
+    ]
+  },
+  "psyllium": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Casca de sementes de Plantago ovata. Rica em mucilagem (fibra solúvel). Amplamente estudada para controle glicêmico — meta-análises mostram redução de glicemia em jejum e HbA1c em DM2. Usado como suplemento e ingrediente funcional.",
+    "alerta": "Psyllium: fibra com forte evidência de redução de glicemia. Benéfico para DM2.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "psyllium",
+      "psyllium husk",
+      "casca de psyllium",
+      "ispagula",
+      "plantago ovata"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (princípio geral de fibras solúveis: fermentação → AGCC → saciedade, sensibilidade insulínica — mecanismo análogo ao do psyllium)"
+    ]
+  },
+  "beta_glucana": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Polissacarídeo de glucose com ligações β(1→3) e β(1→4). Principal fibra ativa da aveia e cevada. Forma gel viscoso no intestino. Reduz pico glicêmico pós-prandial, LDL-C e insulinemia pós-prandial. EFSA aprova claim de saúde para redução de glicemia pós-prandial.",
+    "alerta": "Beta-glucana: fibra da aveia com evidência sólida de redução de pico glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "beta glucana",
+      "beta glucana",
+      "beta glucan",
+      "beta glucan",
+      "betaglucana",
+      "oat beta glucan"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Queenan et al. 2007 Nutr J DOI:10.1186/1475-2891-6-6, apud Aller: concentrated oat beta-glucan ↓LDL-C em hipocolesterolemicos — RCT",
+      "não-starch polysaccharides — beta-glucans Tabela 1)"
+    ]
+  },
+  "celulose": {
+    "classe": "fibra",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Polissacarídeo estrutural insolúvel. Não fermentada pela microbiota humana. Aumenta volume fecal e trânsito intestinal. Sem efeito direto na glicemia. Usada como agente de volume em alimentos de baixa caloria.",
+    "alerta": "Celulose: fibra insolúvel sem impacto glicêmico direto. Agente de volume.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "celulose",
+      "cellulose",
+      "microcrystalline cellulose",
+      "celulose microcristalina",
+      "celulose em po",
+      "e460"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (non-starch polysaccharides: cellulose — insolúvel, não fermentável",
+      "sem AGCC, sem efeito direto na glicemia — Tabela 1)"
+    ]
+  },
+  "maltodextrina_resistente": {
+    "classe": "fibra",
+    "risco": "BENEFICO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Polissacarídeo de baixa viscosidade obtido por pirólise e refino do amido de milho. 90% assayável como fibra alimentar (AOAC). Meta-análise de 37 RCTs (n=897) demonstrou redução de 20-33% na glicemia pós-prandial e ~25% na resposta insulínica quando 3-10g são consumidos com refeições contendo amido (carboidratos). Mecanismo não depende de viscosidade intestinal (difere de psyllium/goma guar). Efeito estável mesmo após adaptação de 4-26 semanas. FOSHU aprovado no Japão. Completamente diferente da maltodextrina comum (IG ≈100, ALTO risco).",
+    "alerta": "Maltodextrina resistente é uma FIBRA que REDUZ glicemia em 20-33%. Não confundir com maltodextrina comum (alto risco).",
+    "nota_clinica": "Rara em rótulos brasileiros (custo elevado). Quando presente, é um marcador de produto funcional. Não confundir com maltodextrina convencional.",
+    "sinonimos": [
+      "maltodextrina resistente",
+      "resistant maltodextrin",
+      "rmd",
+      "dextrina indigestivel",
+      "dextrina indigestivel",
+      "indigestible dextrin",
+      "nondigestible dextrin",
+      "fibersol",
+      "pinefiber"
+    ],
+    "referencias": [
+      "Livesey & Tagami. Am J Clin Nutr 2009",
+      "89:114-25 DOI:10.3945/ajcn.2008.26842",
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (RS mecanismo: fermentação colônica → AGCC → ↑sensibilidade insulínica — Robertson et al. 2003/2005 apud Aller",
+      "RS2 = raw potato starch, Tabela 2)"
+    ]
+  },
+  "proteina_de_soja": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Proteína vegetal completa (contém todos os aminoácidos essenciais). Sem impacto glicêmico imediato. Estimula liberação de insulina e glucagon de forma equilibrada. Meta-análises mostram efeito modesto de redução de LDL-C (Jenkins et al. JAMA 2003). Pode desencadear reação em alérgicos à soja (alérgeno de declaração obrigatória ANVISA).",
+    "alerta": "Proteína de soja sem impacto glicêmico. Atenção para alérgicos à soja (alérgeno obrigatório).",
+    "nota_clinica": "Contar como proteína: ~30-60% pode ser convertida em glicose via neoglicogênese em 3-4h após a refeição (Manual SBD 2024). Declaração de alérgeno obrigatória conforme ANVISA RDC 26/2015.",
+    "sinonimos": [
+      "proteina",
+      "proteinas",
+      "protein",
+      "proteins",
+      "proteina de soja",
+      "soy protein",
+      "isolado proteico de soja",
+      "concentrado de soja",
+      "soy protein isolate",
+      "soy protein concentrate",
+      "farinha de soja",
+      "soja",
+      "textura de soja",
+      "proteina vegetal de soja",
+      "extrato de soja"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024): PTN → 30-60% convertida em glicose em 3-4h",
+      "Jenkins DJA et al. JAMA 2003 DOI:10.1001/jama.290.4.502 (meta-análise: proteína de soja ↓LDL-C 3,3%)",
+      "ANVISA RDC 26/2015 (soja como alérgeno de declaração obrigatória)"
+    ]
+  },
+  "soro_de_leite": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Proteína de alta qualidade biológica (PDCAAS=1,0) rica em BCAA (leucina, isoleucina, valina). Estimula síntese proteica muscular. Sem impacto glicêmico direto mas possui alto índice insulínico (II) — estimula secreção de insulina de forma insulinotrópica independente do IG. Em DM2, consumo pré-prandial demonstrou redução do pico glicêmico pós-refeição (incrementin effect via GLP-1 e GIP). Versões concentradas contêm lactose residual; versões isoladas são praticamente isentas.",
+    "alerta": "Soro de leite (whey) sem impacto glicêmico significativo. Versões concentradas contêm lactose; monitorar em intolerantes.",
+    "nota_clinica": "Contar como proteína: ~30-60% pode ser convertida em glicose em 3-4h (Manual SBD). Alérgeno do leite: declaração obrigatória ANVISA.",
+    "sinonimos": [
+      "soro de leite",
+      "whey",
+      "proteina do soro do leite",
+      "whey protein",
+      "soro de leite em po",
+      "soro de leite concentrado",
+      "soro de leite isolado",
+      "lactossoro",
+      "whey concentrate",
+      "whey isolate",
+      "proteina concentrada do soro do leite",
+      "wpc",
+      "wpi"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024): PTN → 30-60% convertida em glicose em 3-4h",
+      "Akhavan M et al. J Nutr 2010 DOI:10.3945/jn.109.117689 (whey pré-prandial → ↓pico glicêmico e insulínico pós-refeição em DM2)",
+      "ANVISA RDC 26/2015 (leite como alérgeno)"
+    ]
+  },
+  "caseina": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Fosfoproteína micelar (~80% da proteína total do leite bovino). Forma cágulo no estômago ácido, resultando em digestão e absorção aminoacídica sustentadas por 5-7h — perfil oposto ao do whey (rápido). Sem impacto glicêmico agudo. Sensação de saciedade prolongada. Frequentemente listada nos rótulos como 'caseinato de sódio' ou 'caseinato de cálcio'.",
+    "alerta": "Caseína: proteína de digestão lenta. Sem impacto glicêmico agudo. Alérgeno do leite.",
+    "nota_clinica": "Contar como proteína. Alérgeno do leite: declaração obrigatória ANVISA. A liberação lenta de aminoácidos a torna diferente do whey no manejo nutricional (importante para DM1 em jejum prolongado).",
+    "sinonimos": [
+      "caseina",
+      "casein",
+      "caseina",
+      "caseinato de sodio",
+      "caseinato de sodio",
+      "sodium caseinate",
+      "caseinato de calcio",
+      "caseinato de calcio",
+      "calcium caseinate",
+      "proteina do leite",
+      "milk protein",
+      "micellar casein"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024): PTN → digestão lenta, conversão glicose em 3-4h",
+      "Boirie Y et al. PNAS 1997 DOI:10.1073/pnas.94.26.14930 (slow vs. fast protein: caseína — liberação aminoacídica sustentada 5-7h vs. whey — pico rápido)",
+      "ANVISA RDC 26/2015"
+    ]
+  },
+  "ovo": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Alimento de alta densidade nutricional. Clara: proteína de alto valor biológico (albumina, PDCAAS=1,0), sem gordura, sem carboidratos. Gema: lipídios (colesterol + lecitina), vitaminas D, B12, A, K2 e colina. Sem impacto glicêmico direto. Estudos recentes (meta-análises) não confirmam associação entre consumo moderado de ovos (~1/dia) e risco cardiovascular em não-diabéticos; em DM2, evidências são menos conclusivas — orientações divergem (AHA cautela; SBD 2024 permite consumo moderado).",
+    "alerta": "Ovo: sem impacto glicêmico. Excelente fonte de proteína. Consumo moderado permitido — seguir orientação médica em DM2 com dislipidemia.",
+    "nota_clinica": "Contar como proteína. Não eleva glicemia. Em DM2 com dislipidemia, limitar gema conforme orientação médica individual.",
+    "sinonimos": [
+      "ovo",
+      "ovos",
+      "egg",
+      "eggs",
+      "clara de ovo",
+      "gema de ovo",
+      "egg white",
+      "egg yolk",
+      "albumina de ovo",
+      "ovos inteiros",
+      "ovo cozido",
+      "ovo pasteurizado",
+      "ovos pasteurizados",
+      "whole egg",
+      "egg powder",
+      "ovo em po"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023): ovo = proteína, sem carboidrato",
+      "Djoussé L et al. Am J Clin Nutr 2009 DOI:10.3945/ajcn.2009.27491 (consumo de ovos e risco DCV em diabéticos — análise epidemiológica)",
+      "ANVISA RDC 26/2015 (ovo como alérgeno de declaração obrigatória)"
+    ]
+  },
+  "carne": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Alimentos proteicos de origem animal (bovina, suína, frango, peixe, mariscos). Sem carboidratos e sem impacto glicêmico direto. Fornecem proteínas de alto valor biológico, ferro heme (alta biodisponibilidade), vitamina B12 e zinco. Carnes processadas (embutidos, linguiça, salame) contêm nitratos/nitritos e alto teor de sódio — associadas a maior risco DM2 em estudos observacionais. Carnes não-processadas em quantidade moderada são compatíveis com o manejo do DM.",
+    "alerta": "Carnes não-processadas: sem impacto glicêmico. Boas fontes de proteína para diabéticos. Evitar embutidos/processados.",
+    "nota_clinica": "Contar como proteína. Carnes processadas (salsicha, linguiça, bacon) aumentam risco cardiovascular — preferir não-processadas.",
+    "sinonimos": [
+      "carne",
+      "carnes",
+      "carne bovina",
+      "carne suina",
+      "carne de frango",
+      "frango",
+      "suino",
+      "porco",
+      "bovino",
+      "peixe",
+      "frutos do mar",
+      "beef",
+      "pork",
+      "chicken",
+      "fish",
+      "poultry",
+      "meat",
+      "meats",
+      "peito de frango",
+      "file de frango",
+      "carne moida",
+      "carne picada",
+      "bife",
+      "alcatra",
+      "file mignon",
+      "frango grelhado",
+      "frango desfiado",
+      "atum",
+      "sardinha",
+      "salmon",
+      "salao",
+      "tuna",
+      "tilapia",
+      "anchova",
+      "camarao",
+      "shrimp",
+      "embutido",
+      "embutidos",
+      "linguica",
+      "linguica",
+      "salsicha",
+      "presunto",
+      "mortadela",
+      "bacon"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023): carnes = proteína + gordura, sem carboidrato",
+      "Micha R et al. Circulation 2010 DOI:10.1161/CIRCULATIONAHA.109.924977 (carnes processadas ↑risco DM2/DCV — nitratos/nitritos e sódio)"
+    ]
+  },
+  "proteina_de_ervilha": {
+    "classe": "proteina",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": 0,
+    "fisiopatologia": "Proteína vegetal de leguminosa com perfil aminoacídico incompleto (baixo em metionina, triptofano). Sem impacto glicêmico. Alta digestibilidade comparada a outras proteínas vegetais. Crescente presença em produtos plant-based e proteínas em pó. Isenta dos principais alérgenos (glúten, lactose, soja). Alternativa popular para veganos e intolerantes.",
+    "alerta": "Proteína de ervilha sem impacto glicêmico. Isenta de glúten, lactose e soja.",
+    "nota_clinica": "Contar como proteína. Perfil aminoacídico incompleto — combinar com cereais integrais para completar todos os aminoácidos essenciais.",
+    "sinonimos": [
+      "proteina de ervilha",
+      "pea protein",
+      "isolado proteico de ervilha",
+      "pea protein isolate",
+      "concentrado de proteina de ervilha",
+      "pea protein concentrate",
+      "proteina vegetal de ervilha"
+    ],
+    "referencias": [
+      "Manual de Contagem de Carboidratos SBD (ADJ Diabetes Brasil 2023",
+      "Diretrizes SBD 2024): PTN → 30-60% convertida em glicose em 3-4h",
+      "Gorissen SHM et al. Amino Acids 2018 DOI:10.1007/s00726-018-2640-5 (perfil aminoacídico e digestibilidade de proteínas vegetais — pea protein: DIAAS 0.82 vs. whey 1.09)"
+    ]
+  },
+  "feijao": {
+    "classe": "leguminosa",
+    "risco": "BAIXO",
+    "indice_glicemico": 35,
+    "fisiopatologia": "Leguminosa rica em amido resistente (RS1 e RS2), proteína vegetal (~20%) e fibra solúvel. IG ~29-40 dependendo da variedade e preparo. O cozimento aumenta ligeiramente o IG (RS2 → RS3), mas permanece baixo. Beta-glucanas e fibras solúveis retardam absorção de glicose com alto efeito de saciedade. Combinação feijão+arroz apresenta carga glicêmica inferior ao arroz isolado. Meta-análises associam consumo regular de leguminosas à redução de incidência de DM2.",
+    "alerta": "Feijão: IG baixo (~35). Excelente opção para diabéticos. Contar carboidratos da porção normalmente.",
+    "nota_clinica": "Contar como carboidrato + proteína. Apesar do IG baixo, porções grandes elevam carga glicêmica. Feijão temperado (com gordura) pode ter IG ainda menor.",
+    "sinonimos": [
+      "feijao",
+      "feijoes",
+      "feijoes",
+      "feijao preto",
+      "feijao carioca",
+      "feijao branco",
+      "feijao vermelho",
+      "feijao fradinho",
+      "feijao de corda",
+      "feijao rajado",
+      "feijao roxinho",
+      "feijao azuki",
+      "black beans",
+      "kidney beans",
+      "white beans",
+      "pinto beans",
+      "navy beans",
+      "beans",
+      "bean",
+      "leguminosa",
+      "leguminosas"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Conclusão p.361: 'supports the intake of whole grains, legumes and vegetables… associated with reduced risk of cardiovascular and other chronic diseases'",
+      "RS e SDS em leguminosas — mecanismo digestão lenta confirmado Seção 2 e Tabela 2)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — feijão preto IG ~30, feijão carioca IG ~38)"
+    ]
+  },
+  "lentilha": {
+    "classe": "leguminosa",
+    "risco": "BAIXO",
+    "indice_glicemico": 29,
+    "fisiopatologia": "Leguminosa de IG muito baixo (~29). Rica em proteína (~26% seco), fibra solúvel e ferro. Amido resistente e digestão lentificada (SDS). Não necessita remolho prolongado. Alto teor de polifenóis com efeito antioxidante. Benefício glicêmico confirmado em meta-análises de DM2.",
+    "alerta": "Lentilha: IG muito baixo (~29). Ótima opção para diabéticos.",
+    "nota_clinica": "Contar como carboidrato + proteína. Excelente fonte de ferro não-heme — combinar com vitamina C para melhorar absorção.",
+    "sinonimos": [
+      "lentilha",
+      "lentilhas",
+      "lentil",
+      "lentils",
+      "lentilha verde",
+      "lentilha laranja",
+      "lentilha preta",
+      "red lentil",
+      "green lentil",
+      "black lentil",
+      "french lentil"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Conclusão p.361: leguminosas como fontes de carboidratos de baixo impacto glicêmico",
+      "lentilha contém RS1 — physically indigestible starch, Tabela 2)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (lentilha IG ~29)"
+    ]
+  },
+  "grao_de_bico": {
+    "classe": "leguminosa",
+    "risco": "BAIXO",
+    "indice_glicemico": 28,
+    "fisiopatologia": "Leguminosa com IG ~28. Rica em proteína (~19%), fibra e micronutrientes (folato, manganês, zinco). Amido resistente e fibra solúvel retardam absorção de glicose. Amplamente utilizada como homus/hummus e em sopas. Meta-análises confirmam redução de glicemia em jejum com consumo regular.",
+    "alerta": "Grão-de-bico: IG muito baixo (~28). Excelente opção para diabéticos.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "grao de bico",
+      "grao de bico",
+      "grao de bico",
+      "grao de bico",
+      "chickpea",
+      "chickpeas",
+      "garbanzo",
+      "garbanzo beans",
+      "grao de bico cozido",
+      "hummus",
+      "homus",
+      "pasta de grao de bico",
+      "farinha de grao de bico"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Conclusão p.361: 'supports the intake of whole grains, legumes and vegetables… associated with reduced risk of cardiovascular and other chronic diseases'",
+      "leguminosas como fontes de carboidratos de baixo impacto glicêmico — mecanismo RS + fibra solúvel, Seção 2 e Tabela 2)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — grão-de-bico IG ~28)"
+    ]
+  },
+  "ervilha": {
+    "classe": "leguminosa",
+    "risco": "BAIXO",
+    "indice_glicemico": 39,
+    "fisiopatologia": "Leguminosa com IG ~39 (grão inteiro seco/cozido). Diferente da proteína de ervilha industrializada (isolado). Grão inteiro rico em amido resistente e fibra solúvel. Fornece proteína (~25% seco) e vitaminas do complexo B. Utilizada em sopas, refogados e saladas.",
+    "alerta": "Ervilha (grão): IG baixo (~39). Boa opção para diabéticos.",
+    "nota_clinica": "Distinguir ervilha grão (IG baixo ~39) de ervilha em conserva em calda com açúcar adicionado — verificar rótulo.",
+    "sinonimos": [
+      "ervilha",
+      "ervilhas",
+      "pea",
+      "peas",
+      "split peas",
+      "ervilha seca",
+      "ervilha cozida",
+      "ervilha em conserva",
+      "ervilha congelada",
+      "green peas",
+      "dried peas",
+      "yellow peas"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (Conclusão p.361: leguminosas como fontes de carboidratos de baixo impacto glicêmico",
+      "ervilha contém SDS e RS1 — digestão lentificada, Seção 2 e Tabela 2)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — ervilha (dried, split) IG ~39)"
+    ]
+  },
+  "tomate": {
+    "classe": "vegetal_baixo_ig",
+    "risco": "BAIXO",
+    "indice_glicemico": 15,
+    "fisiopatologia": "Fruto/vegetal de IG muito baixo (~15). Rico em licopeno (antioxidante carotenóide), vitamina C e potássio. Consumo frequente associado a menor risco cardiovascular. Sem impacto glicêmico clinicamente relevante nas formas frescas. Em produtos industrializados (extrato, molho), atenção ao sódio e açúcar adicionados.",
+    "alerta": "Tomate: IG muito baixo (~15). Sem impacto glicêmico. Atenção a produtos industrializados (sódio, açúcar).",
+    "nota_clinica": "Tomate fresco: consumo livre. Extrato/molho industrializado: verificar lista de ingredientes (sal, açúcar, amido).",
+    "sinonimos": [
+      "tomate",
+      "tomates",
+      "tomato",
+      "tomatoes",
+      "tomate fresco",
+      "tomate cereja",
+      "tomate grape",
+      "tomate italiano",
+      "extrato de tomate",
+      "pure de tomate",
+      "molho de tomate",
+      "tomate pelado",
+      "tomate seco",
+      "sun dried tomato"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (tomate como alimento in natura — Grupo 1",
+      "ultraprocessado com extrato — verificar ingredientes)"
+    ]
+  },
+  "cenoura": {
+    "classe": "vegetal_baixo_ig",
+    "risco": "BAIXO",
+    "indice_glicemico": 47,
+    "fisiopatologia": "Vegetal com IG ~47 cozida (~16 crua). Rica em betacaroteno (precursor vitamina A), fibra solúvel e potássio. Impacto glicêmico baixo a moderado dependendo do preparo — cozimento aumenta digestibilidade do amido. Em porções normais (~1 cenoura média), a carga glicêmica permanece baixa (<5).",
+    "alerta": "Cenoura: IG baixo (~47 cozida, ~16 crua). Consumo livre em porções normais.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "cenoura",
+      "cenouras",
+      "carrot",
+      "carrots",
+      "cenoura cozida",
+      "cenoura crua",
+      "cenoura ralada",
+      "cenoura baby",
+      "carrot juice",
+      "suco de cenoura"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (vegetais como alimentos in natura — Grupo 1)"
+    ]
+  },
+  "limao_e_citricos": {
+    "classe": "fruta_citrica",
+    "risco": "BAIXO",
+    "indice_glicemico": 25,
+    "fisiopatologia": "Frutas cítricas (limão, laranja, tangerina, pomelo) com IG baixo (~25-45). Ricas em vitamina C, flavonoides (hesperidina, naringenina) e pectina. Suco/sumo tem IG maior que a fruta inteira por perda de fibra e concentração de açúcar. A pectina retarda absorção de glicose.",
+    "alerta": "Frutas cítricas: IG baixo (~25-45). Preferir fruta inteira ao suco para manter efeito da fibra.",
+    "nota_clinica": "Suco integral tem IG maior que a fruta. Frutas desidratadas cítricas têm alta concentração de açúcar — limitar porção.",
+    "sinonimos": [
+      "limao",
+      "limao",
+      "lemon",
+      "lime",
+      "laranja",
+      "orange",
+      "tangerina",
+      "tangerine",
+      "mandarina",
+      "mandarin",
+      "pomelo",
+      "grapefruit",
+      "bergamota",
+      "mexerica",
+      "citrico",
+      "citricos",
+      "citrico",
+      "citrus",
+      "limao siciliano",
+      "limao tahiti",
+      "raspas de limao",
+      "casca de limao",
+      "zest",
+      "suco de laranja"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (frutas como alimentos in natura — Grupo 1)"
+    ]
+  },
+  "frutas_vermelhas": {
+    "classe": "fruta",
+    "risco": "BAIXO",
+    "indice_glicemico": 40,
+    "fisiopatologia": "Frutas vermelhas/roxas (morango, mirtilo, framboesa, amora, cranberry) ricas em antocianinas e polifenóis. IG baixo (~25-53). Meta-análises mostram redução de marcadores inflamatórios e melhora de sensibilidade insulínica. Morango IG ~41; mirtilo ~53; framboesa ~32.",
+    "alerta": "Frutas vermelhas: IG baixo, ricas em antioxidantes. Boa opção para diabéticos em porções adequadas.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "morango",
+      "morangos",
+      "strawberry",
+      "strawberries",
+      "mirtilo",
+      "blueberry",
+      "blueberries",
+      "framboesa",
+      "raspberry",
+      "amora",
+      "blackberry",
+      "mulberry",
+      "cranberry",
+      "acai",
+      "acai",
+      "frutas vermelhas",
+      "red fruits",
+      "berries",
+      "groselha"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (frutas in natura — Grupo 1",
+      "preferir frutas a sucos)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — morango IG ~41, framboesa IG ~32, mirtilo IG ~53)"
+    ]
+  },
+  "banana": {
+    "classe": "fruta",
+    "risco": "MODERADO",
+    "indice_glicemico": 60,
+    "fisiopatologia": "IG variável: banana verde (~42) vs. banana madura (~65). A banana verde é rica em amido resistente (RS2) que se converte em amido digestível com o amadurecimento. Em diabéticos, preferir banana levemente madura; limitar porção a 1 unidade média (~100g).",
+    "alerta": "Banana: IG moderado (~60). Preferir levemente madura. Limitar a 1 unidade média por refeição.",
+    "nota_clinica": "IG varia pelo grau de maturação: verde (~42) → madura (~65). Banana madura em excesso pode elevar glicemia significativamente. Banana passa/seca: muito concentrada em açúcar.",
+    "sinonimos": [
+      "banana",
+      "bananas",
+      "banana nanica",
+      "banana prata",
+      "banana da terra",
+      "banana verde",
+      "banana madura",
+      "banana passa",
+      "banana chips",
+      "banana desidratada",
+      "dried banana",
+      "plantain",
+      "farinha de banana verde"
+    ],
+    "referencias": [
+      "Aller et al. (2011) Nutrients 3:341-369 DOI:10.3390/nu3030341 (banana verde: RS2 — raw banana, amido resistente",
+      "banana madura converte RS2 em RDS com pico glicêmico — Tabela 2)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — banana IG ~51-65 conforme maturação)"
+    ]
+  },
+  "maca_e_peras": {
+    "classe": "fruta",
+    "risco": "BAIXO",
+    "indice_glicemico": 38,
+    "fisiopatologia": "Frutas de caroço (maçã, pera) com IG baixo (~38-42). Ricas em pectina (fibra solúvel viscosa) que retarda absorção de glicose. Carga glicêmica baixa em porções de 1 fruta média. Suco concentrado tem IG maior.",
+    "alerta": "Maçã e pera: IG baixo (~38-42). Boas opções para diabéticos. Preferir fruta inteira ao suco.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "maca",
+      "maca",
+      "pera",
+      "apple",
+      "pear",
+      "maca verde",
+      "maca vermelha",
+      "maca gala",
+      "fuji",
+      "granny smith",
+      "red apple",
+      "green apple",
+      "pera williams",
+      "pera portuguesa",
+      "suco de maca"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (frutas in natura — Grupo 1",
+      "preferir fruta inteira ao suco — fibra e saciedade)",
+      "Atkinson FS et al. Diabetes Care 2008",
+      "31(12):2281-83 DOI:10.2337/dc08-1239 (International Tables of Glycemic Index and Glycemic Load Values 2008 — maçã IG ~38, pera IG ~38)"
+    ]
+  },
+  "vegetais_genericos": {
+    "classe": "vegetal_baixo_ig",
+    "risco": "BAIXO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Hortaliças e vegetais não-amiláceos. IG geralmente muito baixo (<20). Ricos em fibras, micronutrientes e compostos bioativos. Carga glicêmica de vegetais não-amiláceos é clinicamente desprezível. Incluem folhas, legumes (pepino, abobrinha, pimentão) e condimentos (alho, cebola) frequentemente listados em rótulos industriais de sopas, temperos e molhos.",
+    "alerta": "Vegetais não-amiláceos: IG muito baixo. Consumo livre. Essenciais na alimentação do diabético.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "vegetal",
+      "vegetais",
+      "hortalica",
+      "hortalicas",
+      "verdura",
+      "verduras",
+      "alho",
+      "cebola",
+      "pepino",
+      "abobrinha",
+      "pimentao",
+      "pimentao",
+      "beterraba",
+      "brocolis",
+      "brocolis",
+      "couve",
+      "repolho",
+      "alface",
+      "espinafre",
+      "acelga",
+      "rucula",
+      "rucula",
+      "berinjela",
+      "chuchu",
+      "quiabo",
+      "vagem",
+      "aspargo",
+      "salsao",
+      "salsao",
+      "salsa",
+      "coentro",
+      "manjericao",
+      "manjericao",
+      "ervas",
+      "garlic",
+      "onion",
+      "cucumber",
+      "zucchini",
+      "broccoli",
+      "cabbage",
+      "lettuce",
+      "spinach",
+      "oregano",
+      "oregano",
+      "oregao"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (Grupo 1: hortaliças in natura — consumo ilimitado)"
+    ]
+  },
+  "frutas_genericas": {
+    "classe": "fruta",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Termo genérico em rótulos de produtos industrializados ('polpa de frutas', 'preparado de frutas', 'mix de frutas'). Impacto glicêmico depende da fruta específica e do processamento. Frutas in natura têm IG baixo a moderado; frutas em calda ou processadas com açúcar têm IG elevado.",
+    "alerta": "'Frutas' em rótulo: verificar se é in natura, em calda ou com açúcar. O IG varia muito.",
+    "nota_clinica": "Frutas in natura: consumo livre. Frutas em calda: ALTO (açúcar adicionado). Frutas secas/desidratadas: alta concentração de carboidratos — limitar porção.",
+    "sinonimos": [
+      "frutas",
+      "fruta",
+      "fruits",
+      "fruit",
+      "polpa de fruta",
+      "polpa",
+      "preparado de fruta",
+      "mix de frutas",
+      "fruta desidratada",
+      "fruta seca",
+      "dried fruit",
+      "fruta em calda"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (Grupo 1: frutas in natura",
+      "Grupo 4: preparados com açúcar — ultraprocessado)"
+    ]
+  },
+  "lecitina_de_soja": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Fosfolipídio emulsificante extraído da soja. Sem impacto glicêmico. Contém traços de proteína de soja — relevante para alérgicos. Aprovado ANVISA como emulsificante (E322).",
+    "alerta": "Emulsificante sem impacto glicêmico. Atenção: contém traços de soja (alérgico potencial).",
+    "nota_clinica": "Atenção a alérgicos à soja.",
+    "sinonimos": [
+      "lecitina de soja",
+      "soy lecithin",
+      "lecithin",
+      "lecitina",
+      "e322",
+      "lecitina de girassol",
+      "sunflower lecithin"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "goma_xantana": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Polissacarídeo produzido por fermentação de Xanthomonas campestris. Espessante e estabilizante. Considerada fibra alimentar insolúvel. Sem impacto glicêmico. Pode ter leve efeito redutor de pico glicêmico por aumentar viscosidade do bolo alimentar.",
+    "alerta": "Goma espessante sem impacto glicêmico. Informativo.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "goma",
+      "goma xantana",
+      "xanthan gum",
+      "e415",
+      "goma guar",
+      "guar gum",
+      "e412",
+      "goma caraia",
+      "goma tara",
+      "locust bean gum"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "goma_arabica": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Fibra solúvel de acácia. Prebiótico com efeito bifidogênico. Sem impacto glicêmico direto. Usada como emulsificante e agente de corpo.",
+    "alerta": "Goma acácia sem impacto glicêmico. Tem efeito prebiótico leve.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "goma arabica",
+      "arabic gum",
+      "gum arabic",
+      "acacia",
+      "acacia",
+      "e414"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "carragena": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Polissacarídeo sulfatado extraído de algas vermelhas. Espessante e geleificante. Sem impacto glicêmico. Debates sobre inflamação intestinal em doses elevadas (baseados principalmente em estudos in vitro/animal) — literatura humana não confirma risco clínico relevante em doses de uso alimentar.",
+    "alerta": "Espessante de alga sem impacto glicêmico. Uso dentro das normas ANVISA é seguro.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "carragena",
+      "carrageen",
+      "carrageenan",
+      "e407",
+      "carragenato"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "acido_citrico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Ácido orgânico acidulante (E330). Presente naturalmente em frutas cítricas. Sem impacto glicêmico. Função tecnológica de conservação e ajuste de pH.",
+    "alerta": "Acidulante natural sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "acido citrico",
+      "acido citrico",
+      "citric acid",
+      "e330"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "acido_ascorbico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Vitamina C com função antioxidante (E300). Sem impacto glicêmico. Frequentemente adicionado como conservante de cor e antioxidante em produtos processados. A forma salificada (ascorbato de sódio, E301) tem a mesma função.",
+    "alerta": "Vitamina C / antioxidante. Sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "acido ascorbico",
+      "acido ascorbico",
+      "ascorbic acid",
+      "vitamina c",
+      "vitamin c",
+      "e300",
+      "ascorbato",
+      "ascorbato de sodio",
+      "ascorbato de calcio",
+      "sodium ascorbate",
+      "calcium ascorbate",
+      "e301",
+      "e302",
+      "eritorbato",
+      "eritorbato de sodio",
+      "erythorbate",
+      "sodium erythorbate",
+      "isoascorbato",
+      "e315",
+      "e316"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "tocoferol": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Vitamina E (E306-E309). Antioxidante lipossolúvel. Sem impacto glicêmico. Preserva óleos e gorduras contra ranço oxidativo.",
+    "alerta": "Vitamina E / antioxidante. Sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "tocoferol",
+      "tocopherol",
+      "vitamina e",
+      "vitamin e",
+      "e306",
+      "e307",
+      "e308",
+      "e309",
+      "alfa tocoferol",
+      "alpha tocopherol"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "sal": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Cloreto de sódio. Sem carboidratos, sem impacto glicêmico direto. Relevante para controle pressórico — hipertensão é comorbidade frequente no DM2. Limite OMS: <5g/dia.",
+    "alerta": "Sal sem impacto glicêmico. Atenção ao consumo total diário (hipertensão é comorbidade comum no DM).",
+    "nota_clinica": null,
+    "sinonimos": [
+      "sal",
+      "sodium chloride",
+      "cloreto de sodio",
+      "cloreto de sodio",
+      "salt",
+      "sal marinho",
+      "sea salt",
+      "sal iodado"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "bicarbonato_de_sodio": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Fermento químico (agente de crescimento). Sem impacto glicêmico. Contribui com sódio na dieta. Frequentemente listado como 'fermento químico' ou 'carbonato' em rótulos.",
+    "alerta": "Fermento/bicarbonato sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "bicarbonato de sodio",
+      "bicarbonato de sodio",
+      "sodium bicarbonate",
+      "baking soda",
+      "e500",
+      "fermento quimico",
+      "fermentos",
+      "carbonato",
+      "carbonato de sodio",
+      "carbonato de calcio",
+      "calcium carbonate",
+      "e170",
+      "e500ii",
+      "pirofosfato acido de sodio",
+      "pirofosfato"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "fosfato": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Sais de fosfato e sulfato usados como emulsificantes, acidulantes, conservantes e suplementos minerais. Sem impacto glicêmico direto. Consumo excessivo de fósforo pode ser relevante em DM com nefropatia diabética. Sulfatos (ferroso, de zinco, de cálcio) aparecem como fortifcantes minerais.",
+    "alerta": "Emulsificante/mineral sem impacto glicêmico. Em nefropatia diabética, monitorar fósforo total.",
+    "nota_clinica": "Em pacientes com nefropatia diabética, atenção ao fosfato total da dieta.",
+    "sinonimos": [
+      "fosfato",
+      "phosphate",
+      "fosfato de sodio",
+      "sodium phosphate",
+      "fosfato dissodico",
+      "disodium phosphate",
+      "polifosfato",
+      "e339",
+      "e340",
+      "e341",
+      "e450",
+      "e451",
+      "e452",
+      "difosfato",
+      "diphosphate",
+      "pirofosfato de sodio",
+      "sodium pyrophosphate",
+      "sulfato",
+      "sulfato ferroso",
+      "sulfato de ferro",
+      "sulfato de zinco",
+      "sulfato de calcio",
+      "sulfato de magnesio",
+      "ferrous sulfate",
+      "zinc sulfate",
+      "calcium sulfate",
+      "e516",
+      "e517",
+      "monocalcio"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aditivos cosméticos — emulsificantes, espessantes, acidulantes, antioxidantes sintéticos — são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "corante_artificial": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Corantes artificiais sintéticos (azóicos, trifenilmetano) sem impacto glicêmico. Marcadores NOVA Grupo 4. A tartrazina (E102) e amarelo crepúsculo (E110) foram associados a hiperatividade infantil em estudo RCT (McCann et al. Lancet 2007) — evidência suficiente para restrição pela EFSA em produtos destinados a crianças, mas sem relevância metabólica direta no DM.",
+    "alerta": "Corante artificial sem impacto glicêmico. Presente em ultraprocessados (marcador NOVA Grupo 4).",
+    "nota_clinica": null,
+    "sinonimos": [
+      "corante",
+      "corante artificial",
+      "corante sintetico",
+      "tartrazina",
+      "amarelo crepusculo",
+      "amarelo sunset",
+      "carmim",
+      "carmoisina",
+      "azul brilhante",
+      "vermelho 40",
+      "allura red",
+      "e102",
+      "e110",
+      "e120",
+      "e122",
+      "e129",
+      "e133",
+      "amarelo quinolina",
+      "e104",
+      "vermelho ponceau",
+      "e124"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: corantes artificiais são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "McCann D et al. Lancet 2007 DOI:10.1016/S0140-6736(07)61306-3 (tartrazina/E110 e hiperatividade infantil — base para restrição EFSA E102/E110)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "conservante": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Conservantes químicos (sorbatos, benzoatos, nitratos, propionatos) sem impacto glicêmico direto. Benzoato de sódio pode formar benzeno em presença de ácido ascórbico (reação de descarboxilação — quantidade residual em estudos). Nitritos em carnes processadas associados a maior risco DM2 em estudos observacionais (Micha et al. 2010) — provável confundimento por padrão alimentar geral.",
+    "alerta": "Conservante sem impacto glicêmico. Marcador de produto ultraprocessado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "conservante",
+      "sorbato de potassio",
+      "sorbato",
+      "benzoato de sodio",
+      "benzoato",
+      "nitrito de sodio",
+      "nitrito",
+      "nitrato",
+      "propionato de calcio",
+      "propionato",
+      "e200",
+      "e202",
+      "e210",
+      "e211",
+      "e250",
+      "e252",
+      "e282",
+      "e284",
+      "e285"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: conservantes são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "Micha R et al. Circulation 2010 DOI:10.1161/CIRCULATIONAHA.109.924977 (nitrito em carnes processadas e risco DM2/DCV)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "aromatizante": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Substâncias que conferem ou realçam aroma e sabor. Podem ser naturais (obtidas de fontes biológicas) ou artificiais (sintetizadas quimicamente). Sem carboidratos nem impacto glicêmico. Função exclusivamente organoléptica. Marcadores NOVA Grupo 4 quando presentes em ultraprocessados.",
+    "alerta": "Aromatizante sem impacto glicêmico. Presente em ultraprocessados (marcador NOVA Grupo 4).",
+    "nota_clinica": null,
+    "sinonimos": [
+      "aromatizante",
+      "aromas",
+      "aroma",
+      "aroma natural",
+      "aroma artificial",
+      "aroma identico ao natural",
+      "flavoring",
+      "flavour",
+      "natural flavor",
+      "artificial flavor",
+      "essencia",
+      "essencia"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: aromatizantes são marcadores de ultraprocessamento — p.39-40)",
+      "ANVISA RDC 2/2007 (lista de aromatizantes permitidos)"
+    ]
+  },
+  "antioxidante_sintetico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "BHA (E320) e BHT (E321) são antioxidantes fenólicos sintéticos que protegem gorduras e óleos do ranço oxidativo. Sem impacto glicêmico. BHA classificado como possível carcinógeno IARC Grupo 2B com base em estudos em roedores em doses maciças — sem evidência de risco em doses alimentares humanas. TBHQ (E319) tem perfil similar.",
+    "alerta": "Antioxidante sintético sem impacto glicêmico. Marcador de produto ultraprocessado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "antioxidante",
+      "antioxidantes",
+      "bha",
+      "bht",
+      "tbhq",
+      "hidroxianisol butilado",
+      "butylated hydroxyanisole",
+      "hidroxitolueno butilado",
+      "butylated hydroxytoluene",
+      "e320",
+      "e321",
+      "e319"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: antioxidantes sintéticos são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "IARC Monograph Vol 40 (BHA — Grupo 2B, doses maciças em roedores — sem evidência em doses alimentares)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "espessante_celulose": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Derivados de celulose (CMC, metilcelulose, HPMC) e outros polissacarídeos usados como espessantes, estabilizantes, gelificantes e agentes de corpo. Considerados fibras insolúveis. Sem impacto glicêmico.",
+    "alerta": "Espessante/estabilizante/gelificante sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "espessante",
+      "estabilizante",
+      "gelificante",
+      "agente gelificante",
+      "agente estabilizante",
+      "agente de corpo",
+      "agente espessante",
+      "thickener",
+      "stabilizer",
+      "gelling agent",
+      "carboximetilcelulose",
+      "cmc",
+      "e466",
+      "metilcelulose",
+      "e461",
+      "hidroxipropilmetilcelulose",
+      "hpmc",
+      "e464",
+      "hidroxipropilcelulose",
+      "e463",
+      "goma celulose",
+      "celulose microcristalina",
+      "e460"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: espessantes são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "emulsificante_generico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Termo genérico para aditivos com função emulsificante (fosfolipídios, monoglicerídeos, diglicerídeos, ésteres). Sem impacto glicêmico. Marcadores NOVA Grupo 4 quando em ultraprocessados. Inclui lecitinas (soja, girassol), mono e diglicerídeos de ácidos graxos (E471), ésteres de diacetiltartárico (DATEM, E472e).",
+    "alerta": "Emulsificante sem impacto glicêmico. Marcador de produto ultraprocessado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "emulsificante",
+      "agente emulsificante",
+      "emulsifier",
+      "mono e diglicerideos",
+      "monodiglicerideos",
+      "monoglicerideos",
+      "diglicerideos",
+      "datem",
+      "e471",
+      "e472e",
+      "e473",
+      "e474",
+      "e475",
+      "e476",
+      "e481",
+      "e482",
+      "polissorbato",
+      "polysorbate",
+      "tween",
+      "e432",
+      "e433",
+      "e434",
+      "e435",
+      "e436"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: emulsificantes são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "acidulante_generico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Termo genérico para substâncias que conferem acidez ou reduzem pH dos alimentos. Incluem ácidos orgânicos (cítrico, láctico, málico, tartárico, cítricos) e inorgânicos (fosfórico). Sais de citrato (citrato de sódio, citrato de cálcio) são usados como reguladores de acidez e sequestrantes. Sem impacto glicêmico direto. Marcadores NOVA Grupo 4 em ultraprocessados.",
+    "alerta": "Acidulante sem impacto glicêmico. Marcador de produto ultraprocessado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "acidulante",
+      "agente acidulante",
+      "alcalinizante",
+      "regulador de acidez",
+      "regulador",
+      "acidifier",
+      "acido lactico",
+      "acido lactico",
+      "lactic acid",
+      "e270",
+      "acido malico",
+      "acido malico",
+      "malic acid",
+      "e296",
+      "acido tartarico",
+      "acido tartarico",
+      "tartaric acid",
+      "e334",
+      "acido fosforico",
+      "acido fosforico",
+      "phosphoric acid",
+      "e338",
+      "citrato",
+      "citrato de sodio",
+      "citrato de calcio",
+      "citrato de potassio",
+      "sodium citrate",
+      "calcium citrate",
+      "trisodium citrate",
+      "e331",
+      "e332",
+      "e333",
+      "lactato",
+      "lactato de sodio",
+      "lactato de calcio",
+      "sodium lactate",
+      "calcium lactate",
+      "e325",
+      "e326",
+      "acetato",
+      "acetato de sodio",
+      "acetato de calcio",
+      "sodium acetate",
+      "calcium acetate",
+      "e262",
+      "e263"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: acidulantes são marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "fermento_biologico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Leveduras (Saccharomyces cerevisiae) e bactérias utilizadas como agentes de fermentação em pães, cervejas e produtos fermentados. Sem impacto glicêmico direto — o amido do produto final é que determina o IG. Fermentos biológicos são distintos do fermento químico (bicarbonato).",
+    "alerta": "Fermento biológico sem impacto glicêmico direto. O IG do produto depende de seus carboidratos.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "fermento",
+      "fermento biologico",
+      "fermento natural",
+      "levedura",
+      "yeast",
+      "saccharomyces cerevisiae",
+      "levedura seca",
+      "fermentos lacticos",
+      "fermentos lacteos",
+      "cultura latica",
+      "lactobacillus",
+      "bifidobacterium",
+      "fermentado",
+      "fermentos"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "cacau": {
+    "classe": "aditivo_informativo",
+    "risco": "MODERADO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Semente do Theobroma cacao processada como pó (alcalizado ou natural), massa ou manteiga. O pó de cacau puro (sem açúcar) tem IG ~25 e é rico em flavonoides (epicatequina) com efeito antioxidante e hipotensor. O impacto glicêmico é determinado pelo produto final: chocolate amargo >70% cacau → IG baixo (~20-25); chocolate ao leite → IG moderado (40-50); chocolates com açúcar → ALTO (ver sacarose). Em produtos industrializados, 'cacau' como ingrediente frequentemente coexiste com sacarose.",
+    "alerta": "Cacau puro tem baixo IG. O risco depende do produto: chocolate escuro (>70%) é moderado; chocolate ao leite ou com açúcar é ALTO.",
+    "nota_clinica": "Avaliar o produto completo. Cacau puro em pó sem açúcar é aceitável com moderação. 'Chocolate' em produto ultraprocessado exige checar açúcar como primeiro ingrediente.",
+    "sinonimos": [
+      "cacau",
+      "cacao",
+      "cocoa",
+      "chocolate",
+      "chocolate amargo",
+      "chocolate ao leite",
+      "chocolate em po",
+      "cacau em po",
+      "cacau alcalizado",
+      "dutch cocoa",
+      "cocoa powder",
+      "massa de cacau",
+      "liquor de cacau",
+      "manteiga de cacau",
+      "cocoa butter",
+      "nibs de cacau",
+      "cacao nibs",
+      "cobertura de chocolate",
+      "cobertura fracionada"
+    ],
+    "referencias": [
+      "Estruch R et al. NEJM 2013 DOI:10.1056/NEJMoa1200303 (PREDIMED: flavonoides do cacau — efeito cardiovascular positivo)",
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: chocolate ao leite/industrializado = ultraprocessado)"
+    ]
+  },
+  "vitaminas_b": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Vitaminas do complexo B adicionadas como fortifcantes nutricionais em produtos industrializados. Sem impacto glicêmico. Tiamina (B1), riboflavina (B2), niacina (B3), ácido fólico (B9), cobalamina (B12) e suas formas salificadas são listadas nos rótulos pelos nomes comuns ou números E.",
+    "alerta": "Vitaminas do complexo B sem impacto glicêmico. Presença indica produto fortifcado.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "vitaminas",
+      "vitaminas do complexo b",
+      "tiamina",
+      "thiamine",
+      "vitamina b1",
+      "riboflavina",
+      "riboflavin",
+      "vitamina b2",
+      "niacina",
+      "niacin",
+      "vitamina b3",
+      "acido folico",
+      "acido folico",
+      "folic acid",
+      "cobalamina",
+      "vitamin b12",
+      "vitamina b12",
+      "piridoxina",
+      "vitamina b6",
+      "mononitrato de tiamina",
+      "mononitrato",
+      "cloridrato de tiamina",
+      "cloridrato de piridoxina",
+      "cloridrato",
+      "palmitato de retinol",
+      "palmitato",
+      "retinol",
+      "vitamina a",
+      "vitamina d",
+      "vitamina d3",
+      "colecalciferol",
+      "vitamina k"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (p.39-40)",
+      "ANVISA RDC 269/2005 (ingestas diárias recomendadas de vitaminas)"
+    ]
+  },
+  "glutamato_monossodico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Sal de sódio do ácido glutâmico (E621). Realçador de sabor umami. Sem carboidratos, sem impacto glicêmico. Contribui para a carga de sódio da dieta — relevante em DM2 com hipertensão associada.",
+    "alerta": "Realçador de sabor sem impacto glicêmico. Atenção ao sódio total em hipertensos.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "glutamato",
+      "glutamato monossodico",
+      "glutamato monosodico",
+      "monosodium glutamate",
+      "msg",
+      "e621",
+      "glutamato de sodio",
+      "umami",
+      "inosinato",
+      "inosinate",
+      "guanilato",
+      "guanylate",
+      "e627",
+      "e631",
+      "e635"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: realçadores de sabor — marcadores de ultraprocessamento",
+      "p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "enzimas": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Enzimas de uso alimentar (amilases, lipases, proteases, lactases, transglutaminases) utilizadas como auxiliares tecnológicos na produção de pães, laticínios, cervejas e produtos processados. Geralmente não precisam ser declaradas como ingredientes por serem consideradas auxiliares tecnológicos inativos no produto final. Sem impacto glicêmico.",
+    "alerta": "Enzimas alimentares sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "enzimas",
+      "enzima",
+      "amilase",
+      "lipase",
+      "protease",
+      "lactase",
+      "transglutaminase",
+      "celulase",
+      "xilanase",
+      "food enzymes"
+    ],
+    "referencias": [
+      "ANVISA Lista de Aditivos Alimentares",
+      "Guia Alimentar para a População Brasileira, MS 2014 (p.39-40)"
+    ]
+  },
+  "gelatina": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Proteína derivada da hidrólise parcial do colágeno (pele, ossos e tecido conjuntivo animal). Sem carboidratos, sem impacto glicêmico. Usada como gelificante, espessante e agente de corpo em sobremesas, produtos cárneos e cápsulas farmacêuticas. Versão vegetal: ágar-ágar (alga).",
+    "alerta": "Gelatina (proteína animal) sem impacto glicêmico.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "gelatina",
+      "gelatin",
+      "gelatine",
+      "colageno hidrolisado",
+      "colageno hidrolisado",
+      "hydrolyzed collagen",
+      "collagen peptides",
+      "agar",
+      "agar agar",
+      "agar",
+      "e406"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (p.39-40)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "gluten": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Proteína de reserva de cereais (gliadina + glutenina no trigo; hordeína na cevada; secalina no centeio). Sem impacto glicêmico próprio — o impacto é do amido do cereal associado. Clinicamente relevante: declaração obrigatória como alérgeno (ANVISA RDC 26/2015) e contraindicado na doença celíaca (comorbidade com DM1 ~5-10% dos casos).",
+    "alerta": "Glúten: proteína do trigo/cevada/centeio. Sem impacto glicêmico próprio. Alérgeno de declaração obrigatória.",
+    "nota_clinica": "Pacientes com DM1 têm prevalência aumentada de doença celíaca (5-10%). Produtos 'sem glúten' não são automaticamente de baixo IG.",
+    "sinonimos": [
+      "gluten",
+      "gluten",
+      "gluten de trigo",
+      "wheat gluten",
+      "vital wheat gluten",
+      "proteina de trigo",
+      "proteina de trigo",
+      "sem gluten",
+      "sem gluten",
+      "gluten free"
+    ],
+    "referencias": [
+      "ANVISA RDC 26/2015 (glúten como alérgeno de declaração obrigatória)",
+      "Guia Alimentar para a População Brasileira, MS 2014"
+    ]
+  },
+  "alfarroba": {
+    "classe": "aditivo_informativo",
+    "risco": "MODERADO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Fruto do alfarrobeiro (Ceratonia siliqua) processado como pó ou extrato. Substituto do cacau sem cafeína nem teobromina. IG ~30-40 (com açúcar adicionado pode ser maior — avaliar produto). Rico em fibra (40%), galactomananas e compostos polifenólicos. Sem glúten. Amplamente usado como substituto de cacau em produtos para crianças e alérgicos.",
+    "alerta": "Alfarroba: substituto do cacau com IG moderado quando puro. Avaliar açúcar adicionado no produto final.",
+    "nota_clinica": "Produtos de alfarroba frequentemente adicionam açúcar — verificar lista de ingredientes completa.",
+    "sinonimos": [
+      "alfarroba",
+      "carob",
+      "farinha de alfarroba",
+      "carob flour",
+      "carob powder",
+      "alfarroba em po",
+      "alfarrobeira",
+      "carob chips",
+      "carob nibs"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: substitutos de cacau em ultraprocessados)",
+      "ANVISA Lista de Aditivos Alimentares"
+    ]
+  },
+  "vinagre": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Produto da fermentação acética de álcool etílico (vinho, maçã, arroz, cana). Contém ácido acético (4-8%), sem carboidratos. Evidências de nível moderado mostram que o ácido acético reduz o pico glicêmico pós-prandial (~20-35%) quando consumido junto à refeição — mecanismo: retardo do esvaziamento gástrico e inibição parcial de dissacaridases intestinais. Sem calorias relevantes. Amplamente listado em molhos, conservas e temperos industriais.",
+    "alerta": "Vinagre: sem impacto glicêmico próprio. Ácido acético pode reduzir pico glicêmico quando consumido junto à refeição.",
+    "nota_clinica": "Efeito glicêmico do vinagre é modesto e dose-dependente (~15-30 mL). Não substitui medicação. Aplicável como tempero habitual.",
+    "sinonimos": [
+      "vinagre",
+      "vinagre de vinho",
+      "vinagre de maca",
+      "vinagre de arroz",
+      "vinagre de cana",
+      "vinagre de alcool",
+      "apple cider vinegar",
+      "acv",
+      "aceto",
+      "wine vinegar",
+      "rice vinegar",
+      "balsamic vinegar",
+      "vinagre balsamico",
+      "vinagre balsamico",
+      "acido acetico",
+      "acido acetico",
+      "acetic acid"
+    ],
+    "referencias": [
+      "Johnston CS & Gaas CA. Medscape General Medicine 2006",
+      "8(1):61 (vinegar: acetic acid mechanisms — retardo esvaziamento gástrico, ↓atividade dissacaridases intestinais, ↓pico glicêmico pós-prandial)"
+    ]
+  },
+  "condimento_generico": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Termos genéricos para especiarias, temperos e condimentos usados para conferir sabor. A maioria não contém carboidratos em quantidades relevantes na dose habitual de uso. Impacto glicêmico clinicamente desprezível. Em misturas de temperos industriais, atenção ao sódio e ao glutamato adicionados.",
+    "alerta": "Especiarias e condimentos: sem impacto glicêmico em doses normais. Atenção ao sódio em misturas industriais.",
+    "nota_clinica": null,
+    "sinonimos": [
+      "tempero",
+      "temperos",
+      "condimento",
+      "condimentos",
+      "spice",
+      "spices",
+      "seasoning",
+      "seasonings",
+      "especiaria",
+      "especiarias",
+      "paprica",
+      "paprica",
+      "paprika",
+      "cominho",
+      "cumin",
+      "canela",
+      "cinnamon",
+      "noz moscada",
+      "nutmeg",
+      "cravo",
+      "clove",
+      "louro",
+      "bay leaf",
+      "mostarda",
+      "mustard",
+      "molho de mostarda",
+      "pimenta",
+      "pimenta do reino",
+      "black pepper",
+      "pimenta vermelha",
+      "red pepper",
+      "cayenne",
+      "curry",
+      "coentro",
+      "cilantro",
+      "gengibre",
+      "ginger",
+      "ervas aromaticas",
+      "oregano",
+      "manjericao",
+      "alecrim",
+      "rosemary",
+      "tomilho",
+      "thyme",
+      "alho em po",
+      "cebola em po",
+      "garlic powder",
+      "onion powder"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (especiarias — Grupo 1 quando naturais",
+      "Grupo 4 quando em misturas ultraprocessadas com aditivos)"
+    ]
+  },
+  "curcuma": {
+    "classe": "aditivo_informativo",
+    "risco": "INFORMATIVO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Rizoma do Curcuma longa. Curcumina é o principal composto bioativo — potente anti-inflamatório e antioxidante. Estudos in vitro e em modelos animais mostram efeito hipoglicemiante; meta-análises de RCTs humanos mostram redução modesta de glicemia em jejum e HbA1c em DM2, porém biodisponibilidade da curcumina é baixa sem piperina/lipídios. Sem carboidratos relevantes na dose de condimento.",
+    "alerta": "Cúrcuma/açafrão-da-terra: sem impacto glicêmico. Efeito anti-inflamatório com evidência crescente. Pode ser usada livremente como condimento.",
+    "nota_clinica": "Dose de condimento (<1-2g/dia) tem benefício modesto. Suplementos concentrados de curcumina têm maior efeito mas requerem avaliação médica.",
+    "sinonimos": [
+      "curcuma",
+      "curcuma",
+      "curcumin",
+      "curcumina",
+      "acafrao da terra",
+      "acafrao da terra",
+      "turmeric",
+      "golden milk",
+      "leite dourado",
+      "curcuma em po"
+    ],
+    "referencias": [
+      "Hewlings SJ & Kalman DS. Foods 2017 DOI:10.3390/foods6100092 (curcumina: anti-inflamatório, efeito modesto em glicemia — revisão)",
+      "Guia Alimentar para a Population Brasileira, MS 2014 (especiarias — Grupo 1)"
+    ]
+  },
+  "edulcorante_generico": {
+    "classe": "edulcorante_artificial",
+    "risco": "BAIXO",
+    "indice_glicemico": null,
+    "fisiopatologia": "Termo genérico para substâncias com sabor doce que não elevam ou elevam minimamente a glicemia. Inclui edulcorantes artificiais (aspartame E951, acessulfame-K E950, sacarina E954, ciclamato E952, sucralose E955, neotame E961, advantame E969) e naturais (estévia E960, taumatina E957, monelina). Edulcorantes polióis (xilitol, eritritol, sorbitol, maltitol) são cobertos em categoria separada (poliois). Revisão IARC 2023 classificou aspartame como 'possível carcinógeno' Grupo 2B (evidência insuficiente) — JECFA manteve IDA inalterada; recomendação OMS 2023 desencoraja uso habitual para controle de peso a longo prazo, mas sem contraindicação absoluta para DM.",
+    "alerta": "Edulcorante sem impacto glicêmico significativo. OMS 2023 desencoraja uso habitual para controle de peso, mas não contraindica para DM.",
+    "nota_clinica": "Distinguir edulcorantes puros (baixo IG) de produtos 'diet/light' que podem conter outros carboidratos (maltodextrina, amido) — verificar tabela nutricional.",
+    "sinonimos": [
+      "edulcorante",
+      "edulcorantes",
+      "adocante",
+      "adocante",
+      "sweetener",
+      "edulcorante artificial",
+      "edulcorante natural",
+      "aspartame",
+      "aspartamo",
+      "e951",
+      "acessulfame",
+      "acessulfame de potassio",
+      "acesulfame k",
+      "e950",
+      "sacarina",
+      "saccharin",
+      "e954",
+      "ciclamato",
+      "cyclamate",
+      "e952",
+      "sucralose",
+      "e955",
+      "neotame",
+      "e961",
+      "stevia",
+      "estevia",
+      "steviol",
+      "steviosideo",
+      "rebaudioside",
+      "e960",
+      "taumatina",
+      "thaumatin",
+      "e957",
+      "adocante artificial",
+      "adocante natural"
+    ],
+    "referencias": [
+      "Guia Alimentar para a População Brasileira, MS 2014 (NOVA Grupo 4: edulcorantes artificiais — marcadores de ultraprocessamento)",
+      "IARC Monograph Vol 135 (aspartame — Grupo 2B, 2023: evidência insuficiente)",
+      "JECFA 2023 (IDA aspartame mantida: 40 mg/kg/dia)",
+      "OMS 2023 Guideline on Non-sugar Sweeteners (evidência insuficiente de benefício a longo prazo para peso)"
+    ]
+  }
+}

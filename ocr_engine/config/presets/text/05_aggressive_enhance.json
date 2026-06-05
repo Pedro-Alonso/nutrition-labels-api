@@ -1,0 +1,29 @@
+{
+  "name": "aggressive_enhance",
+  "description": "Fallback para texto corrido de baixa qualidade: bilateral filter, unsharp mask, CLAHE forte, adaptive threshold pequeno. Último recurso antes de desistir.",
+  "kind": "linear_text",
+  "priority": 90,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h800", "max_height": 800},
+    {"op": "resize_min_height", "name": "resize_min_h500", "min_height": 500},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "bilateral_filter", "name": "bilateral_filter", "diameter": 7, "sigma_color": 60.0, "sigma_space": 60.0},
+    {"op": "unsharp_mask", "name": "unsharp_mask", "kernel_size": 5, "amount": 1.2},
+    {"op": "clahe", "name": "clahe_strong", "clip_limit": 3.5, "tile_grid_size": [6, 6]},
+    {"op": "adaptive_threshold", "name": "adaptive_small_block", "block_size": 25, "c": 12},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "morph_close", "name": "morph_close", "kernel_size": 2, "iterations": 1},
+    {"op": "thin_text_if_thick", "name": "thin_text_if_thick"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 55,
+    "min_text_length": 50,
+    "min_keyword_hits": 2
+  }
+}

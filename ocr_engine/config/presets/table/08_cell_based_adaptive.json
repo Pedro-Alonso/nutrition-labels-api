@@ -1,0 +1,34 @@
+{
+  "name": "cell_based_adaptive",
+  "description": "Variante do processamento por células com adaptive threshold na preparação. Usar quando o Otsu perde texto por iluminação irregular mas as linhas da grade ainda são detectáveis.",
+  "kind": "cell_based",
+  "priority": 80,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h800", "max_height": 800},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.5, "tile_grid_size": [8, 8]},
+    {"op": "gaussian_blur", "name": "gaussian_blur", "kernel_size": 3},
+    {"op": "adaptive_threshold", "name": "adaptive_threshold", "block_size": 35, "c": 12},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 7,
+    "oem": 3,
+    "dual_pass_polarity": false
+  },
+  "cell_detection": {
+    "horizontal_divisor": 15,
+    "vertical_divisor": 15,
+    "min_cell_area_ratio": 0.002,
+    "max_cell_area_ratio": 0.45,
+    "cell_ocr_psm": 7,
+    "header_region_ratio": 0.25,
+    "vd_column_psm": 7
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 55,
+    "min_text_length": 30,
+    "min_keyword_hits": 2
+  }
+}

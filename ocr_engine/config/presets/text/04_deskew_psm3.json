@@ -1,0 +1,26 @@
+{
+  "name": "deskew_psm3",
+  "description": "Texto corrido possivelmente torto: deskew + adaptive threshold + PSM 3 (segmentação totalmente automática). Uso quando PSM 6/4 falham em encontrar a orientação do texto.",
+  "kind": "linear_text",
+  "priority": 40,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h700", "max_height": 700},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "gaussian_blur", "name": "gaussian_blur", "kernel_size": 3},
+    {"op": "adaptive_threshold", "name": "adaptive_threshold", "block_size": 41, "c": 14},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "deskew", "name": "deskew", "max_abs_angle": 10.0}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 3,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 60,
+    "min_text_length": 60,
+    "min_keyword_hits": 3
+  }
+}

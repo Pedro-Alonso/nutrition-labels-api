@@ -1,0 +1,28 @@
+{
+  "name": "deskew_adaptive",
+  "description": "Corrige pequenos ângulos de inclinação antes da binarização. Usar quando fotografia foi tirada levemente torta.",
+  "kind": "linear_table",
+  "priority": 60,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h600", "max_height": 600},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "gaussian_blur", "name": "gaussian_blur", "kernel_size": 3},
+    {"op": "adaptive_threshold", "name": "adaptive_threshold", "block_size": 41, "c": 14},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "deskew", "name": "deskew", "max_abs_angle": 10.0},
+    {"op": "remove_grid_lines", "name": "remove_grid_lines", "horizontal_divisor": 20, "vertical_divisor": 20},
+    {"op": "median_blur", "name": "post_median_blur", "kernel_size": 3}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 65,
+    "min_text_length": 40,
+    "min_keyword_hits": 3
+  }
+}

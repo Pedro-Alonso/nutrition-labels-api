@@ -1,0 +1,33 @@
+{
+  "name": "highres_clahe_psm4",
+  "description": "Alta resolução (700 px) com CLAHE agressivo e PSM 4 (coluna única). Para tabelas com baixo contraste, colunas estreitas ou JPEG comprimido.",
+  "kind": "linear_table",
+  "priority": 90,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h700", "max_height": 700},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe_aggressive", "clip_limit": 4.0, "tile_grid_size": [8, 8]},
+    {"op": "median_blur", "name": "median_blur", "kernel_size": 3},
+    {"op": "otsu_threshold", "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 4,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 60,
+    "min_text_length": 40,
+    "min_keyword_hits": 3,
+    "expected_keywords": [
+      "valor energetico",
+      "carboidratos",
+      "proteinas",
+      "gorduras totais",
+      "gorduras saturadas",
+      "sodio"
+    ]
+  }
+}

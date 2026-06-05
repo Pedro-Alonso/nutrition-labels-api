@@ -1,0 +1,26 @@
+{
+  "name": "adaptive_psm4",
+  "description": "Texto em colunas ou com quebras estruturadas: adaptive threshold + PSM 4 (coluna única de texto de tamanhos variados).",
+  "kind": "linear_text",
+  "priority": 30,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h700", "max_height": 700},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "gaussian_blur", "name": "gaussian_blur", "kernel_size": 3},
+    {"op": "adaptive_threshold", "name": "adaptive_threshold", "block_size": 41, "c": 14},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "thin_text_if_thick", "name": "thin_text_if_thick"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 4,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 62,
+    "min_text_length": 60,
+    "min_keyword_hits": 3
+  }
+}

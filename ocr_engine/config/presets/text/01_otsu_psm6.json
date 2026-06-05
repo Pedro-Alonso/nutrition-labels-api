@@ -1,0 +1,25 @@
+{
+  "name": "otsu_psm6",
+  "description": "Texto corrido: CLAHE leve, median blur, Otsu e PSM 6 (bloco único de texto).",
+  "kind": "linear_text",
+  "priority": 10,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h600", "max_height": 600},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "median_blur", "name": "median_blur", "kernel_size": 3},
+    {"op": "otsu_threshold", "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 65,
+    "min_text_length": 60,
+    "min_keyword_hits": 3
+  }
+}

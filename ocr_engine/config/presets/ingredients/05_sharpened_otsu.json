@@ -1,0 +1,26 @@
+{
+  "name": "ingredient_sharpened_otsu",
+  "description": "Aplica Unsharp Mask para realçar o contraste das letras antes da binarização. Indicado para rótulos com impressão de baixa qualidade ou borrada.",
+  "kind": "linear_ingredient",
+  "priority": 50,
+  "steps": [
+    {"op": "resize_max_height",          "name": "resize_max_h900",   "max_height": 900},
+    {"op": "grayscale",                  "name": "grayscale"},
+    {"op": "unsharp_mask",              "name": "unsharp_mask",      "kernel_size": 5, "amount": 2.0},
+    {"op": "otsu_threshold",             "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 4,
+    "oem": 3,
+    "extra_config": "",
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 45,
+    "min_text_length": 20,
+    "min_keyword_hits": 1,
+    "expected_keywords": ["ingredientes", "contem", "acucar", "sal", "farinha", "oleo", "gordura", "amido"]
+  }
+}

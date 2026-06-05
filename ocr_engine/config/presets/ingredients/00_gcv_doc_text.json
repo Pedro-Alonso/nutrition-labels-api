@@ -1,0 +1,32 @@
+{
+  "name": "gcv_doc_text_ingredients",
+  "description": "Google Cloud Vision API com DOCUMENT_TEXT_DETECTION para listas de ingredientes. Pula o pipeline local de PDI (steps=[]) e envia a imagem (pós-ROI) diretamente à API. Roda primeiro na cascata por priority=5; cede para presets Tesseract se a chamada falhar (skip mode) ou se o texto não atingir os limiares de qualidade. O texto bruto vencedor é encaminhado ao IngredientAnalyzer (ontologia DM).",
+  "kind": "cloud_vision",
+  "priority": 5,
+  "steps": [],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3
+  },
+  "gcv": {
+    "feature": "DOCUMENT_TEXT_DETECTION",
+    "language_hints": ["pt"],
+    "model": null
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 65,
+    "min_text_length": 20,
+    "min_keyword_hits": 1,
+    "expected_keywords": [
+      "ingredientes",
+      "contem",
+      "acucar",
+      "sal",
+      "farinha",
+      "oleo",
+      "gordura",
+      "amido"
+    ]
+  }
+}

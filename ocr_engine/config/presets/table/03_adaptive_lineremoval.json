@@ -1,0 +1,28 @@
+{
+  "name": "adaptive_lineremoval",
+  "description": "Adaptive threshold seguido de remoção morfológica das linhas da tabela. Útil quando o OCR confunde linhas com caracteres.",
+  "kind": "linear_table",
+  "priority": 30,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h600", "max_height": 600},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "gaussian_blur", "name": "gaussian_blur", "kernel_size": 3},
+    {"op": "adaptive_threshold", "name": "adaptive_threshold", "block_size": 41, "c": 14},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "remove_grid_lines", "name": "remove_grid_lines", "horizontal_divisor": 20, "vertical_divisor": 20, "min_line_area_ratio": 0.004},
+    {"op": "median_blur", "name": "post_median_blur", "kernel_size": 3},
+    {"op": "thin_text_if_thick", "name": "thin_text_if_thick"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 70,
+    "min_text_length": 50,
+    "min_keyword_hits": 3
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "cell_based_otsu",
+  "description": "Processamento baseado em células: detecta cada caixinha da tabela via morfologia e passa célula por célula pelo OCR. Indicado para iluminação muito irregular, onde OCR da imagem inteira degrada.",
+  "kind": "cell_based",
+  "priority": 70,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h800", "max_height": 800},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe", "clip_limit": 2.0, "tile_grid_size": [8, 8]},
+    {"op": "median_blur", "name": "median_blur", "kernel_size": 3},
+    {"op": "otsu_threshold", "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 7,
+    "oem": 3,
+    "dual_pass_polarity": false
+  },
+  "cell_detection": {
+    "horizontal_divisor": 15,
+    "vertical_divisor": 15,
+    "min_cell_area_ratio": 0.002,
+    "max_cell_area_ratio": 0.45,
+    "cell_ocr_psm": 7,
+    "header_region_ratio": 0.25,
+    "vd_column_psm": 7
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 55,
+    "min_text_length": 30,
+    "min_keyword_hits": 2
+  }
+}

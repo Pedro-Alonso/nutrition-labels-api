@@ -1,0 +1,26 @@
+{
+  "name": "ingredient_bilateral_adaptive",
+  "description": "Filtro bilateral para remover ruído de fundo mantendo bordas, seguido de threshold adaptativo com janela grande para evitar granulação em embalagens plásticas com sombras.",
+  "kind": "linear_ingredient",
+  "priority": 40,
+  "steps": [
+    {"op": "resize_max_height",          "name": "resize_max_h900",   "max_height": 900},
+    {"op": "grayscale",                  "name": "grayscale"},
+    {"op": "bilateral_filter",           "name": "bilateral",         "diameter": 9, "sigma_color": 75, "sigma_space": 75},
+    {"op": "adaptive_threshold",         "name": "adaptive_threshold","block_size": 51, "c": 15},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "extra_config": "",
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 45,
+    "min_text_length": 20,
+    "min_keyword_hits": 1,
+    "expected_keywords": ["ingredientes", "contem", "acucar", "sal", "farinha", "oleo", "gordura", "amido"]
+  }
+}

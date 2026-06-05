@@ -1,0 +1,33 @@
+{
+  "name": "bilateral_sharpen_otsu",
+  "description": "Filtro bilateral (edge-preserving) + unsharp mask antes da binarização. Para labels com fundo gradiente, textura ou texto desfocado.",
+  "kind": "linear_table",
+  "priority": 100,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h500", "max_height": 500},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "bilateral_filter", "name": "bilateral", "diameter": 9, "sigma_color": 75, "sigma_space": 75},
+    {"op": "unsharp_mask", "name": "unsharp", "kernel_size": 3, "amount": 1.5},
+    {"op": "otsu_threshold", "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 60,
+    "min_text_length": 40,
+    "min_keyword_hits": 3,
+    "expected_keywords": [
+      "valor energetico",
+      "carboidratos",
+      "proteinas",
+      "gorduras totais",
+      "gorduras saturadas",
+      "sodio"
+    ]
+  }
+}

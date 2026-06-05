@@ -1,0 +1,23 @@
+{
+  "default_category_override": null,
+  "default_roi_enabled": true,
+  "default_stop_on_first_pass": true,
+  "default_postprocess": true,
+  "roi": {
+    "prototxt_path": null,
+    "weights_path": null,
+    "pb_path": null,
+    "pbtxt_path": null,
+    "confidence_threshold": 0.2,
+    "target_class_names": ["diningtable", "tvmonitor", "bottle", "tabela_nutricional"],
+    "use_contour_fallback": true
+  },
+  "gcv": {
+    "credentials_path": null,
+    "on_failure": "skip",
+    "cache_enabled": true,
+    "cache_dir": "/tmp/.gcv_cache",
+    "max_requests_per_minute": null,
+    "request_timeout_seconds": 30
+  }
+}

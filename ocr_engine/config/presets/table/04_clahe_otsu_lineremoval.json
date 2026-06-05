@@ -1,0 +1,27 @@
+{
+  "name": "clahe_otsu_lineremoval",
+  "description": "Híbrido: CLAHE forte + Otsu + remoção de linhas. Tenta combinar robustez de contraste com polaridade limpa.",
+  "kind": "linear_table",
+  "priority": 40,
+  "steps": [
+    {"op": "resize_max_height", "name": "resize_max_h600", "max_height": 600},
+    {"op": "grayscale", "name": "grayscale"},
+    {"op": "clahe", "name": "clahe_strong", "clip_limit": 3.0, "tile_grid_size": [8, 8]},
+    {"op": "median_blur", "name": "median_blur", "kernel_size": 3},
+    {"op": "otsu_threshold", "name": "otsu_threshold"},
+    {"op": "ensure_black_text_on_white", "name": "ensure_polarity"},
+    {"op": "remove_grid_lines", "name": "remove_grid_lines", "horizontal_divisor": 18, "vertical_divisor": 18},
+    {"op": "thin_text_if_thick", "name": "thin_text_if_thick"}
+  ],
+  "ocr": {
+    "lang": "por",
+    "psm": 6,
+    "oem": 3,
+    "dual_pass_polarity": true
+  },
+  "quality_thresholds": {
+    "min_mean_confidence": 65,
+    "min_text_length": 40,
+    "min_keyword_hits": 3
+  }
+}
