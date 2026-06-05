@@ -7,7 +7,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.analysis.router import router as analysis_router
+from app.auth.router import router as auth_router
 from app.core.config import get_settings
+from app.users.router import router as users_router
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +38,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 app.include_router(analysis_router, prefix="/api/v1", tags=["analysis"])
 
 

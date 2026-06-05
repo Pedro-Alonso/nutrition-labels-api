@@ -2,24 +2,28 @@ from __future__ import annotations
 
 import asyncio
 import os
+import sys
 from logging.config import fileConfig
+from pathlib import Path
 
 from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
+
+# Garante que o pacote app/ seja importável a partir da raiz do projeto
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Importar Base com todos os models registrados
-# (descomentado na Fase 3 quando os models existirem)
-# from app.core.database import Base
-# from app.users.models import User  # noqa: F401
-# from app.analysis.models import Scan  # noqa: F401
-# target_metadata = Base.metadata
-target_metadata = None
+# Importar Base e todos os models para autogenerate funcionar
+from app.core.database import Base  # noqa: E402
+from app.users.models import User  # noqa: E402, F401
+from app.analysis.models import Scan  # noqa: E402, F401
+
+target_metadata = Base.metadata
 
 DATABASE_URL = os.getenv("DATABASE_URL", config.get_main_option("sqlalchemy.url"))
 config.set_main_option("sqlalchemy.url", DATABASE_URL)

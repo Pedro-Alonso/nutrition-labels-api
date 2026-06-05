@@ -1,10 +1,17 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
+import uuid
+from datetime import datetime, timezone
 
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.analysis.models import Scan
 from app.analysis.schemas import AnalyzeResponse
 from app.analysis.service import AnalysisService
 from app.core.config import get_settings
+from app.core.database import get_db
+from app.core.dependencies import get_current_user_id
 
 router = APIRouter()
 
@@ -31,6 +38,8 @@ async def analyze_label(
     roi_enabled: bool = Form(True),
     stop_on_first_pass: bool = Form(True),
     postprocess: bool = Form(True),
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
 ):
     """Analisa uma foto de rótulo alimentício e retorna informação nutricional estruturada."""
     settings = get_settings()
@@ -66,6 +75,26 @@ async def analyze_label(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(exc),
         )
+
+    scan_id = str(uuid.uuid4())
+    result["scan_id"] = scan_id
+
+    ingredient_analysis = result.get("ingredient_analysis")
+    risco_global = ingredient_analysis.get("risco_global") if ingredient_analysis else None
+
+    scan = Scan(
+        id=scan_id,
+        user_id=user_id,
+        image_hash=result.get("image_hash", ""),
+        detected_format=result.get("detected_format", {}).get("category"),
+        winning_preset=result.get("winning_preset"),
+        passed=result.get("passed", False),
+        risco_global=risco_global,
+        result_json=result,
+        created_at=datetime.now(timezone.utc),
+    )
+    db.add(scan)
+    await db.commit()
 
     return result
 
