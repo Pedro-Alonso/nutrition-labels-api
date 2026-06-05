@@ -52,3 +52,18 @@ EXPOSE 8000
 # Um worker: NutritionReader é singleton em memória.
 # Para escalar, prefira múltiplos containers (horizontal).
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+
+# ─────────────────────────────────────────────
+# Stage de teste (docker-compose.test.yml)
+# ─────────────────────────────────────────────
+FROM base AS test
+
+USER root
+
+COPY requirements-dev.txt .
+RUN pip install --no-cache-dir -r requirements-dev.txt
+
+COPY tests/ ./tests/
+COPY pytest.ini .
+
+USER appuser
