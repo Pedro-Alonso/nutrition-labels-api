@@ -1,0 +1,57 @@
+# Ambiente virtual Python
+.venv/
+venv/
+env/
+ENV/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyc
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Variáveis de ambiente (nunca commitar)
+.env
+*.env.local
+.env.*
+!.env.example
+
+# Credenciais Google Cloud Vision (nunca na imagem)
+secrets/
+*.json
+!ocr_engine/config/*.json
+!ocr_engine/config/presets/**/*.json
+
+# IDE e editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker
+*.tar
+
+# Logs
+*.log
+logs/
+
+# Alembic (gerado automaticamente)
+# alembic/versions/ é commitado (migrations versionadas)
+
+# Coverage
+.coverage
+htmlcov/
