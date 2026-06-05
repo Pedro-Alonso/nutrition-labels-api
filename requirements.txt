@@ -1,0 +1,27 @@
+# === Motor OCR (herdado do monolito) ===
+Pillow
+pytesseract
+opencv-python
+numpy<2.0.0
+google-cloud-vision>=3.4,<4
+
+# TensorFlow: OMITIDO na primeira versão (modelo SSD não treinado para tabelas nutricionais)
+# Fallback por contornos cobre o uso atual. Adicionar quando modelo for re-treinado.
+# tensorflow
+
+# === Framework web ===
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+
+# === Configuração via env vars ===
+pydantic-settings>=2.2
+
+# === Banco de dados ===
+sqlalchemy>=2.0
+asyncpg>=0.29
+alembic>=1.13
+
+# === Autenticação ===
+passlib[bcrypt]>=1.7
+python-jose[cryptography]>=3.3

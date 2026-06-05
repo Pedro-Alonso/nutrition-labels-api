@@ -1,0 +1,32 @@
+# Ambiente virtual Python
+.venv/
+venv/
+env/
+
+# Cache e artefatos de desenvolvimento
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+dist/
+build/
+
+# Testes (não necessários na imagem de produção)
+tests/
+
+# Arquivos de desenvolvimento e IDE
+.env
+*.env.local
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Credenciais (gerenciadas via volume ou secret manager)
+secrets/
+
+# README e docs
+README.md
+docs/
