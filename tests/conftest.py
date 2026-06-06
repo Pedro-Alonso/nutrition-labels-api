@@ -11,6 +11,9 @@ Estratégia de isolamento de banco:
 """
 from __future__ import annotations
 
+import uuid
+from datetime import datetime, timezone
+
 import ocr_engine  # noqa: F401 — garante que ocr_engine/ entre em sys.path
 
 import pytest
@@ -20,6 +23,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
 
+from app.analysis.models import Scan
 from app.core.config import get_settings
 from app.core.database import get_db
 from app.main import app
@@ -130,3 +134,70 @@ async def auth_token(client: AsyncClient, test_user: dict) -> str:
     )
     assert resp.status_code == 200, f"Falha ao fazer login: {resp.text}"
     return resp.json()["access_token"]
+
+
+@pytest_asyncio.fixture
+async def test_user_2(client: AsyncClient) -> dict:
+    """Segundo usuário de teste para verificar isolamento entre usuários."""
+    resp = await client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": "other@example.com",
+            "password": "outrosenha12345",
+            "display_name": "Other User",
+        },
+    )
+    assert resp.status_code == 201, f"Falha ao criar segundo usuário: {resp.text}"
+    return {"email": "other@example.com", "password": "outrosenha12345"}
+
+
+@pytest_asyncio.fixture
+async def auth_token_2(client: AsyncClient, test_user_2: dict) -> str:
+    """JWT access token do segundo usuário de teste."""
+    resp = await client.post(
+        "/api/v1/auth/login",
+        json={"email": test_user_2["email"], "password": test_user_2["password"]},
+    )
+    assert resp.status_code == 200, f"Falha ao fazer login do segundo usuário: {resp.text}"
+    return resp.json()["access_token"]
+
+
+# ---------------------------------------------------------------------------
+# Helper para inserir scans diretamente no banco (sem OCR)
+# ---------------------------------------------------------------------------
+
+async def _insert_scans(
+    db: AsyncSession,
+    user_id: str,
+    count: int,
+    image_hash_prefix: str = "",
+) -> list[Scan]:
+    """Insere `count` scans para `user_id` diretamente via ORM, sem OCR."""
+    scans: list[Scan] = []
+    for i in range(count):
+        scan = Scan(
+            id=str(uuid.uuid4()),
+            user_id=user_id,
+            image_hash=f"{image_hash_prefix}{i:064d}",
+            detected_format="table",
+            winning_preset="preset_test",
+            passed=True,
+            risco_global=None,
+            result_json={
+                "scan_id": str(uuid.uuid4()),
+                "cache_hit": False,
+                "detected_format": {"category": "table", "score": 0.9, "grid_density": 0.02, "reasoning": "test"},
+                "winning_preset": "preset_test",
+                "winning_attempt_index": 1,
+                "passed": True,
+                "final_ocr_text": f"scan {i}",
+                "final_postprocessed_text": f"scan {i}",
+                "attempts": [],
+                "ingredient_analysis": None,
+            },
+            created_at=datetime.now(timezone.utc),
+        )
+        db.add(scan)
+        scans.append(scan)
+    await db.commit()
+    return scans
