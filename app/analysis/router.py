@@ -129,7 +129,7 @@ async def analyze_label(
 async def list_presets(request: Request):
     """Lista os presets disponíveis por categoria. Não requer autenticação."""
     reader = request.app.state.reader
-    preset_repo = reader._preset_repo
+    preset_repo = reader.preset_repo
 
     result: dict[str, list[dict]] = {"table": [], "text": [], "ingredients": []}
     for preset in preset_repo.all():
