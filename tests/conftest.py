@@ -2,6 +2,12 @@
 
 Garante que ocr_engine/ esteja em sys.path (via importação do pacote)
 antes que qualquer teste da suíte GCV seja coletado.
+
+Estratégia de isolamento de banco:
+- NullPool no engine de teste: cada conexão é criada e fechada sem pooling,
+  evitando o erro "cannot use Connection.transaction() in a manually started
+  transaction" do asyncpg quando pool_pre_ping=True encontra conexões sujas.
+- clean_db autouse trunca as tabelas antes de cada teste.
 """
 from __future__ import annotations
 
@@ -10,23 +16,46 @@ import ocr_engine  # noqa: F401 — garante que ocr_engine/ entre em sys.path
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.pool import NullPool
 
-from app.core.database import get_db, get_engine
+from app.core.config import get_settings
+from app.core.database import get_db
 from app.main import app
 
+# Engine de teste com NullPool — sem compartilhamento de conexões entre fixtures
+_test_engine = None
+
+
+def _get_test_engine():
+    global _test_engine
+    if _test_engine is None:
+        settings = get_settings()
+        _test_engine = create_async_engine(
+            settings.database_url,
+            echo=False,
+            poolclass=NullPool,
+        )
+    return _test_engine
+
 
 # ---------------------------------------------------------------------------
-# Client de sessão: lifespan (e build_reader) é invocado apenas uma vez
+# Client de sessão: carrega o reader OCR apenas uma vez por sessão
 # ---------------------------------------------------------------------------
 
-@pytest_asyncio.fixture(scope="session")
+@pytest_asyncio.fixture
 async def session_client() -> AsyncClient:
-    """AsyncClient que compartilha o lifespan da app por toda a sessão.
+    """AsyncClient para cada teste.
 
-    O NutritionReader é carregado uma única vez no startup — invocá-lo
-    por teste tornaria a suíte impraticavelmente lenta.
+    ASGITransport do httpx não executa o lifespan ASGI, portanto o
+    NutritionReader é carregado diretamente se ainda não foi inicializado.
+    build_reader() é rápido (carrega JSONs), então o overhead é aceitável.
     """
+    if not hasattr(app.state, "reader") or app.state.reader is None:
+        from ocr_engine import build_reader
+        app.state.reader = build_reader()
+
     async with AsyncClient(
         transport=ASGITransport(app=app),
         base_url="http://test",
@@ -35,39 +64,35 @@ async def session_client() -> AsyncClient:
 
 
 # ---------------------------------------------------------------------------
-# Sessão de banco com rollback automático
+# Limpeza de banco entre testes
+# ---------------------------------------------------------------------------
+
+@pytest_asyncio.fixture(autouse=True)
+async def clean_db() -> None:
+    """Trunca as tabelas antes de cada teste para isolamento completo."""
+    async with _get_test_engine().begin() as conn:
+        await conn.execute(text("TRUNCATE TABLE revoked_tokens, scans, users RESTART IDENTITY CASCADE"))
+
+
+# ---------------------------------------------------------------------------
+# Sessão de banco por teste
 # ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture
 async def db_session() -> AsyncSession:
-    """Sessão de banco isolada por teste via savepoint + rollback.
-
-    Usa ``join_transaction_mode="create_savepoint"`` para que qualquer
-    ``await session.commit()`` dentro do código da app crie um savepoint
-    em vez de commitar a transação externa — garantindo que todos os
-    dados sejam revertidos ao fim de cada teste.
-    """
-    engine = get_engine()
-    conn = await engine.connect()
-    trans = await conn.begin()
-    session = AsyncSession(
-        bind=conn,
-        expire_on_commit=False,
-        join_transaction_mode="create_savepoint",
-    )
-    yield session
-    await session.close()
-    await trans.rollback()
-    await conn.close()
+    """AsyncSession isolada por teste via NullPool (sem reúso de conexão)."""
+    factory = async_sessionmaker(bind=_get_test_engine(), expire_on_commit=False)
+    async with factory() as session:
+        yield session
 
 
 # ---------------------------------------------------------------------------
-# Client por teste: injeta a sessão isolada via override de dependência
+# Client por teste: injeta a sessão via override de dependência
 # ---------------------------------------------------------------------------
 
 @pytest_asyncio.fixture
 async def client(session_client: AsyncClient, db_session: AsyncSession) -> AsyncClient:
-    """AsyncClient por teste com override de get_db apontando para a sessão isolada."""
+    """AsyncClient por teste com override de get_db apontando para a sessão de teste."""
 
     async def override_get_db():
         yield db_session

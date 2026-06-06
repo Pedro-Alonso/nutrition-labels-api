@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import uuid
 from datetime import datetime, timedelta, timezone
 
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 
@@ -21,7 +24,12 @@ def verify_password(plain: str, hashed: str) -> bool:
 def _create_token(subject: str, token_type: str, expires_delta: timedelta) -> str:
     settings = get_settings()
     expire = datetime.now(timezone.utc) + expires_delta
-    payload = {"sub": subject, "exp": expire, "type": token_type}
+    payload = {
+        "sub": subject,
+        "exp": expire,
+        "type": token_type,
+        "jti": str(uuid.uuid4()),
+    }
     return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
 
 
@@ -63,3 +71,10 @@ def verify_refresh_token(token: str) -> dict | None:
         return payload
     except JWTError:
         return None
+
+
+async def is_token_revoked(db: AsyncSession, jti: str) -> bool:
+    from app.auth.models import RevokedToken
+
+    result = await db.execute(select(RevokedToken).where(RevokedToken.jti == jti))
+    return result.scalar_one_or_none() is not None
