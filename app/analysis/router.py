@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import uuid
 from datetime import datetime, timezone
 
@@ -63,7 +64,8 @@ async def analyze_label(
     service = _get_analysis_service(request)
 
     try:
-        result = service.analyze(
+        result = await asyncio.to_thread(
+            service.analyze,
             image_bytes=image_bytes,
             category_override=category_override,
             roi_enabled=roi_enabled,

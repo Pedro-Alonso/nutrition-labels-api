@@ -20,6 +20,8 @@ class Settings(BaseSettings):
 
     tessdata_prefix: str | None = None
 
+    allowed_origins: str = "*"
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:

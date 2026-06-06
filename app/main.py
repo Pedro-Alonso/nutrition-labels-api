@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 
@@ -9,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.analysis.router import router as analysis_router
 from app.auth.router import router as auth_router
 from app.core.config import get_settings
+from app.core.middleware import LoggingMiddleware
 from app.users.router import router as users_router
 
 logger = logging.getLogger(__name__)
@@ -20,9 +22,38 @@ async def lifespan(app: FastAPI):
     from ocr_engine import build_reader
     app.state.reader = build_reader()
     logger.info("Motor OCR carregado: %s", type(app.state.reader).__name__)
+
+    cleanup_task = asyncio.create_task(_cleanup_expired_tokens())
+
     yield
+
+    cleanup_task.cancel()
     logger.info("Shutdown: motor OCR não possui recursos a liberar.")
 
+
+async def _cleanup_expired_tokens() -> None:
+    from datetime import datetime, timezone
+
+    from sqlalchemy import delete
+
+    from app.auth.models import RevokedToken
+    from app.core.database import get_session_factory
+
+    while True:
+        await asyncio.sleep(3600)
+        try:
+            async with get_session_factory()() as db:
+                await db.execute(
+                    delete(RevokedToken).where(
+                        RevokedToken.expires_at < datetime.now(timezone.utc)
+                    )
+                )
+                await db.commit()
+        except Exception:
+            logger.exception("Erro ao limpar tokens revogados expirados.")
+
+
+settings = get_settings()
 
 app = FastAPI(
     title="Rótulos Backend",
@@ -31,9 +62,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(LoggingMiddleware)
+
+origins = [o.strip() for o in settings.allowed_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
