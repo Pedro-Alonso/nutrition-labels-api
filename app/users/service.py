@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import func, select
+from sqlalchemy import delete as sql_delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.users.models import User
@@ -41,6 +41,7 @@ async def delete_scan(db: AsyncSession, scan_id: str, user_id: str) -> bool:
 async def delete_user(db: AsyncSession, user_id: str) -> None:
     user = await get_user_by_id(db, user_id)
     if user:
+        await db.execute(sql_delete(Scan).where(Scan.user_id == user_id))
         await db.delete(user)
         await db.commit()
 

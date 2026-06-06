@@ -9,6 +9,7 @@ services:
       DATABASE_URL: "postgresql+asyncpg://test_user:test_pass@db-test:5432/test_db"
       SECRET_KEY: "test-secret-key-apenas-para-ci"
       GOOGLE_APPLICATION_CREDENTIALS: ""
+      TESTING: "1"
     depends_on:
       db-test:
         condition: service_healthy

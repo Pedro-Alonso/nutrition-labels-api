@@ -13,8 +13,13 @@ from ocr_engine.nutrition.reader import NutritionReader, ReaderOptions, ReadOutc
 
 def decode_image_bytes(image_bytes: bytes) -> np.ndarray:
     """Decodifica bytes de imagem para numpy array BGR."""
+    if not image_bytes:
+        raise ValueError("Não foi possível decodificar a imagem. Formato inválido ou corrompido.")
     arr = np.frombuffer(image_bytes, dtype=np.uint8)
-    image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+    try:
+        image = cv2.imdecode(arr, cv2.IMREAD_COLOR)
+    except cv2.error as exc:
+        raise ValueError("Não foi possível decodificar a imagem. Formato inválido ou corrompido.") from exc
     if image is None:
         raise ValueError("Não foi possível decodificar a imagem. Formato inválido ou corrompido.")
     return image
@@ -33,11 +38,13 @@ def outcome_to_dict(outcome: ReadOutcome) -> dict:
         result["ingredient_analysis"] = None
     result.pop("ingredient_report", None)
 
-    # Converte attempts: QualityScore é dataclass aninhado
+    # Converte attempts: QualityScore é dataclass com slots=True (sem __dict__)
+    from dataclasses import is_dataclass
+
     attempts_out = []
     for att in outcome.attempts:
         score_obj = att.get("score", {})
-        if hasattr(score_obj, "__dict__"):
+        if is_dataclass(score_obj) and not isinstance(score_obj, type):
             score_dict = asdict(score_obj)
         elif isinstance(score_obj, dict):
             score_dict = score_obj
