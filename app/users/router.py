@@ -35,6 +35,14 @@ async def update_me(
     return updated
 
 
+@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_me(
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    await user_service.delete_user(db, user_id)
+
+
 @router.get("/me/scans", response_model=PaginatedScans)
 async def list_my_scans(
     page: int = Query(1, ge=1),

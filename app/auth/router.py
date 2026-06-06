@@ -1,18 +1,29 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth import service as auth_service
 from app.auth.schemas import (
     AccessTokenResponse,
+    ChangePasswordRequest,
     LoginRequest,
+    LogoutRequest,
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
 )
 from app.core.database import get_db
-from app.core.security import create_access_token, create_refresh_token, verify_refresh_token
+from app.core.dependencies import get_current_user_id, oauth2_scheme
+from app.core.security import (
+    create_access_token,
+    create_refresh_token,
+    verify_access_token,
+    verify_refresh_token,
+)
+from app.users import service as user_service
 from app.users.schemas import UserResponse
 
 router = APIRouter()
@@ -56,3 +67,48 @@ async def refresh_token(body: RefreshRequest):
         )
     user_id: str = payload["sub"]
     return AccessTokenResponse(access_token=create_access_token(user_id))
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+async def logout(
+    body: LogoutRequest,
+    raw_token: str = Depends(oauth2_scheme),
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    payload_access = verify_access_token(raw_token)
+    if payload_access and payload_access.get("jti"):
+        exp = payload_access.get("exp")
+        expires_at = (
+            datetime.fromtimestamp(exp, tz=timezone.utc)
+            if exp
+            else datetime.now(timezone.utc)
+        )
+        await auth_service.revoke_token(db, payload_access["jti"], user_id, expires_at)
+
+    payload_refresh = verify_refresh_token(body.refresh_token)
+    if payload_refresh and payload_refresh.get("jti"):
+        exp = payload_refresh.get("exp")
+        expires_at = (
+            datetime.fromtimestamp(exp, tz=timezone.utc)
+            if exp
+            else datetime.now(timezone.utc)
+        )
+        await auth_service.revoke_token(db, payload_refresh["jti"], user_id, expires_at)
+
+
+@router.put("/password", status_code=status.HTTP_204_NO_CONTENT)
+async def change_password(
+    body: ChangePasswordRequest,
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    user = await user_service.get_user_by_id(db, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuário não encontrado.")
+    changed = await auth_service.change_password(db, user, body.current_password, body.new_password)
+    if not changed:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Senha atual incorreta.",
+        )

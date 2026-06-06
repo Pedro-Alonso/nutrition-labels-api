@@ -22,6 +22,13 @@ async def update_user(
     return user
 
 
+async def delete_user(db: AsyncSession, user_id: str) -> None:
+    user = await get_user_by_id(db, user_id)
+    if user:
+        await db.delete(user)
+        await db.commit()
+
+
 async def list_user_scans(
     db: AsyncSession, user_id: str, page: int = 1, per_page: int = 20
 ) -> tuple[list[Scan], int]:

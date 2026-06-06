@@ -3,9 +3,10 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import select
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.models import RevokedToken
 from app.core.security import hash_password, verify_password
 from app.users.models import User
 
@@ -44,3 +45,26 @@ async def authenticate_user(
     if not verify_password(password, user.password_hash):
         return None
     return user
+
+
+async def revoke_token(
+    db: AsyncSession, jti: str, user_id: str, expires_at: datetime
+) -> None:
+    stmt = (
+        insert(RevokedToken)
+        .values(jti=jti, user_id=user_id, expires_at=expires_at)
+        .on_conflict_do_nothing(index_elements=["jti"])
+    )
+    await db.execute(stmt)
+    await db.commit()
+
+
+async def change_password(
+    db: AsyncSession, user: User, current: str, new: str
+) -> bool:
+    if not verify_password(current, user.password_hash):
+        return False
+    user.password_hash = hash_password(new)
+    user.updated_at = datetime.now(timezone.utc)
+    await db.commit()
+    return True
