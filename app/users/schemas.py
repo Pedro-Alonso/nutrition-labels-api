@@ -29,6 +29,18 @@ class ScanSummaryResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ScanDetailResponse(BaseModel):
+    id: str
+    created_at: datetime
+    detected_format: str | None
+    passed: bool
+    winning_preset: str | None
+    risco_global: str | None
+    result_json: dict
+
+    model_config = {"from_attributes": True}
+
+
 class PaginatedScans(BaseModel):
     items: list[ScanSummaryResponse]
     total: int

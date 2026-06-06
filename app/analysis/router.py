@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import uuid
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analysis.models import Scan
@@ -54,12 +56,33 @@ async def analyze_label(
             detail=f"Arquivo muito grande. Limite: {settings.max_upload_size_mb}MB.",
         )
 
+    if len(image_bytes) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Arquivo vazio.",
+        )
+
     content_type = (file.content_type or "").lower()
     if content_type and content_type not in SUPPORTED_CONTENT_TYPES:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Formato de arquivo não suportado. Use JPEG, PNG, WEBP ou BMP.",
         )
+
+    image_hash = hashlib.sha256(image_bytes).hexdigest()
+
+    cached_result = await db.execute(
+        select(Scan)
+        .where(Scan.user_id == user_id, Scan.image_hash == image_hash)
+        .order_by(Scan.created_at.desc())
+        .limit(1)
+    )
+    cached_scan = cached_result.scalar_one_or_none()
+    if cached_scan:
+        result = dict(cached_scan.result_json)
+        result["cache_hit"] = True
+        result["scan_id"] = cached_scan.id
+        return result
 
     service = _get_analysis_service(request)
 
@@ -78,6 +101,7 @@ async def analyze_label(
             detail=str(exc),
         )
 
+    result["cache_hit"] = False
     scan_id = str(uuid.uuid4())
     result["scan_id"] = scan_id
 
@@ -87,7 +111,7 @@ async def analyze_label(
     scan = Scan(
         id=scan_id,
         user_id=user_id,
-        image_hash=result.get("image_hash", ""),
+        image_hash=image_hash,
         detected_format=result.get("detected_format", {}).get("category"),
         winning_preset=result.get("winning_preset"),
         passed=result.get("passed", False),

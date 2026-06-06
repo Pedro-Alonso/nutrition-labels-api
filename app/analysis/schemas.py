@@ -41,6 +41,7 @@ class IngredientAnalysisSchema(BaseModel):
 
 class AnalyzeResponse(BaseModel):
     scan_id: str | None = None
+    cache_hit: bool = False
     detected_format: DetectedFormatSchema
     winning_preset: str | None
     winning_attempt_index: int | None

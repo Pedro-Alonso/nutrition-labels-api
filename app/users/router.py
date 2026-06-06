@@ -6,7 +6,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.dependencies import get_current_user_id
 from app.users import service as user_service
-from app.users.schemas import PaginatedScans, ScanSummaryResponse, UserResponse, UserUpdate
+from app.users.schemas import (
+    PaginatedScans,
+    ScanDetailResponse,
+    ScanSummaryResponse,
+    UserResponse,
+    UserUpdate,
+)
 
 router = APIRouter()
 
@@ -57,3 +63,26 @@ async def list_my_scans(
         page=page,
         per_page=per_page,
     )
+
+
+@router.get("/me/scans/{scan_id}", response_model=ScanDetailResponse)
+async def get_scan(
+    scan_id: str,
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    scan = await user_service.get_scan_by_id(db, scan_id, user_id)
+    if scan is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Scan não encontrado.")
+    return scan
+
+
+@router.delete("/me/scans/{scan_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_scan(
+    scan_id: str,
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    deleted = await user_service.delete_scan(db, scan_id, user_id)
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Scan não encontrado.")
