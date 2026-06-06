@@ -22,6 +22,10 @@ sqlalchemy>=2.0
 asyncpg>=0.29
 alembic>=1.13
 
+# === Rate limiting ===
+slowapi>=0.1.9
+
 # === Autenticação ===
 passlib[bcrypt]>=1.7
+bcrypt<4          # passlib 1.7.x é incompatível com bcrypt>=4 (detect_wrap_bug usa senha >72 bytes)
 python-jose[cryptography]>=3.3

@@ -7,9 +7,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+
 from app.analysis.router import router as analysis_router
 from app.auth.router import router as auth_router
 from app.core.config import get_settings
+from app.core.limiter import limiter
 from app.core.middleware import LoggingMiddleware
 from app.users.router import router as users_router
 
@@ -62,6 +66,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(LoggingMiddleware)
 
 origins = [o.strip() for o in settings.allowed_origins.split(",") if o.strip()]
