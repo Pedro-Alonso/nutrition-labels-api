@@ -22,6 +22,8 @@ if config.config_file_name is not None:
 from app.core.database import Base  # noqa: E402
 from app.users.models import User  # noqa: E402, F401
 from app.analysis.models import Scan  # noqa: E402, F401
+from app.auth.models import RevokedToken  # noqa: E402, F401
+from app.products.models import Product, NutritionalTable, IngredientList  # noqa: E402, F401
 
 target_metadata = Base.metadata
 
