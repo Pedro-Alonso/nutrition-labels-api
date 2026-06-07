@@ -72,6 +72,29 @@ class AnalysisService:
     def __init__(self, reader: NutritionReader) -> None:
         self._reader = reader
 
+    def read_outcome(
+        self,
+        image_bytes: bytes,
+        category_override: str | None = None,
+        roi_enabled: bool = True,
+        stop_on_first_pass: bool = True,
+        postprocess: bool = True,
+    ) -> ReadOutcome:
+        """Executa OCR e retorna o ReadOutcome diretamente (não convertido para dict)."""
+        options = ReaderOptions(
+            category_override=category_override,
+            roi_enabled=roi_enabled,
+            stop_on_first_pass=stop_on_first_pass,
+            postprocess=postprocess,
+        )
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
+            tmp.write(image_bytes)
+            tmp_path = Path(tmp.name)
+        try:
+            return self._reader.read(tmp_path, options=options)
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
     def analyze(
         self,
         image_bytes: bytes,

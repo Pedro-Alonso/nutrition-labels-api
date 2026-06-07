@@ -15,6 +15,7 @@ from app.auth.router import router as auth_router
 from app.core.config import get_settings
 from app.core.limiter import limiter
 from app.core.middleware import LoggingMiddleware
+from app.products.router import router as products_router
 from app.users.router import router as users_router
 
 logger = logging.getLogger(__name__)
@@ -81,6 +82,7 @@ app.add_middleware(
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 app.include_router(analysis_router, prefix="/api/v1", tags=["analysis"])
+app.include_router(products_router, prefix="/api/v1/products", tags=["products"])
 
 
 @app.get("/api/v1/health", tags=["health"])
