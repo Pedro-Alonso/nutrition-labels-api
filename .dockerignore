@@ -13,9 +13,6 @@ __pycache__/
 dist/
 build/
 
-# Testes (não necessários na imagem de produção)
-tests/
-
 # Arquivos de desenvolvimento e IDE
 .env
 *.env.local

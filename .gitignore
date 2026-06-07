@@ -56,3 +56,6 @@ logs/
 # Coverage
 .coverage
 htmlcov/
+
+.kiro/
+.claude/
