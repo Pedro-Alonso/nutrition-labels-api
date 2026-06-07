@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O `rotulos-backend` é um serviço REST em FastAPI que expõe o motor OCR local
+O `nutrition-labels-api` é um serviço REST em FastAPI que expõe o motor OCR local
 (herdado do monolito `teste-pytesseract`) como API HTTP para consumo por um
 app mobile voltado a pacientes diabéticos. O sistema recebe fotos de rótulos
 alimentícios, executa OCR + análise clínica simbólica e persiste resultados por
@@ -32,7 +32,7 @@ usuário.
 ## Estrutura de Pacotes
 
 ```
-rotulos-backend/
+nutrition-labels-api/
 ├── app/                          # Camada HTTP (FastAPI)
 │   ├── main.py                   # Entrypoint: lifespan, routers, middlewares
 │   ├── core/

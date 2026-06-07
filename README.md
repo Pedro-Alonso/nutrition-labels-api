@@ -1,4 +1,4 @@
-# rotulos-backend
+# nutrition-labels-api
 
 Backend REST para análise de rótulos alimentícios voltado a pacientes diabéticos.
 Expõe a API consumida pelo app mobile, integrando OCR (Tesseract / Google Cloud Vision),

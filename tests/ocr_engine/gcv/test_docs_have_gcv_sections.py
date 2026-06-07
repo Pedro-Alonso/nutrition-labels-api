@@ -17,7 +17,7 @@ import pytest
 # Raiz do monolito (teste-pytesseract/) — contém docs/PRESETS.md, docs/CONFIG.md,
 # docs/ARCHITECTURE.md e .kiro/steering/. Os testes GCV verificam se esses
 # arquivos do monolito foram atualizados para mencionar a feature cloud_vision.
-# Estrutura: tests/ocr_engine/gcv/  →  parents[3] = rotulos-backend/  →  parents[4] = monolito
+# Estrutura: tests/ocr_engine/gcv/  →  parents[3] = nutrition-labels-api/  →  parents[4] = monolito
 _PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
 # Arquivos que devem mencionar GCV, com pelo menos um dos marcadores listados.

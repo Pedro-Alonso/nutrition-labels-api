@@ -25,7 +25,7 @@ import pytest
 
 # Raiz do backend resolvida a partir deste arquivo:
 # ``tests/ocr_engine/gcv/test_pins.py`` → sobe 3 níveis (gcv → ocr_engine →
-# tests → rotulos-backend). O requirements.txt está na raiz do backend.
+# tests → nutrition-labels-api). O requirements.txt está na raiz do backend.
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _REQUIREMENTS_FILE = _PROJECT_ROOT / "requirements.txt"
 

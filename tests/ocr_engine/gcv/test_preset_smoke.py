@@ -28,7 +28,7 @@ from pathlib import Path
 
 # Raiz do backend resolvida a partir deste arquivo:
 # ``tests/ocr_engine/gcv/test_preset_smoke.py`` → sobe 3 níveis (gcv →
-# ocr_engine → tests → rotulos-backend). Os presets estão em
+# ocr_engine → tests → nutrition-labels-api). Os presets estão em
 # ``ocr_engine/config/presets/`` no backend.
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _PRESETS_ROOT = _PROJECT_ROOT / "ocr_engine" / "config" / "presets"
