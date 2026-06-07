@@ -26,9 +26,26 @@ docker compose up --build
 curl http://localhost:8000/api/v1/health
 ```
 
+Swagger UI (documentação interativa): http://localhost:8000/docs
+
 ---
 
-## Endpoints
+## Documentação Técnica
+
+| Documento | Conteúdo |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | Arquitetura, stack, decisões de design, fluxo de dados |
+| [docs/api-reference.md](docs/api-reference.md) | Referência completa de todos os endpoints |
+| [docs/authentication.md](docs/authentication.md) | JWT, bcrypt, fluxo de tokens, revogação |
+| [docs/database.md](docs/database.md) | Modelos ORM, migrations, relacionamentos, PostgreSQL |
+| [docs/ocr-engine.md](docs/ocr-engine.md) | Motor OCR, presets, pipelines, GCV, análise clínica DM |
+| [docs/products.md](docs/products.md) | Base comunitária de produtos (cadastro colaborativo) |
+| [docs/testing.md](docs/testing.md) | Fixtures, como rodar testes, property-based testing GCV |
+| [docs/deployment.md](docs/deployment.md) | Docker, variáveis de ambiente, produção, migrations |
+
+---
+
+## Endpoints Resumidos
 
 | Método | Rota | Auth | Descrição |
 |---|---|---|---|
@@ -38,79 +55,32 @@ curl http://localhost:8000/api/v1/health
 | POST | `/api/v1/auth/register` | Não | Cria usuário |
 | POST | `/api/v1/auth/login` | Não | Login (retorna JWT) |
 | POST | `/api/v1/auth/refresh` | Não | Renova access token |
+| POST | `/api/v1/auth/logout` | JWT | Revoga refresh token |
 | GET | `/api/v1/users/me` | JWT | Perfil do usuário autenticado |
 | PUT | `/api/v1/users/me` | JWT | Atualiza perfil |
 | GET | `/api/v1/users/me/scans` | JWT | Histórico de análises |
+| GET | `/api/v1/products/{barcode}` | Não | Produto com análise clínica |
+| POST | `/api/v1/products/{barcode}` | JWT | Cria produto |
+| PUT | `/api/v1/products/{barcode}` | JWT | Atualiza produto |
+| POST | `/api/v1/products/{barcode}/ocr` | JWT | Preview OCR (sem persistir) |
+| GET | `/api/v1/products/{barcode}/analysis` | Não | Análise clínica dos ingredientes |
 
-Documentação interativa: http://localhost:8000/docs (Swagger UI)
+Ver [docs/api-reference.md](docs/api-reference.md) para schemas completos.
 
 ---
 
-## Comandos Docker Úteis
+## Comandos Docker
 
 ```bash
-# Subir tudo (com rebuild)
-docker compose up --build
-
-# Só o banco (para dev sem Docker da API)
-docker compose up db
-
-# Aplicar migrations manualmente
-docker compose exec api alembic upgrade head
-
-# Criar nova migration após alterar model ORM
-docker compose exec api alembic revision --autogenerate -m "descricao"
-
-# Acessar o banco
-docker compose exec db psql -U rotulos_user -d rotulos_db
-
-# Ver logs em tempo real
-docker compose logs -f api
-
-# Rebuild sem cache (quando requirements.txt mudar)
-docker compose build --no-cache api
-
-# Parar containers (preserva volume do banco)
-docker compose down
-
-# Reset completo (apaga banco)
-docker compose down -v
-
-# Rodar testes no container
-docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
-```
-
----
-
-## Estrutura do Projeto
-
-```
-rotulos-backend/
-├── app/                    # Aplicação FastAPI
-│   ├── main.py             # Ponto de entrada, lifespan, routers, CORS
-│   ├── core/               # Infraestrutura horizontal
-│   │   ├── config.py       # Pydantic Settings (lê .env)
-│   │   ├── database.py     # SQLAlchemy async engine + session
-│   │   ├── security.py     # JWT + bcrypt
-│   │   └── dependencies.py # get_db(), get_reader(), get_current_user()
-│   ├── analysis/           # Feature: análise de rótulos
-│   ├── auth/               # Feature: autenticação
-│   └── users/              # Feature: perfil e histórico
-│
-├── ocr_engine/             # Motor OCR (migrado do monolito)
-│   ├── __init__.py         # build_reader() — único ponto de entrada
-│   ├── nutrition/          # NutritionReader, presets, pipelines
-│   ├── ocr/                # OcrService, qualidade, pós-processamento
-│   ├── imaging/            # Operações PDI, ROI
-│   ├── ingredients/        # Análise clínica DM
-│   ├── audit/              # NullAuditRecorder (sem I/O em disco)
-│   └── config/             # Presets JSON, ontologia, wordlist
-│
-├── alembic/                # Migrations de banco de dados
-├── tests/                  # Testes automatizados
-├── Dockerfile
-├── docker-compose.yml
-└── .env.example
+docker compose up --build                                          # subir tudo
+docker compose up db                                               # só o banco
+docker compose exec api alembic upgrade head                       # migrations
+docker compose exec api alembic revision --autogenerate -m "desc" # nova migration
+docker compose exec db psql -U rotulos_user -d rotulos_db          # acesso ao banco
+docker compose logs -f api                                         # logs em tempo real
+docker compose down                                                # parar (preserva volume)
+docker compose down -v                                             # reset completo
+docker compose -f docker-compose.test.yml up --build --abort-on-container-exit  # testes CI
 ```
 
 ---
@@ -119,55 +89,38 @@ rotulos-backend/
 
 ### Branch naming
 
-Todo branch deve seguir o padrão:
-
 ```
 (feat|fix|release)/<número-2-dígitos>/<nome-descritivo>
 
-Exemplos válidos:
+Exemplos:
   feat/00/setup-inicial
-  feat/01/ocr-engine
+  feat/04/tests
   fix/02/null-recorder-interface
-  release/10/v1.0.0
 ```
 
-Branches com nome inválido são **rejeitados no commit e no push** pelos git hooks instalados.
-
 ### Commit message
-
-Todo commit deve seguir o padrão:
 
 ```
 (feat|fix|release|refactor|docs|chore|merge): <mensagem descritiva>
 
-Exemplos válidos:
+Exemplos:
   feat: add health check endpoint
-  chore: initial project structure
   fix: correct import path in null_recorder
   docs: add README with commit conventions
-  refactor: extract outcome serialization helper
 ```
 
-Mensagens com formato inválido são **rejeitadas pelo commit-msg hook**.
-
-### Git hooks instalados
-
-Os hooks estão em `.git/hooks/` e são instalados automaticamente na criação do repositório:
-
-| Hook | Valida |
-|---|---|
-| `pre-commit` | Nome do branch antes de cada commit |
-| `commit-msg` | Nome do branch e formato da mensagem |
-| `pre-push` | Nome do branch antes de qualquer push |
+Formatos inválidos são **rejeitados pelos git hooks** em `.git/hooks/`.
 
 ---
 
-## Variáveis de Ambiente
-
-Ver `.env.example` para a lista completa. Variáveis obrigatórias em produção:
+## Variáveis de Ambiente Obrigatórias em Produção
 
 | Variável | Descrição |
 |---|---|
 | `DATABASE_URL` | `postgresql+asyncpg://user:pass@host:5432/db` |
-| `SECRET_KEY` | Chave aleatória 256 bits — gerar com `python -c "import secrets; print(secrets.token_hex(32))"` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Path do service account GCV (opcional se não usar GCV) |
+| `SECRET_KEY` | Gerar com `python -c "import secrets; print(secrets.token_hex(32))"` |
+| `ALLOWED_ORIGINS` | Origins do app mobile (substitua `"*"` em produção) |
+| `GOOGLE_APPLICATION_CREDENTIALS` | Path do service account GCV (opcional) |
+
+Ver `.env.example` para a lista completa e [docs/deployment.md](docs/deployment.md)
+para instruções detalhadas.
