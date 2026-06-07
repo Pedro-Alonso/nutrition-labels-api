@@ -75,7 +75,7 @@ async def session_client() -> AsyncClient:
 async def clean_db() -> None:
     """Trunca as tabelas antes de cada teste para isolamento completo."""
     async with _get_test_engine().begin() as conn:
-        await conn.execute(text("TRUNCATE TABLE revoked_tokens, scans, users RESTART IDENTITY CASCADE"))
+        await conn.execute(text("TRUNCATE TABLE revoked_tokens, scans, ingredient_lists, nutritional_tables, products, users RESTART IDENTITY CASCADE"))
 
 
 # ---------------------------------------------------------------------------
