@@ -11,7 +11,9 @@ from app.analysis.service import AnalysisService
 from app.core.config import get_settings
 from app.core.database import get_db
 from app.core.dependencies import get_current_user_id
+from app.core.security import verify_access_token
 from app.products import service as product_service
+from app.products.llm_service import clean_ingredients_text, generate_summary
 from app.products.schemas import (
     IngredientsData,
     OcrPreviewResponse,
@@ -39,6 +41,18 @@ def _get_analysis_service(request: Request) -> AnalysisService:
 def _get_analyzer(request: Request):
     reader = request.app.state.reader
     return getattr(reader, "ingredient_analyzer", None)
+
+
+async def _get_optional_user(request: Request, db: AsyncSession):
+    """Retorna User se token Bearer válido presente; None caso contrário."""
+    auth = request.headers.get("Authorization", "")
+    if not auth.startswith("Bearer "):
+        return None
+    payload = verify_access_token(auth.split(" ", 1)[1])
+    if not payload:
+        return None
+    from app.users import service as user_service
+    return await user_service.get_user_by_id(db, payload["sub"])
 
 
 async def _read_upload(upload: UploadFile, max_bytes: int) -> bytes:
@@ -88,14 +102,35 @@ async def get_product_analysis(
             detail="Produto não possui lista de ingredientes cadastrada.",
         )
 
-    analysis = product_service._compute_analysis(
-        analyzer, list(product.ingredient_list.items), barcode
-    )
+    settings = get_settings()
+    items = list(product.ingredient_list.items)
+
+    # 1. Limpeza pré-análise: remove alegações e ruído OCR da lista de ingredientes
+    if settings.groq_api_key:
+        raw_text = ", ".join(items)
+        cleaned_text = await clean_ingredients_text(raw_text, settings.groq_api_key)
+        cleaned_items = [t.strip() for t in cleaned_text.split(",") if t.strip()]
+        if cleaned_items:
+            items = cleaned_items
+
+    # 2. Análise ontológica
+    analysis = product_service._compute_analysis(analyzer, items, barcode)
     if analysis is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Produto não possui lista de ingredientes cadastrada.",
         )
+
+    # 3. Resumo em linguagem natural (personalizado se usuário autenticado)
+    if settings.groq_api_key:
+        user = await _get_optional_user(request, db)
+        analysis.natural_language_summary = await generate_summary(
+            analysis,
+            settings.groq_api_key,
+            language_level=getattr(user, "language_level", None),
+            diabetes_type=getattr(user, "diabetes_type", None),
+        )
+
     return analysis
 
 
