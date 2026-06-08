@@ -35,6 +35,7 @@ Definidas em `.env` (não commitado) — ver `.env.example` para a lista complet
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | não | `15` | Expiração do access token |
 | `REFRESH_TOKEN_EXPIRE_DAYS` | não | `30` | Expiração do refresh token |
 | `GOOGLE_APPLICATION_CREDENTIALS` | não | `null` | Path do service account GCV |
+| `GROQ_API_KEY` | não | `null` | API key Groq — ativa limpeza LLM + resumo clínico em `/analysis` |
 | `MAX_UPLOAD_SIZE_MB` | não | `10` | Limite de upload em `/analyze` |
 | `TESSDATA_PREFIX` | não | `null` | Override do diretório tessdata |
 | `ALLOWED_ORIGINS` | não | `"*"` | CORS origins (separados por vírgula) |
@@ -170,6 +171,34 @@ O `docker-compose.yml` já monta `./secrets/service_account.json:/app/secrets/se
 Para desabilitar GCV, não configure a variável. Os presets `cloud_vision` serão
 ignorados (carregados, mas sem credencial disponível retornam erro que é tratado
 com `on_failure: "skip"`).
+
+---
+
+## Configuração do Groq LLM
+
+O Groq é **totalmente opcional**. Sem a chave, o endpoint `/analysis` funciona
+normalmente com análise ontológica pura — `natural_language_summary` retorna `null`.
+
+1. Criar conta em [console.groq.com](https://console.groq.com).
+2. Gerar uma API key na seção **API Keys**.
+3. Adicionar ao `.env`:
+
+```bash
+GROQ_API_KEY=gsk_...
+```
+
+### Limites do free tier
+
+| Métrica | Limite |
+|---|---|
+| Requisições por minuto | 30 |
+| Requisições por dia | 14.400 |
+| Modelo usado | `llama-3.3-70b-versatile` |
+
+Cada chamada a `/products/{barcode}/analysis` com Groq ativo consome **2
+requisições**: uma para limpeza, uma para o resumo. Com `GROQ_API_KEY` ausente
+ou com erro do Groq (429, timeout, etc.), o endpoint retorna análise ontológica
+completa com `natural_language_summary: null` — sem propagar o erro ao cliente.
 
 ---
 

@@ -69,7 +69,7 @@ Prefixo: `/api/v1/products`
 | POST | `/{barcode}` | JWT | Cria produto |
 | PUT | `/{barcode}` | JWT | Atualiza produto (patch semântico) |
 | POST | `/{barcode}/ocr` | JWT | Preview OCR sem persistir |
-| GET | `/{barcode}/analysis` | Não | Análise clínica dos ingredientes |
+| GET | `/{barcode}/analysis` | Opcional (soft auth) | Análise clínica dos ingredientes + resumo LLM |
 
 ### Semântica de `PUT` (patch)
 
@@ -161,6 +161,43 @@ Se o `IngredientAnalyzer` não estiver disponível (ontologia ausente no
 container), `GET /{barcode}/analysis` retorna HTTP 503 e `analysis` em
 `GET /{barcode}` retorna `null`.
 
+### Pipeline de análise em `GET /{barcode}/analysis` (com Groq)
+
+Quando `GROQ_API_KEY` está configurado, o endpoint executa três etapas em sequência:
+
+```
+ingredient_list.items
+    │
+    ├─ 1. clean_ingredients_text (llm_service.py)
+    │       Groq llama-3.3-70b-versatile, temperature=0
+    │       Remove: alegações de marketing, dados corporativos,
+    │               instruções de conservação, advertências alergênicas
+    │       Fallback silencioso → itens originais em caso de erro
+    │
+    ├─ 2. _compute_analysis (service.py)
+    │       IngredientAnalyzer sobre itens limpos
+    │       → IngredientAnalysisSchema
+    │
+    └─ 3. generate_summary (llm_service.py)
+            Groq llama-3.3-70b-versatile, temperature=0
+            Personalizado por language_level e diabetes_type do usuário
+            Regras: máx 3 frases, apenas dados do JSON, sem especulação
+            Fallback silencioso → natural_language_summary = null
+```
+
+### Soft auth em `GET /{barcode}/analysis`
+
+O endpoint não exige autenticação, mas **lê o token Bearer se presente**:
+
+```python
+# bearer válido → personaliza o resumo LLM com perfil do usuário
+# bearer ausente/inválido → resumo usa prompts defaults neutros
+```
+
+O token inválido (expirado, assinatura errada) é silenciosamente ignorado —
+não retorna 401. Isso garante que clientes não autenticados nunca recebam erro
+por enviar um token desatualizado.
+
 ---
 
 ## Referências de Código
@@ -169,6 +206,8 @@ container), `GET /{barcode}/analysis` retorna HTTP 503 e `analysis` em
 |---|---|
 | `app/products/models.py` | `Product`, `NutritionalTable`, `IngredientList` |
 | `app/products/schemas.py` | `ProductResponse`, `ProductCreateRequest`, `ProductUpdateRequest`, `OcrPreviewResponse`, `NutritionalTableData`, `IngredientsData` |
-| `app/products/router.py` | Rotas GET/POST/PUT + `/ocr` + `/analysis` |
+| `app/products/router.py` | Rotas GET/POST/PUT + `/ocr` + `/analysis` (com soft auth e Groq) |
 | `app/products/service.py` | `get_by_barcode`, `create_product`, `update_product`, `build_product_response`, `parse_postprocessed_to_nutritional_table`, `_compute_analysis` |
-| `alembic/versions/c3d4e5f6a7b8_add_products.py` | Migration que criou as três tabelas |
+| `app/products/llm_service.py` | `clean_ingredients_text`, `generate_summary` — integração Groq |
+| `alembic/versions/c3d4e5f6a7b8_add_products.py` | Migration que criou as três tabelas de produtos |
+| `alembic/versions/d1e2f3a4b5c6_add_language_level_diabetes_type_to_users.py` | Migration que adicionou `language_level` e `diabetes_type` em `users` |

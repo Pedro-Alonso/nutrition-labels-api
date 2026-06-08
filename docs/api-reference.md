@@ -185,9 +185,16 @@ Retorna o perfil do usuário autenticado.
   "id": "550e8400-...",
   "email": "usuario@example.com",
   "display_name": "Nome",
+  "language_level": "padrão",
+  "diabetes_type": "type2",
   "created_at": "2026-06-06T12:00:00Z"
 }
 ```
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `language_level` | `"simples"` \| `"padrão"` \| `"técnico"` \| `null` | Nível de linguagem do resumo clínico gerado por LLM |
+| `diabetes_type` | `"type1"` \| `"type2"` \| `null` | Tipo de diabetes — personaliza o foco do resumo clínico |
 
 ---
 
@@ -199,9 +206,17 @@ Atualiza o perfil do usuário autenticado.
 
 ```json
 {
-  "display_name": "Novo Nome"
+  "display_name": "Novo Nome",
+  "language_level": "simples",
+  "diabetes_type": "type1"
 }
 ```
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `display_name` | string \| null | Nome de exibição (opcional) |
+| `language_level` | `"simples"` \| `"padrão"` \| `"técnico"` \| null | Nível de linguagem para resumos LLM |
+| `diabetes_type` | `"type1"` \| `"type2"` \| null | Tipo de diabetes |
 
 **Resposta 200** — mesmo schema de `GET /me`
 
@@ -374,7 +389,8 @@ Retorna dados completos de um produto. Não requer autenticação.
     "ingredientes_identificados": [...],
     "nao_identificados": [],
     "high_risk_ingredients": ["açúcar"],
-    "safe_sweeteners": []
+    "safe_sweeteners": [],
+    "natural_language_summary": null
   },
   "created_at": "2026-06-06T12:00:00Z",
   "updated_at": "2026-06-06T12:00:00Z"
@@ -484,7 +500,44 @@ Campos `null` quando a imagem correspondente não foi enviada.
 
 Retorna análise clínica DM dos ingredientes do produto. Não requer autenticação.
 
-**Resposta 200** — mesmo schema de `AnalyzeResponse.ingredient_analysis`
+**Autenticação opcional (soft auth):** se um `Bearer` token válido for enviado, o
+campo `natural_language_summary` é personalizado com `language_level` e
+`diabetes_type` do perfil do usuário. Sem token, o resumo usa os defaults neutros.
+
+**Fluxo interno** (quando `GROQ_API_KEY` está configurado):
+
+1. **Limpeza LLM** — `llama-3.3-70b-versatile` remove alegações de marketing
+   ("zero açúcar", "fonte de fibras", CNPJ, etc.) e ruído OCR da lista de
+   ingredientes antes da análise ontológica.
+2. **Análise ontológica** — `IngredientAnalyzer` roda sobre a lista limpa.
+3. **Resumo LLM** — modelo gera até 3 frases em PT-BR, baseadas exclusivamente
+   nos dados da análise (sem adicionar fatos externos). Personalizado pelo perfil
+   do usuário autenticado.
+
+**Resposta 200**
+
+```json
+{
+  "risco_global": "ALTO",
+  "ingredientes_identificados": [
+    {
+      "nome_lido": "açúcar",
+      "classe": "acucar_simples",
+      "risco": "ALTO",
+      "alerta": "Eleva glicemia rapidamente. IG ≈ 65.",
+      "indice_glicemico": 65,
+      "nota_clinica": null
+    }
+  ],
+  "nao_identificados": ["vitamina c"],
+  "high_risk_ingredients": ["açúcar"],
+  "safe_sweeteners": [],
+  "natural_language_summary": "Este produto contém açúcar (IG 65), classificado como ALTO risco para pacientes diabéticos. Recomenda-se evitar o consumo ou verificar a porção com o nutricionista."
+}
+```
+
+`natural_language_summary` é `null` quando `GROQ_API_KEY` não está configurado
+ou quando o Groq retorna erro (o endpoint **não falha** nesses casos).
 
 **Erros**
 

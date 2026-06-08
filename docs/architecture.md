@@ -24,6 +24,7 @@ usuário.
 | Auth | python-jose (JWT) + passlib/bcrypt |
 | OCR local | Tesseract (pytesseract) + OpenCV |
 | OCR nuvem | Google Cloud Vision API |
+| LLM | Groq API (llama-3.3-70b-versatile, free tier) |
 | Containerização | Docker + Docker Compose |
 | Rate limiting | slowapi |
 
@@ -46,6 +47,7 @@ nutrition-labels-api/
 │   ├── users/                    # /api/v1/users — perfil, histórico de scans
 │   ├── analysis/                 # /api/v1/analyze, /api/v1/presets
 │   └── products/                 # /api/v1/products — base comunitária de produtos
+│       └── llm_service.py        # Groq: limpeza de ingredientes + resumo clínico
 │
 ├── ocr_engine/                   # Motor OCR (cópia do monolito, sem alterações)
 │   ├── __init__.py               # build_reader() — único ponto de entrada
@@ -129,6 +131,26 @@ entre fixtures. Cada fixture `db_session` abre conexão limpa.
 Uma `asyncio.Task` iniciada no `lifespan` limpa tokens expirados da tabela
 `revoked_tokens` a cada hora, evitando crescimento ilimitado.
 
+### LLM layer via Groq (opcional)
+
+`GET /products/{barcode}/analysis` possui uma camada LLM opcional ativada
+pela presença de `GROQ_API_KEY`:
+
+1. **Limpeza pré-análise** — `clean_ingredients_text()` envia a lista de
+   ingredientes ao modelo `llama-3.3-70b-versatile` (temperature=0) com um
+   prompt restritivo que remove alegações de marketing ("zero açúcar", CNPJ,
+   instruções de conservação, certificações) sem inventar nem omitir
+   ingredientes reais. Fallback silencioso: em caso de erro, usa os itens
+   originais.
+2. **Resumo clínico** — `generate_summary()` transforma o `IngredientAnalysisSchema`
+   em até 3 frases em PT-BR, personalizadas pelo perfil do usuário autenticado
+   (`language_level`, `diabetes_type`). O prompt proíbe explicitamente adicionar
+   fatos externos ao JSON fornecido.
+
+Sem `GROQ_API_KEY`: `natural_language_summary` retorna `null`; análise
+ontológica roda normalmente sobre os itens brutos. O endpoint nunca retorna
+erro por falha do Groq — degradação silenciosa em ambos os passos.
+
 ---
 
 ## Fluxo de uma Requisição de Análise
@@ -193,6 +215,7 @@ app.main
   │     └── app.analysis.service
   │           └── ocr_engine (NutritionReader singleton via app.state.reader)
   └── app.products.router
-        └── app.products.service
-              └── ocr_engine (IngredientAnalyzer via reader.ingredient_analyzer)
+        ├── app.products.service
+        │     └── ocr_engine (IngredientAnalyzer via reader.ingredient_analyzer)
+        └── app.products.llm_service  (Groq: clean_ingredients_text, generate_summary)
 ```
