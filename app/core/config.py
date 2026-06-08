@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     refresh_token_expire_days: int = 30
 
     google_application_credentials: str | None = None
+    groq_api_key: str | None = None
 
     max_upload_size_mb: int = 10
 
