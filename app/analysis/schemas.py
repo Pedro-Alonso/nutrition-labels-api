@@ -37,6 +37,7 @@ class IngredientAnalysisSchema(BaseModel):
     nao_identificados: list[str]
     high_risk_ingredients: list[str] = []
     safe_sweeteners: list[str] = []
+    natural_language_summary: str | None = None
 
 
 class AnalyzeResponse(BaseModel):
