@@ -13,10 +13,18 @@ async def get_user_by_id(db: AsyncSession, user_id: str) -> User | None:
 
 
 async def update_user(
-    db: AsyncSession, user: User, display_name: str | None
+    db: AsyncSession,
+    user: User,
+    display_name: str | None = None,
+    language_level: str | None = None,
+    diabetes_type: str | None = None,
 ) -> User:
     if display_name is not None:
         user.display_name = display_name
+    if language_level is not None:
+        user.language_level = language_level
+    if diabetes_type is not None:
+        user.diabetes_type = diabetes_type
     await db.commit()
     await db.refresh(user)
     return user

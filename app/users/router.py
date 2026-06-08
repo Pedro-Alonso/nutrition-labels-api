@@ -37,7 +37,12 @@ async def update_me(
     user = await user_service.get_user_by_id(db, user_id)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuário não encontrado.")
-    updated = await user_service.update_user(db, user, display_name=body.display_name)
+    updated = await user_service.update_user(
+        db, user,
+        display_name=body.display_name,
+        language_level=body.language_level,
+        diabetes_type=body.diabetes_type,
+    )
     return updated
 
 

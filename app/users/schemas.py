@@ -9,6 +9,8 @@ class UserResponse(BaseModel):
     id: str
     email: str
     display_name: str | None
+    language_level: str | None = None
+    diabetes_type: str | None = None
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -16,6 +18,8 @@ class UserResponse(BaseModel):
 
 class UserUpdate(BaseModel):
     display_name: str | None = None
+    language_level: str | None = None
+    diabetes_type: str | None = None
 
 
 class ScanSummaryResponse(BaseModel):
