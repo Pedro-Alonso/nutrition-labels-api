@@ -67,7 +67,7 @@ a sessão manualmente dentro do endpoint.
 | `password_hash` | VARCHAR | NOT NULL | Hash bcrypt |
 | `display_name` | VARCHAR | NULL | Nome opcional |
 | `language_level` | VARCHAR | NULL | Nível de linguagem LLM: `"simples"` \| `"padrão"` \| `"técnico"` |
-| `diabetes_type` | VARCHAR | NULL | Tipo de diabetes: `"type1"` \| `"type2"` |
+| `diabetes_type` | VARCHAR | NULL | Tipo de diabetes: `"type1"` \| `"type2"` \| `"dmg"` |
 | `created_at` | TIMESTAMPTZ | NOT NULL | UTC de criação |
 | `updated_at` | TIMESTAMPTZ | NOT NULL | Atualizado via `onupdate` |
 

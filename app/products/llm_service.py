@@ -50,6 +50,11 @@ _DIABETES_HINTS: dict[str, str] = {
         "O paciente tem Diabetes Tipo 2. "
         "Priorize índice glicêmico, carga glicêmica e padrão dietético geral."
     ),
+    "dmg": (
+        "A paciente tem Diabetes Mellitus Gestacional. "
+        "Priorize controle glicêmico pós-prandial, limite de carboidratos por refeição "
+        "e ingredientes contraindicados na gestação."
+    ),
 }
 
 

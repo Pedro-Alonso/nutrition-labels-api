@@ -194,7 +194,7 @@ Retorna o perfil do usuário autenticado.
 | Campo | Tipo | Descrição |
 |---|---|---|
 | `language_level` | `"simples"` \| `"padrão"` \| `"técnico"` \| `null` | Nível de linguagem do resumo clínico gerado por LLM |
-| `diabetes_type` | `"type1"` \| `"type2"` \| `null` | Tipo de diabetes — personaliza o foco do resumo clínico |
+| `diabetes_type` | `"type1"` \| `"type2"` \| `"dmg"` \| `null` | Tipo de diabetes — personaliza o foco do resumo clínico |
 
 ---
 
@@ -216,7 +216,7 @@ Atualiza o perfil do usuário autenticado.
 |---|---|---|
 | `display_name` | string \| null | Nome de exibição (opcional) |
 | `language_level` | `"simples"` \| `"padrão"` \| `"técnico"` \| null | Nível de linguagem para resumos LLM |
-| `diabetes_type` | `"type1"` \| `"type2"` \| null | Tipo de diabetes |
+| `diabetes_type` | `"type1"` \| `"type2"` \| `"dmg"` \| null | Tipo de diabetes |
 
 **Resposta 200** — mesmo schema de `GET /me`
 
