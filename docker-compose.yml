@@ -6,6 +6,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    # .env fornece GROQ_API_KEY (e demais chaves) ao container.
+    # Valores em `environment:` abaixo têm precedência sobre o env_file.
+    env_file:
+      - .env
     environment:
       DATABASE_URL: "postgresql+asyncpg://rotulos_user:rotulos_pass@db:5432/rotulos_db"
       SECRET_KEY: "dev-secret-key-nao-usar-em-producao-32bytes!"
