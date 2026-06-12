@@ -22,6 +22,25 @@ Retorne APENAS os ingredientes separados por vírgula.
 Se um texto for genuinamente ambíguo (pode ser ingrediente), mantenha-o.
 NUNCA explique, adicione texto ou invente ingredientes. Copie os nomes verbatim."""
 
+_REFUSAL_MARKERS = (
+    "não há",
+    "nao ha",
+    "nenhum ingrediente",
+    "texto fornecido",
+)
+
+
+def _is_refusal(text: str) -> bool:
+    """Detecta recusas/explicações da LLM em vez da lista de ingredientes esperada."""
+    normalized = text.strip().lower()
+    if not normalized:
+        return False
+    if any(marker in normalized for marker in _REFUSAL_MARKERS):
+        return True
+    # Resposta longa sem vírgula provavelmente é uma frase explicativa, não uma lista.
+    return len(normalized) > 60 and "," not in normalized
+
+
 _SUMMARY_SYSTEM_BASE = """\
 Você é um nutricionista que reporta análise clínica de rótulos a pacientes diabéticos.
 REGRAS OBRIGATÓRIAS — sem exceção:
@@ -70,7 +89,10 @@ async def clean_ingredients_text(raw_text: str, api_key: str) -> str:
                 {"role": "user", "content": raw_text},
             ],
         )
-        return completion.choices[0].message.content or raw_text
+        content = completion.choices[0].message.content or raw_text
+        if _is_refusal(content):
+            return ""
+        return content
     except Exception:
         logger.exception("Falha na limpeza LLM de ingredientes — usando texto original")
         return raw_text
