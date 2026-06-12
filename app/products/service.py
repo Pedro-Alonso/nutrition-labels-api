@@ -174,7 +174,7 @@ async def record_product_scan(
         image_hash=hashlib.sha256(barcode.encode("utf-8")).hexdigest(),
         detected_format="ingredient",
         winning_preset=None,
-        passed=False,
+        passed=True,
         risco_global=analysis.risco_global if analysis is not None else None,
         result_json=result_json,
         created_at=datetime.now(timezone.utc),

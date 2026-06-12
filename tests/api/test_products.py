@@ -165,6 +165,9 @@ async def test_create_product_persists_scan_for_history(
     payload = after.json()
     assert payload["total"] == 1
     assert len(payload["items"]) == 1
+    # Scan do fluxo de produtos é marcado como revisado (sem banner de
+    # "baixa qualidade" no histórico).
+    assert payload["items"][0]["passed"] is True
 
 
 async def test_create_product_409_duplicate(
