@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 import logging
 
 from groq import AsyncGroq
 
 from app.analysis.schemas import IngredientAnalysisSchema
+from app.products.schemas import NutritionalTableData
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +23,30 @@ REMOVER sem exceção:
 Retorne APENAS os ingredientes separados por vírgula.
 Se um texto for genuinamente ambíguo (pode ser ingrediente), mantenha-o.
 NUNCA explique, adicione texto ou invente ingredientes. Copie os nomes verbatim."""
+
+_TABLE_SYSTEM = """\
+Você recebe o texto bruto extraído por OCR de uma tabela nutricional de rótulo \
+alimentício brasileiro. Sua ÚNICA tarefa: estruturar essas informações em JSON.
+
+Responda APENAS com um objeto JSON neste formato:
+{
+  "portion_description": "<descrição da porção, ex.: 'Porção de 30g (2 colheres de sopa)', ou null>",
+  "columns": ["<rótulo da 1ª coluna de valores>", "<rótulo da 2ª coluna, se houver>"],
+  "rows": [
+    {"nutrient": "<nome do nutriente>", "values": ["<valor1>", "<valor2>"]}
+  ]
+}
+
+REGRAS OBRIGATÓRIAS:
+- Cole a unidade (g, mg, kcal) junto ao número, sem espaço (ex.: "15g", "120kcal").
+- A coluna de %VD deve conter o número seguido de "%", ou "**" quando o rótulo não
+  traz %VD para aquele nutriente.
+- Copie os números EXATAMENTE como aparecem no texto (verbatim) — não arredonde,
+  não converta unidades, não calcule valores.
+- NUNCA invente nutrientes, valores ou colunas que não estejam no texto.
+- Se o texto não contiver uma tabela nutricional reconhecível, responda com
+  {"portion_description": null, "columns": [], "rows": []}.
+- NUNCA explique, adicione markdown ou texto fora do JSON."""
 
 _REFUSAL_MARKERS = (
     "não há",
@@ -96,6 +122,33 @@ async def clean_ingredients_text(raw_text: str, api_key: str) -> str:
     except Exception:
         logger.exception("Falha na limpeza LLM de ingredientes — usando texto original")
         return raw_text
+
+
+async def clean_nutritional_table(raw_text: str, api_key: str) -> NutritionalTableData | None:
+    """Extrai a tabela nutricional estruturada via LLM. Retorna None em caso de erro,
+    JSON inválido ou tabela sem linhas (OCR ilegível)."""
+    try:
+        client = AsyncGroq(api_key=api_key)
+        completion = await client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            temperature=0,
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": _TABLE_SYSTEM},
+                {"role": "user", "content": raw_text},
+            ],
+        )
+        content = completion.choices[0].message.content
+        if not content:
+            return None
+        data = json.loads(content)
+        table = NutritionalTableData(**data)
+        if not table.rows:
+            return None
+        return table
+    except Exception:
+        logger.exception("Falha na extração LLM da tabela nutricional")
+        return None
 
 
 async def generate_summary(
