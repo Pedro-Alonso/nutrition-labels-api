@@ -143,6 +143,30 @@ async def test_create_product_with_ingredients(
         assert "ingredientes_identificados" in data["analysis"]
 
 
+async def test_create_product_persists_scan_for_history(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Criar um produto deve registrar um Scan no histórico do usuário."""
+    headers = {"Authorization": f"Bearer {auth_token}"}
+
+    # Histórico começa vazio.
+    before = await client.get("/api/v1/users/me/scans", headers=headers)
+    assert before.status_code == 200
+    assert before.json()["total"] == 0
+
+    await _create_product(
+        client,
+        auth_token,
+        body={"ingredients": {"items": ["açúcar", "sal"]}},
+    )
+
+    after = await client.get("/api/v1/users/me/scans", headers=headers)
+    assert after.status_code == 200
+    payload = after.json()
+    assert payload["total"] == 1
+    assert len(payload["items"]) == 1
+
+
 async def test_create_product_409_duplicate(
     client: AsyncClient, auth_token: str
 ) -> None:
