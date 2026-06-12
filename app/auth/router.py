@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth import service as auth_service
@@ -11,6 +11,7 @@ from app.auth.schemas import (
     ChangePasswordRequest,
     LoginRequest,
     LogoutRequest,
+    LogoutResponse,
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
@@ -77,9 +78,9 @@ async def refresh_token(body: RefreshRequest):
     return AccessTokenResponse(access_token=create_access_token(user_id))
 
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/logout", response_model=LogoutResponse)
 async def logout(
-    body: LogoutRequest,
+    body: LogoutRequest | None = Body(None),
     raw_token: str = Depends(oauth2_scheme),
     user_id: str = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db),
@@ -94,15 +95,18 @@ async def logout(
         )
         await auth_service.revoke_token(db, payload_access["jti"], user_id, expires_at)
 
-    payload_refresh = verify_refresh_token(body.refresh_token)
-    if payload_refresh and payload_refresh.get("jti"):
-        exp = payload_refresh.get("exp")
-        expires_at = (
-            datetime.fromtimestamp(exp, tz=timezone.utc)
-            if exp
-            else datetime.now(timezone.utc)
-        )
-        await auth_service.revoke_token(db, payload_refresh["jti"], user_id, expires_at)
+    if body is not None:
+        payload_refresh = verify_refresh_token(body.refresh_token)
+        if payload_refresh and payload_refresh.get("jti"):
+            exp = payload_refresh.get("exp")
+            expires_at = (
+                datetime.fromtimestamp(exp, tz=timezone.utc)
+                if exp
+                else datetime.now(timezone.utc)
+            )
+            await auth_service.revoke_token(db, payload_refresh["jti"], user_id, expires_at)
+
+    return {"message": "Logout efetuado com sucesso."}
 
 
 @router.put("/password", status_code=status.HTTP_204_NO_CONTENT)
