@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import re
 import uuid
 from datetime import datetime, timezone
@@ -7,6 +8,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.analysis.models import Scan
 from app.analysis.schemas import IngredientAnalysisSchema, IngredientItemSchema
 from app.products.models import IngredientList, NutritionalTable, Product
 from app.products.schemas import (
@@ -145,6 +147,40 @@ def build_product_response(product: Product, analyzer=None) -> ProductResponse:
         created_at=product.created_at,
         updated_at=product.updated_at,
     )
+
+
+async def record_product_scan(
+    db: AsyncSession,
+    user_id: str,
+    barcode: str,
+    analysis: IngredientAnalysisSchema | None,
+) -> None:
+    """Persiste um Scan no histórico do usuário ao criar um produto.
+
+    O fluxo de produtos não passa por `POST /analyze`, então sem isto o
+    histórico (`GET /users/me/scans`) ficaria vazio. `result_json` segue o
+    shape de `AnalyzeResponse` para a tela de detalhe do app consumir sem ajuste.
+    Não há imagem neste fluxo (corpo JSON): `image_hash` usa o SHA-256 do barcode.
+    """
+    result_json = {
+        "barcode": barcode,
+        "ingredient_analysis": analysis.model_dump() if analysis is not None else None,
+        "llm_summary": analysis.natural_language_summary if analysis is not None else None,
+        "final_postprocessed_text": "",
+    }
+    scan = Scan(
+        id=str(uuid.uuid4()),
+        user_id=user_id,
+        image_hash=hashlib.sha256(barcode.encode("utf-8")).hexdigest(),
+        detected_format="ingredient",
+        winning_preset=None,
+        passed=False,
+        risco_global=analysis.risco_global if analysis is not None else None,
+        result_json=result_json,
+        created_at=datetime.now(timezone.utc),
+    )
+    db.add(scan)
+    await db.commit()
 
 
 async def get_by_barcode(db: AsyncSession, barcode: str) -> Product | None:

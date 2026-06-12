@@ -245,7 +245,24 @@ async def create_product(
 
     product = await product_service.create_product(db, barcode, user_id, body)
     analyzer = _get_analyzer(request)
-    return product_service.build_product_response(product, analyzer)
+    response = product_service.build_product_response(product, analyzer)
+
+    settings = get_settings()
+    user = await _get_optional_user(request, db)
+
+    # Resumo em linguagem natural (personalizado), se Groq configurado.
+    if settings.groq_api_key and response.analysis is not None:
+        response.analysis.natural_language_summary = await generate_summary(
+            response.analysis,
+            settings.groq_api_key,
+            language_level=getattr(user, "language_level", None),
+            diabetes_type=getattr(user, "diabetes_type", None),
+        )
+
+    # Persiste um Scan para o histórico do usuário.
+    await product_service.record_product_scan(db, user_id, barcode, response.analysis)
+
+    return response
 
 
 # -----------------------------------------------------------------------
