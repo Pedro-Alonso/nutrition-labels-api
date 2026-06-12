@@ -45,6 +45,35 @@ async def test_register_without_display_name(client: AsyncClient) -> None:
     assert resp.json()["display_name"] is None
 
 
+async def test_register_persists_profile_fields(client: AsyncClient) -> None:
+    resp = await client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": "perfil@example.com",
+            "password": "senha12345",
+            "diabetes_type": "DM2",
+            "language_level": "leigo",
+        },
+    )
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["diabetes_type"] == "DM2"
+    assert data["language_level"] == "leigo"
+
+    login = await client.post(
+        "/api/v1/auth/login",
+        json={"email": "perfil@example.com", "password": "senha12345"},
+    )
+    access = login.json()["access_token"]
+    me = await client.get(
+        "/api/v1/users/me",
+        headers={"Authorization": f"Bearer {access}"},
+    )
+    assert me.status_code == 200
+    assert me.json()["diabetes_type"] == "DM2"
+    assert me.json()["language_level"] == "leigo"
+
+
 async def test_login_success(client: AsyncClient, test_user: dict) -> None:
     resp = await client.post(
         "/api/v1/auth/login",

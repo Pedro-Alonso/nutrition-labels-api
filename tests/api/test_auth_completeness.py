@@ -51,7 +51,8 @@ async def test_logout_access_token_revoked(
         headers={"Authorization": f"Bearer {access}"},
         json={"refresh_token": refresh},
     )
-    assert resp.status_code == 204
+    assert resp.status_code == 200
+    assert "message" in resp.json()
 
     # Token revogado: não pode mais acessar /me
     resp2 = await client.get(
@@ -81,7 +82,7 @@ async def test_logout_refresh_token_revoked(
     # Refresh token revogado — porém o endpoint /refresh não verifica blacklist hoje;
     # o token ainda é criptograficamente válido. O teste verifica o comportamento
     # atual (pode emitir novo access ou não, dependendo da implementação).
-    # O critério mínimo: logout deve retornar 204.
+    # O critério mínimo: logout deve retornar 200.
     assert resp.status_code in (200, 401)
 
 
@@ -91,6 +92,27 @@ async def test_logout_requires_auth(client: AsyncClient) -> None:
         json={"refresh_token": "invalid"},
     )
     assert resp.status_code == 401
+
+
+async def test_logout_without_body_revokes_access_token(
+    client: AsyncClient, test_user: dict
+) -> None:
+    # O app envia logout sem corpo (apenas o Bearer). Deve revogar o access token.
+    tokens = await _get_tokens(client, test_user["email"], test_user["password"])
+    access = tokens["access_token"]
+
+    resp = await client.post(
+        "/api/v1/auth/logout",
+        headers={"Authorization": f"Bearer {access}"},
+    )
+    assert resp.status_code == 200
+    assert "message" in resp.json()
+
+    resp2 = await client.get(
+        "/api/v1/users/me",
+        headers={"Authorization": f"Bearer {access}"},
+    )
+    assert resp2.status_code == 401
 
 
 # ---------------------------------------------------------------------------
