@@ -19,6 +19,22 @@ from app.products.schemas import (
 )
 
 
+def split_ingredient_text(raw: str) -> list[str]:
+    """Quebra texto cru de OCR em itens de ingredientes.
+
+    Usa vírgula/ponto-e-vírgula como separador; na ausência deles, cai para
+    quebras de linha (listas em coluna estreita não usam vírgula). Descarta
+    fragmentos curtos ou puramente numéricos (ruído de OCR).
+    """
+    raw = (raw or "").strip()
+    if not raw:
+        return []
+
+    delimiter = r"[,;]" if re.search(r"[,;]", raw) else r"[\r\n]+"
+    parts = [t.strip(" \t-•·.") for t in re.split(delimiter, raw)]
+    return [p for p in parts if len(p) >= 2 and not p.isdigit()]
+
+
 def parse_postprocessed_to_nutritional_table(text: str) -> NutritionalTableData | None:
     """Converte o texto pós-processado do OCR em NutritionalTableData estruturada.
 
@@ -50,6 +66,11 @@ def parse_postprocessed_to_nutritional_table(text: str) -> NutritionalTableData 
 
         nutrient = parts[0]
         values = parts[1:]
+        # Descarta linhas-cabeçalho/ruído (ex.: "INFORMAÇÃO NUTRICIONAL",
+        # "Porções por embalagem"): uma linha de nutriente precisa de ao menos
+        # um valor numérico.
+        if not any(any(ch.isdigit() for ch in v) for v in values):
+            continue
         if nutrient:
             rows.append(NutritionalRowData(nutrient=nutrient, values=values))
 

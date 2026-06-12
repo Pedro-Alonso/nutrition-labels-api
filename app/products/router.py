@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import re
 
 from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -203,11 +202,17 @@ async def ocr_preview(
         except ValueError as exc:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
 
-        if outcome.ingredient_report is not None:
+        if outcome.ingredient_report is not None and outcome.ingredient_report.tokens_found:
             items = list(outcome.ingredient_report.tokens_found)
         else:
-            raw = outcome.final_ocr_text.strip()
-            items = [t.strip() for t in re.split(r"[,;]", raw) if t.strip()] if raw else []
+            items = product_service.split_ingredient_text(outcome.final_ocr_text)
+
+        # Limpeza LLM opcional: remove alegações e ruído OCR antes do preview.
+        if settings.groq_api_key and items:
+            cleaned = await clean_ingredients_text(", ".join(items), settings.groq_api_key)
+            cleaned_items = [t.strip() for t in cleaned.split(",") if t.strip()]
+            if cleaned_items:
+                items = cleaned_items
 
         ing_data = IngredientsData(items=items) if items else None
 
