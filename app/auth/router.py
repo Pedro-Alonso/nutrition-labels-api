@@ -40,7 +40,12 @@ async def register(request: Request, body: RegisterRequest, db: AsyncSession = D
             detail="E-mail já cadastrado.",
         )
     user = await auth_service.create_user(
-        db, email=body.email, password=body.password, display_name=body.display_name
+        db,
+        email=body.email,
+        password=body.password,
+        display_name=body.display_name,
+        diabetes_type=body.diabetes_type,
+        language_level=body.language_level,
     )
     return user
 

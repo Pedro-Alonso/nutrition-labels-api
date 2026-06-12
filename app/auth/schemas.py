@@ -7,6 +7,8 @@ class RegisterRequest(BaseModel):
     email: str
     password: str
     display_name: str | None = None
+    diabetes_type: str | None = None
+    language_level: str | None = None
 
     @field_validator("password")
     @classmethod

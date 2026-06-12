@@ -22,12 +22,16 @@ async def create_user(
     email: str,
     password: str,
     display_name: str | None = None,
+    diabetes_type: str | None = None,
+    language_level: str | None = None,
 ) -> User:
     user = User(
         id=str(uuid.uuid4()),
         email=email.lower(),
         password_hash=hash_password(password),
         display_name=display_name,
+        diabetes_type=diabetes_type,
+        language_level=language_level,
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
     )
