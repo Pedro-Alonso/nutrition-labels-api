@@ -12,7 +12,11 @@ from app.core.database import get_db
 from app.core.dependencies import get_current_user_id
 from app.core.security import verify_access_token
 from app.products import service as product_service
-from app.products.llm_service import clean_ingredients_text, generate_summary
+from app.products.llm_service import (
+    clean_ingredients_text,
+    clean_nutritional_table,
+    generate_summary,
+)
 from app.products.schemas import (
     IngredientsData,
     OcrPreviewResponse,
@@ -52,6 +56,15 @@ async def _get_optional_user(request: Request, db: AsyncSession):
         return None
     from app.users import service as user_service
     return await user_service.get_user_by_id(db, payload["sub"])
+
+
+_PHRASE_LIKE_MIN_LENGTH = 60
+
+
+def _looks_like_single_phrase(items: list[str]) -> bool:
+    """Detecta um item único e longo sem separadores — provável frase/recusa
+    do OCR ou da LLM, não um ingrediente real."""
+    return len(items) == 1 and len(items[0]) > _PHRASE_LIKE_MIN_LENGTH
 
 
 async def _read_upload(upload: UploadFile, max_bytes: int) -> bytes:
@@ -187,9 +200,16 @@ async def ocr_preview(
             )
         except ValueError as exc:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
-        nt_data = product_service.parse_postprocessed_to_nutritional_table(
-            outcome.final_postprocessed_text
-        )
+
+        # Extração estruturada via LLM (preferida); parser regex é o fallback.
+        if settings.groq_api_key:
+            nt_data = await clean_nutritional_table(
+                outcome.final_postprocessed_text, settings.groq_api_key
+            )
+        if nt_data is None:
+            nt_data = product_service.parse_postprocessed_to_nutritional_table(
+                outcome.final_postprocessed_text
+            )
 
     if image_ingredients is not None:
         ingredients_bytes = await _read_upload(image_ingredients, max_bytes)
@@ -213,6 +233,11 @@ async def ocr_preview(
             cleaned_items = [t.strip() for t in cleaned.split(",") if t.strip()]
             if cleaned_items:
                 items = cleaned_items
+
+        # Descarta item único sem separadores que pareça frase/recusa (OCR
+        # ilegível), em vez de salvá-lo como "ingrediente".
+        if _looks_like_single_phrase(items):
+            items = []
 
         ing_data = IngredientsData(items=items) if items else None
 
