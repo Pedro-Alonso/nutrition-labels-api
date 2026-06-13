@@ -24,6 +24,6 @@ build/
 # Credenciais (gerenciadas via volume ou secret manager)
 secrets/
 
-# README e docs
+# README (docs/ é necessário no build context para o stage de teste,
+# que copia docs/ para validar referências de documentação em testes)
 README.md
-docs/
