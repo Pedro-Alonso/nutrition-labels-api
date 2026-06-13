@@ -2,19 +2,24 @@
 
 **Validates: R6.4, R6.10**
 
-Dois exemplos verificam que uma falha de GCV em ``on_failure="raise"``
-não corrompe nem apaga os artefatos já produzidos por outras imagens:
+No backend REST, ``AuditRecorder`` é um no-op (``NullAuditRecorder`` — ver
+``audit/recorder.py``): ``finalize()`` sempre devolve ``Path("/dev/null")``,
+sem gravar nenhum arquivo em disco. Dois exemplos verificam que esse
+contrato no-op se mantém quando uma segunda imagem falha durante o
+processamento:
 
-- R6.4: ``read()`` bem-sucedida em ``img_a`` grava ``_summary.json``;
-  ``read()`` com GCV falhando em ``img_b`` levanta ``GcvError``;
-  ``extractions/img_a/_summary.json`` continua íntegro.
+- R6.4: ``read()`` bem-sucedida em ``img_a`` devolve ``ReadOutcome`` com
+  ``summary_path == Path("/dev/null")`` e campos populados em memória;
+  ``read()`` com GCV falhando em ``img_b`` levanta ``GcvError`` sem afetar
+  o resultado já retornado para ``img_a`` — não há arquivo compartilhado
+  em disco para corromper.
 - R6.10: quando GCV falha antes de qualquer gravação de cache
   (``cache_enabled=True`` mas fetch levanta antes de ``cache.put``),
   o ``cache_dir`` permanece vazio.
 
-O ``NutritionReader`` usa ``AuditRecorder(clean_previous=True)`` que
-apaga apenas a pasta da imagem corrente — as demais nunca são tocadas
-pela lógica de cleanup.
+O ``NutritionReader`` usa ``AuditRecorder(clean_previous=True)``, que no
+backend REST aceita o parâmetro sem erro mas não realiza nenhuma operação
+de limpeza ou escrita em disco.
 """
 
 from __future__ import annotations
@@ -166,14 +171,15 @@ def _build_reader_raise_mode(
 
 
 def test_raise_mode_leaves_other_image_artifacts_intact(tmp_path: Path) -> None:
-    """Falha de GCV em img_b não apaga artefatos de img_a.
+    """Falha de GCV em img_b não corrompe o resultado em memória de img_a.
 
     **Validates: R6.4**
 
-    A lógica do ``AuditRecorder(clean_previous=True)`` apaga apenas
-    ``extractions/<slug_da_imagem_corrente>/`` antes de cada execução.
-    Um erro levantado no meio do processamento de img_b não deve tocar
-    em ``extractions/img_a/``.
+    Com ``AuditRecorder`` (Null), ``summary_path`` é sempre o sentinela
+    ``Path("/dev/null")`` — nenhum arquivo é gravado. A invariante R6.4 se
+    traduz em: o ``ReadOutcome`` de img_a, já retornado antes do
+    processamento de img_b, permanece íntegro e com os campos esperados
+    populados mesmo após a falha de GCV em img_b.
     """
 
     call_count = 0
@@ -194,27 +200,26 @@ def test_raise_mode_leaves_other_image_artifacts_intact(tmp_path: Path) -> None:
     _write_tiny_png(img_a)
     _write_tiny_png(img_b)
 
-    # img_a: deve ter sucesso e gravar _summary.json.
+    # img_a: deve ter sucesso. AuditRecorder (Null) não grava nada em
+    # disco — summary_path é o sentinela do recorder.
     outcome_a = reader.read(img_a, ReaderOptions(roi_enabled=False))
-    assert outcome_a.summary_path is not None
-    summary_a = outcome_a.summary_path
-    assert summary_a.exists(), "extractions/img_a/_summary.json deveria existir"
-
-    # Verificar que é JSON válido antes de continuar.
-    json.loads(summary_a.read_text(encoding="utf-8"))
+    assert outcome_a.summary_path == Path("/dev/null")
+    assert outcome_a.winning_preset is not None, (
+        "img_a deveria ter um preset vencedor mesmo sem persistência em disco"
+    )
+    winning_preset_a = outcome_a.winning_preset
+    final_ocr_text_a = outcome_a.final_ocr_text
 
     # img_b: deve levantar GcvError.
     with pytest.raises(GcvError) as exc_info:
         reader.read(img_b, ReaderOptions(roi_enabled=False))
     assert exc_info.value.error == "generic_error"
 
-    # Invariante R6.4: artefatos de img_a continuam intactos.
-    assert summary_a.exists(), (
-        "extractions/img_a/_summary.json foi removido após falha em img_b; "
-        "AuditRecorder não deve tocar pastas de outras imagens"
-    )
-    data = json.loads(summary_a.read_text(encoding="utf-8"))
-    assert "winning_preset" in data, "estrutura de _summary.json foi corrompida"
+    # Invariante R6.4: o ReadOutcome de img_a permanece íntegro após a
+    # falha em img_b — não há arquivo compartilhado em disco para corromper.
+    assert outcome_a.summary_path == Path("/dev/null")
+    assert outcome_a.winning_preset == winning_preset_a
+    assert outcome_a.final_ocr_text == final_ocr_text_a
 
 
 # ---------------------------------------------------------------------------
