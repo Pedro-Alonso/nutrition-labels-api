@@ -4,13 +4,15 @@ import hashlib
 import re
 import uuid
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analysis.models import Scan
 from app.analysis.schemas import IngredientAnalysisSchema, IngredientItemSchema
-from app.products.models import IngredientList, NutritionalTable, Product
+from app.products.llm_service import generate_summary
+from app.products.models import IngredientList, NutritionalTable, Product, ProductSummary
 from app.products.schemas import (
     IngredientsData,
     NutritionalRowData,
@@ -19,6 +21,9 @@ from app.products.schemas import (
     ProductResponse,
     ProductUpdateRequest,
 )
+
+if TYPE_CHECKING:
+    from app.users.models import User
 
 
 def split_ingredient_text(raw: str) -> list[str]:
@@ -149,6 +154,71 @@ def build_product_response(product: Product, analyzer=None) -> ProductResponse:
     )
 
 
+async def get_or_create_summary(
+    db: AsyncSession,
+    product: Product,
+    analysis: IngredientAnalysisSchema | None,
+    user: "User | None",
+    api_key: str | None,
+) -> str | None:
+    """Retorna o resumo em linguagem natural cacheado ou gera um novo via LLM.
+
+    Cache por `(barcode, diabetes_type, language_level)`. Cache-hit é reutilizado
+    apenas se `summary.updated_at >= product.updated_at` — qualquer edição do
+    produto invalida o cache e força regeneração.
+    """
+    if analysis is None:
+        return None
+
+    diabetes_type = getattr(user, "diabetes_type", None)
+    language_level = getattr(user, "language_level", None)
+
+    result = await db.execute(
+        select(ProductSummary).where(
+            ProductSummary.barcode == product.barcode,
+            ProductSummary.diabetes_type == diabetes_type,
+            ProductSummary.language_level == language_level,
+        )
+    )
+    cached = result.scalar_one_or_none()
+
+    if cached is not None and cached.updated_at >= product.updated_at:
+        return cached.summary
+
+    if not api_key:
+        return cached.summary if cached is not None else None
+
+    summary_text = await generate_summary(
+        analysis,
+        api_key,
+        language_level=language_level,
+        diabetes_type=diabetes_type,
+        name=product.name,
+        brand=product.brand,
+    )
+    if summary_text is None:
+        return cached.summary if cached is not None else None
+
+    now = datetime.now(timezone.utc)
+    if cached is not None:
+        cached.summary = summary_text
+        cached.updated_at = now
+    else:
+        db.add(
+            ProductSummary(
+                id=str(uuid.uuid4()),
+                barcode=product.barcode,
+                diabetes_type=diabetes_type,
+                language_level=language_level,
+                summary=summary_text,
+                updated_at=now,
+            )
+        )
+
+    await db.commit()
+    return summary_text
+
+
 async def record_product_scan(
     db: AsyncSession,
     user_id: str,
@@ -157,12 +227,16 @@ async def record_product_scan(
     name: str | None = None,
     brand: str | None = None,
 ) -> None:
-    """Persiste um Scan no histórico do usuário ao criar um produto.
+    """Registra/atualiza o Scan do produto no histórico do usuário.
 
     O fluxo de produtos não passa por `POST /analyze`, então sem isto o
     histórico (`GET /users/me/scans`) ficaria vazio. `result_json` segue o
     shape de `AnalyzeResponse` para a tela de detalhe do app consumir sem ajuste.
     Não há imagem neste fluxo (corpo JSON): `image_hash` usa o SHA-256 do barcode.
+
+    Dedupe por `(user_id, image_hash)`: reler o mesmo produto atualiza o Scan
+    existente (bump de `created_at` para o topo do histórico) em vez de criar
+    uma entrada duplicada.
     """
     result_json = {
         "barcode": barcode,
@@ -172,18 +246,33 @@ async def record_product_scan(
         "llm_summary": analysis.natural_language_summary if analysis is not None else None,
         "final_postprocessed_text": "",
     }
-    scan = Scan(
-        id=str(uuid.uuid4()),
-        user_id=user_id,
-        image_hash=hashlib.sha256(barcode.encode("utf-8")).hexdigest(),
-        detected_format="ingredient",
-        winning_preset=None,
-        passed=True,
-        risco_global=analysis.risco_global if analysis is not None else None,
-        result_json=result_json,
-        created_at=datetime.now(timezone.utc),
+    image_hash = hashlib.sha256(barcode.encode("utf-8")).hexdigest()
+    risco_global = analysis.risco_global if analysis is not None else None
+
+    result = await db.execute(
+        select(Scan).where(Scan.user_id == user_id, Scan.image_hash == image_hash)
     )
-    db.add(scan)
+    scan = result.scalar_one_or_none()
+
+    if scan is not None:
+        scan.created_at = datetime.now(timezone.utc)
+        scan.result_json = result_json
+        scan.risco_global = risco_global
+        scan.passed = True
+    else:
+        scan = Scan(
+            id=str(uuid.uuid4()),
+            user_id=user_id,
+            image_hash=image_hash,
+            detected_format="ingredient",
+            winning_preset=None,
+            passed=True,
+            risco_global=risco_global,
+            result_json=result_json,
+            created_at=datetime.now(timezone.utc),
+        )
+        db.add(scan)
+
     await db.commit()
 
 

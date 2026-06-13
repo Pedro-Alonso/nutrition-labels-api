@@ -15,7 +15,6 @@ from app.products import service as product_service
 from app.products.llm_service import (
     clean_ingredients_text,
     clean_nutritional_table,
-    generate_summary,
 )
 from app.products.schemas import (
     IngredientsData,
@@ -133,17 +132,11 @@ async def get_product_analysis(
             detail="Produto não possui lista de ingredientes cadastrada.",
         )
 
-    # 3. Resumo em linguagem natural (personalizado se usuário autenticado)
-    if settings.groq_api_key:
-        user = await _get_optional_user(request, db)
-        analysis.natural_language_summary = await generate_summary(
-            analysis,
-            settings.groq_api_key,
-            language_level=getattr(user, "language_level", None),
-            diabetes_type=getattr(user, "diabetes_type", None),
-            name=product.name,
-            brand=product.brand,
-        )
+    # 3. Resumo em linguagem natural (personalizado se usuário autenticado, com cache)
+    user = await _get_optional_user(request, db)
+    analysis.natural_language_summary = await product_service.get_or_create_summary(
+        db, product, analysis, user, settings.groq_api_key
+    )
 
     return analysis
 
@@ -163,7 +156,16 @@ async def get_product(
     if product is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Produto não encontrado.")
     analyzer = _get_analyzer(request)
-    return product_service.build_product_response(product, analyzer)
+    response = product_service.build_product_response(product, analyzer)
+
+    if response.analysis is not None:
+        settings = get_settings()
+        user = await _get_optional_user(request, db)
+        response.analysis.natural_language_summary = await product_service.get_or_create_summary(
+            db, product, response.analysis, user, settings.groq_api_key
+        )
+
+    return response
 
 
 # -----------------------------------------------------------------------
@@ -277,15 +279,10 @@ async def create_product(
     settings = get_settings()
     user = await _get_optional_user(request, db)
 
-    # Resumo em linguagem natural (personalizado), se Groq configurado.
-    if settings.groq_api_key and response.analysis is not None:
-        response.analysis.natural_language_summary = await generate_summary(
-            response.analysis,
-            settings.groq_api_key,
-            language_level=getattr(user, "language_level", None),
-            diabetes_type=getattr(user, "diabetes_type", None),
-            name=product.name,
-            brand=product.brand,
+    # Resumo em linguagem natural (personalizado, com cache).
+    if response.analysis is not None:
+        response.analysis.natural_language_summary = await product_service.get_or_create_summary(
+            db, product, response.analysis, user, settings.groq_api_key
         )
 
     # Persiste um Scan para o histórico do usuário.
