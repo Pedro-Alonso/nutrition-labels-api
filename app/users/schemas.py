@@ -29,6 +29,8 @@ class ScanSummaryResponse(BaseModel):
     passed: bool
     winning_preset: str | None
     risco_global: str | None
+    name: str | None = None
+    brand: str | None = None
 
     model_config = {"from_attributes": True}
 

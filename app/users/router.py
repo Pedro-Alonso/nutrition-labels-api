@@ -63,7 +63,19 @@ async def list_my_scans(
 ):
     scans, total = await user_service.list_user_scans(db, user_id, page=page, per_page=per_page)
     return PaginatedScans(
-        items=[ScanSummaryResponse.model_validate(s) for s in scans],
+        items=[
+            ScanSummaryResponse(
+                id=s.id,
+                created_at=s.created_at,
+                detected_format=s.detected_format,
+                passed=s.passed,
+                winning_preset=s.winning_preset,
+                risco_global=s.risco_global,
+                name=(s.result_json or {}).get("name"),
+                brand=(s.result_json or {}).get("brand"),
+            )
+            for s in scans
+        ],
         total=total,
         page=page,
         per_page=per_page,
