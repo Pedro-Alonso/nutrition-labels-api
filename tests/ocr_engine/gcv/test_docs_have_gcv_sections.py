@@ -14,34 +14,37 @@ from pathlib import Path
 
 import pytest
 
-# Raiz do monolito (teste-pytesseract/) — contém docs/PRESETS.md, docs/CONFIG.md,
-# docs/ARCHITECTURE.md e .kiro/steering/. Os testes GCV verificam se esses
-# arquivos do monolito foram atualizados para mencionar a feature cloud_vision.
-# Estrutura: tests/ocr_engine/gcv/  →  parents[3] = nutrition-labels-api/  →  parents[4] = monolito
-_PROJECT_ROOT = Path(__file__).resolve().parents[4]
+# Raiz do projeto (nutrition-labels-api/) — contém docs/ com a documentação
+# atualizada pela feature ``cloud_vision``.
+# Estrutura: tests/ocr_engine/gcv/  →  parents[3] = nutrition-labels-api/
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 # Arquivos que devem mencionar GCV, com pelo menos um dos marcadores listados.
 # Estrutura: (caminho_relativo_ao_projeto, marcadores_esperados)
 _DOC_REQUIREMENTS: list[tuple[str, list[str]]] = [
     (
-        "docs/PRESETS.md",
-        ["cloud_vision", "gcv", "GCV"],
-    ),
-    (
-        "docs/CONFIG.md",
-        ["cloud_vision", "gcv", "GCV"],
-    ),
-    (
-        "docs/ARCHITECTURE.md",
+        "docs/ocr-engine.md",
         ["cloud_vision", "CloudVisionPipeline", "GCV"],
     ),
     (
-        ".kiro/steering/nutrition.md",
-        ["cloud_vision", "CloudVisionPipeline"],
+        "docs/architecture.md",
+        ["cloud_vision", "CloudVisionPipeline", "GCV"],
     ),
     (
-        ".kiro/steering/nutrition-pipelines.md",
-        ["cloud_vision", "CloudVisionPipeline"],
+        "docs/api-reference.md",
+        ["cloud_vision", "gcv", "GCV"],
+    ),
+    (
+        "docs/database.md",
+        ["cloud_vision", "gcv", "GCV"],
+    ),
+    (
+        "docs/deployment.md",
+        ["cloud_vision", "gcv", "GCV"],
+    ),
+    (
+        "docs/testing.md",
+        ["cloud_vision", "CloudVisionPipeline", "GCV"],
     ),
 ]
 
