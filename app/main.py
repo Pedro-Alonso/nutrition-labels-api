@@ -63,7 +63,7 @@ settings = get_settings()
 app = FastAPI(
     title="Rótulos Backend",
     description="API de análise de rótulos alimentícios para pacientes diabéticos.",
-    version="1.0.0",
+    version="1.1.0",
     lifespan=lifespan,
 )
 
@@ -90,7 +90,7 @@ async def health_check():
     settings = get_settings()
     return {
         "status": "ok",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "dependencies": {
             "database": "not_checked",
             "tesseract": "not_checked",
