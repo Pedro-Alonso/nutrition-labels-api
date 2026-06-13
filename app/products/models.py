@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, String
+from sqlalchemy import DateTime, ForeignKey, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -77,3 +77,28 @@ class IngredientList(Base):
     )
 
     product: Mapped[Product] = relationship(back_populates="ingredient_list")
+
+
+class ProductSummary(Base):
+    __tablename__ = "product_summaries"
+    __table_args__ = (
+        UniqueConstraint(
+            "barcode", "diabetes_type", "language_level", name="uq_product_summary_cache_key"
+        ),
+    )
+
+    id: Mapped[str] = mapped_column(
+        String, primary_key=True, default=lambda: str(uuid.uuid4())
+    )
+    barcode: Mapped[str] = mapped_column(
+        String, ForeignKey("products.barcode", ondelete="CASCADE"), nullable=False, index=True
+    )
+    diabetes_type: Mapped[str | None] = mapped_column(String, nullable=True)
+    language_level: Mapped[str | None] = mapped_column(String, nullable=True)
+    summary: Mapped[str] = mapped_column(Text, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+        nullable=False,
+    )
