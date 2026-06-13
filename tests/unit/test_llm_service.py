@@ -10,10 +10,12 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+from app.analysis.schemas import IngredientAnalysisSchema
 from app.products.llm_service import (
     _is_refusal,
     clean_ingredients_text,
     clean_nutritional_table,
+    generate_summary,
 )
 from app.products.router import _looks_like_single_phrase
 
@@ -127,6 +129,39 @@ async def test_clean_ingredients_text_long_phrase_without_comma_returns_empty() 
 )
 def test_is_refusal(text: str, expected: bool) -> None:
     assert _is_refusal(text) == expected
+
+
+# ---------------------------------------------------------------------------
+# generate_summary — injeção de nome/marca do produto no prompt
+# ---------------------------------------------------------------------------
+
+_ANALYSIS = IngredientAnalysisSchema(
+    risco_global="ALTO",
+    ingredientes_identificados=[],
+    nao_identificados=[],
+)
+
+
+async def test_generate_summary_includes_product_name_and_brand() -> None:
+    client = _mock_groq_client("Resumo gerado.")
+    with patch("app.products.llm_service.AsyncGroq", return_value=client):
+        await generate_summary(
+            _ANALYSIS, "fake-key", name="Refrigerante Cola", brand="Marca X"
+        )
+
+    messages = client.chat.completions.create.call_args.kwargs["messages"]
+    user_content = messages[1]["content"]
+    assert 'Produto: "Refrigerante Cola Marca X"' in user_content
+
+
+async def test_generate_summary_without_name_or_brand_omits_product_line() -> None:
+    client = _mock_groq_client("Resumo gerado.")
+    with patch("app.products.llm_service.AsyncGroq", return_value=client):
+        await generate_summary(_ANALYSIS, "fake-key")
+
+    messages = client.chat.completions.create.call_args.kwargs["messages"]
+    user_content = messages[1]["content"]
+    assert "Produto:" not in user_content
 
 
 # ---------------------------------------------------------------------------
