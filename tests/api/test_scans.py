@@ -177,6 +177,38 @@ async def test_list_scans_empty(
     assert data["items"] == []
 
 
+async def test_list_scans_includes_product_name_and_brand(
+    client: AsyncClient, auth_token: str, db_session: AsyncSession
+) -> None:
+    user_id = await _get_user_id(client, auth_token)
+    await _insert_scans(db_session, user_id, count=1, name="Refrigerante Cola", brand="Marca X")
+
+    resp = await client.get(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 200
+    item = resp.json()["items"][0]
+    assert item["name"] == "Refrigerante Cola"
+    assert item["brand"] == "Marca X"
+
+
+async def test_list_scans_without_product_name_returns_null(
+    client: AsyncClient, auth_token: str, db_session: AsyncSession
+) -> None:
+    user_id = await _get_user_id(client, auth_token)
+    await _insert_scans(db_session, user_id, count=1)
+
+    resp = await client.get(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 200
+    item = resp.json()["items"][0]
+    assert item["name"] is None
+    assert item["brand"] is None
+
+
 # ---------------------------------------------------------------------------
 # Cache hit / miss
 # ---------------------------------------------------------------------------

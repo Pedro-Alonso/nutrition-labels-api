@@ -171,6 +171,8 @@ async def _insert_scans(
     user_id: str,
     count: int,
     image_hash_prefix: str = "",
+    name: str | None = None,
+    brand: str | None = None,
 ) -> list[Scan]:
     """Insere `count` scans para `user_id` diretamente via ORM, sem OCR."""
     scans: list[Scan] = []
@@ -194,6 +196,8 @@ async def _insert_scans(
                 "final_postprocessed_text": f"scan {i}",
                 "attempts": [],
                 "ingredient_analysis": None,
+                "name": name,
+                "brand": brand,
             },
             created_at=datetime.now(timezone.utc),
         )
