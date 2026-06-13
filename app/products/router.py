@@ -253,6 +253,40 @@ async def ocr_preview(
 
 
 # -----------------------------------------------------------------------
+# POST /{barcode}/scan — deve vir ANTES de POST /{barcode}
+# -----------------------------------------------------------------------
+
+@router.post("/{barcode}/scan", response_model=ProductResponse)
+async def scan_product(
+    barcode: str,
+    request: Request,
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    """Registra a leitura de um produto já cadastrado no histórico do usuário (scan-on-read)."""
+    product = await product_service.get_by_barcode(db, barcode)
+    if product is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Produto não encontrado.")
+
+    analyzer = _get_analyzer(request)
+    response = product_service.build_product_response(product, analyzer)
+
+    settings = get_settings()
+    user = await _get_optional_user(request, db)
+
+    if response.analysis is not None:
+        response.analysis.natural_language_summary = await product_service.get_or_create_summary(
+            db, product, response.analysis, user, settings.groq_api_key
+        )
+
+    await product_service.record_product_scan(
+        db, user_id, barcode, response.analysis, name=product.name, brand=product.brand
+    )
+
+    return response
+
+
+# -----------------------------------------------------------------------
 # POST /{barcode}
 # -----------------------------------------------------------------------
 
