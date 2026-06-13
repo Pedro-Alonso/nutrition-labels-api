@@ -18,11 +18,12 @@ dois casos. Em particular:
   ``block_count``, ``paragraph_count``, ``word_count`` e
   ``gcv_response_path`` permanecem com os mesmos valores derivados do
   mesmo ``response_json``.
-- O arquivo apontado por ``gcv_response_path`` existe em disco em
-  ambos os casos (Requirement 10.1 + 10.4): cache hit também grava a
-  cópia local da resposta crua, garantindo que a inspeção visual da
-  pasta ``images/pipeline/<input>/<NN>_<preset>/`` seja
-  indistinguível entre execuções com e sem chamada à API.
+- ``gcv_response_path`` é idêntico (mesmo sentinela) em ambos os casos
+  (Requirement 10.1 + 10.4): no backend REST, ``AuditRecorder`` é um
+  no-op (``NullAuditRecorder``) — ``save_stage``/``save_stage_json``
+  sempre devolvem ``Path("/dev/null")``, independentemente de
+  ``cache_hit``. A simetria entre hit e miss se mantém porque os dois
+  caminhos recebem exatamente o mesmo sentinela.
 
 Para falsificar a invariante, instanciamos dois ``CloudVisionPipeline``
 com stubs de ``GcvClient`` que retornam ``GcvFetchResult`` com o mesmo
@@ -261,12 +262,11 @@ def test_audit_is_symmetric_between_cache_hit_and_miss(
     - A mesma sequência de stages (mesmos rótulos, mesma ordem).
     - O mesmo conjunto de chaves em ``metadata``.
     - Os mesmos valores em ``metadata`` para todos os campos exceto
-      ``cache_hit`` (cujo valor reflete a origem da resposta) e
-      ``gcv_response_path`` (que aponta para arquivos em
-      ``project_root`` diferentes — comparamos pelo nome do arquivo).
-    - Existência física do arquivo de resposta apontado por
-      ``gcv_response_path`` em ambos os casos (cache hit também
-      grava a cópia local — Requirement 10.4).
+      ``cache_hit`` (cujo valor reflete a origem da resposta).
+    - ``gcv_response_path`` igual ao sentinela do ``NullAuditRecorder``
+      (``Path("/dev/null")``) em ambos os casos — o no-op recorder não
+      grava nenhuma cópia local da resposta, independentemente de
+      ``cache_hit`` (Requirement 10.1 + 10.4).
     """
 
     # ``tmp_path_factory`` é session-scoped; ``mktemp`` produz um
@@ -332,10 +332,11 @@ def test_audit_is_symmetric_between_cache_hit_and_miss(
 
     # ---------------------------------------------------------------
     # Invariante 3: valores idênticos em todos os campos exceto
-    # ``cache_hit`` (cujo valor reflete a origem) e
-    # ``gcv_response_path`` (que aponta para project_roots distintos).
+    # ``cache_hit`` (cujo valor reflete a origem). ``gcv_response_path``
+    # também é idêntico (ambos ``/dev/null``), mas isso é verificado
+    # separadamente na Invariante 4.
     # ---------------------------------------------------------------
-    for key in _REQUIRED_METADATA_KEYS - {"cache_hit", "gcv_response_path"}:
+    for key in _REQUIRED_METADATA_KEYS - {"cache_hit"}:
         assert result_miss.metadata[key] == result_hit.metadata[key], (
             f"metadata[{key!r}] diverge entre hit e miss: "
             f"miss={result_miss.metadata[key]!r}, "
@@ -347,29 +348,24 @@ def test_audit_is_symmetric_between_cache_hit_and_miss(
     assert result_hit.metadata["cache_hit"] is True
 
     # ---------------------------------------------------------------
-    # Invariante 4: ``gcv_response_path`` aponta para arquivo existente
-    # em ambos os casos. Requirements 10.1 e 10.4 — cache hit também
-    # grava a cópia local da resposta crua para que a auditoria seja
-    # autocontida (não depende do estado do cache no disco).
+    # Invariante 4: ``gcv_response_path`` é o sentinela do
+    # ``NullAuditRecorder`` (``Path("/dev/null")``) em ambos os casos.
+    # Requirements 10.1 e 10.4 — o no-op recorder não grava nenhuma
+    # cópia local da resposta, independentemente de ``cache_hit``; a
+    # simetria entre hit e miss se mantém porque ambos recebem
+    # exatamente o mesmo sentinela.
     # ---------------------------------------------------------------
     path_miss = Path(result_miss.metadata["gcv_response_path"])
     path_hit = Path(result_hit.metadata["gcv_response_path"])
-    assert path_miss.is_file(), (
-        f"miss: gcv_response_path={path_miss!r} não existe em disco — "
-        "cópia local da resposta crua não foi gravada"
+    assert path_miss == Path("/dev/null"), (
+        f"miss: gcv_response_path={path_miss!r} não é o sentinela "
+        "do NullAuditRecorder"
     )
-    assert path_hit.is_file(), (
-        f"hit: gcv_response_path={path_hit!r} não existe em disco — "
-        "cache hit deveria gravar cópia local idêntica (Requirement 10.4)"
+    assert path_hit == Path("/dev/null"), (
+        f"hit: gcv_response_path={path_hit!r} não é o sentinela "
+        "do NullAuditRecorder"
     )
-    # Os dois paths são absolutos mas vivem em ``project_root``
-    # diferentes; o nome do arquivo (input_slug + preset_slug + NN +
-    # stage) é o que pode ser comparado para confirmar simetria de
-    # naming canônico (Requirement 10.1).
-    assert path_miss.name == path_hit.name, (
-        f"naming canônico do gcv_response diverge entre hit e miss: "
-        f"miss={path_miss.name!r}, hit={path_hit.name!r}"
-    )
+    assert path_miss == path_hit
 
     # ---------------------------------------------------------------
     # Invariante 5: stages de overlay e response presentes em ambos os
