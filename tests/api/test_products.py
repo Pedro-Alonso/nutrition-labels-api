@@ -13,14 +13,20 @@ Cobre:
 - POST /{barcode}/ocr 422 sem imagens
 - POST /{barcode}/ocr retorna preview com imagem real
 - Rotas públicas (GET) acessíveis sem auth
+- GET /{barcode} popula analysis.natural_language_summary (cache de ProductSummary)
+- Cache-hit evita 2ª chamada ao Groq; regenera ao trocar personalização ou editar produto
+- POST /{barcode}/scan (scan-on-read): auth, 404, resposta com resumo, dedupe no histórico
 """
 from __future__ import annotations
 
 from pathlib import Path
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.config import get_settings
 
 FIXTURES = Path(__file__).parent.parent / "fixtures" / "images"
 
@@ -406,3 +412,209 @@ async def test_ocr_preview_does_not_save_to_db(
 
     result = await db_session.execute(select(Product).where(Product.barcode == BARCODE))
     assert result.scalar_one_or_none() is None
+
+
+# ---------------------------------------------------------------------------
+# GET /{barcode} — resumo em linguagem natural (cache de ProductSummary)
+# ---------------------------------------------------------------------------
+
+async def test_get_product_includes_natural_language_summary(
+    client: AsyncClient, auth_token: str
+) -> None:
+    data = await _create_product(
+        client,
+        auth_token,
+        body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+    )
+    if data["analysis"] is None:
+        return  # analyzer não disponível neste ambiente
+
+    resp = await client.get(f"/api/v1/products/{BARCODE}")
+    assert resp.status_code == 200
+    assert "natural_language_summary" in resp.json()["analysis"]
+
+
+async def test_get_product_summary_cache_hit_avoids_second_groq_call(
+    client: AsyncClient, auth_token: str
+) -> None:
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        return_value="Resumo de teste.",
+    ) as mock_generate:
+        data = await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+        if data["analysis"] is None:
+            return  # analyzer não disponível neste ambiente
+
+        resp1 = await client.get(f"/api/v1/products/{BARCODE}")
+        resp2 = await client.get(f"/api/v1/products/{BARCODE}")
+
+        assert resp1.status_code == 200
+        assert resp2.status_code == 200
+        assert resp1.json()["analysis"]["natural_language_summary"] == "Resumo de teste."
+        assert resp2.json()["analysis"]["natural_language_summary"] == "Resumo de teste."
+        # Criação + 2 GETs reaproveitam o mesmo cache (barcode, None, None).
+        assert mock_generate.call_count == 1
+
+
+async def test_get_product_summary_regenerates_on_personalization_change(
+    client: AsyncClient, auth_token: str
+) -> None:
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        side_effect=["Resumo padrão.", "Resumo personalizado."],
+    ) as mock_generate:
+        data = await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+        if data["analysis"] is None:
+            return  # analyzer não disponível neste ambiente
+
+        headers = {"Authorization": f"Bearer {auth_token}"}
+
+        resp1 = await client.get(f"/api/v1/products/{BARCODE}", headers=headers)
+        assert resp1.json()["analysis"]["natural_language_summary"] == "Resumo padrão."
+
+        put_resp = await client.put(
+            "/api/v1/users/me",
+            headers=headers,
+            json={"diabetes_type": "DM2", "language_level": "leigo"},
+        )
+        assert put_resp.status_code == 200
+
+        resp2 = await client.get(f"/api/v1/products/{BARCODE}", headers=headers)
+        assert (
+            resp2.json()["analysis"]["natural_language_summary"]
+            == "Resumo personalizado."
+        )
+        # Chave de cache (barcode, diabetes_type, language_level) mudou → 2ª chamada ao Groq.
+        assert mock_generate.call_count == 2
+
+
+async def test_get_product_summary_regenerates_after_product_update(
+    client: AsyncClient, auth_token: str
+) -> None:
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        side_effect=["Resumo original.", "Resumo atualizado."],
+    ) as mock_generate:
+        data = await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+        if data["analysis"] is None:
+            return  # analyzer não disponível neste ambiente
+
+        headers = {"Authorization": f"Bearer {auth_token}"}
+
+        put_resp = await client.put(
+            f"/api/v1/products/{BARCODE}",
+            headers=headers,
+            json={"name": "Produto Atualizado"},
+        )
+        assert put_resp.status_code == 200
+
+        resp = await client.get(f"/api/v1/products/{BARCODE}", headers=headers)
+        assert resp.json()["analysis"]["natural_language_summary"] == "Resumo atualizado."
+        # Edição do produto invalida o cache → 2ª chamada ao Groq.
+        assert mock_generate.call_count == 2
+
+
+# ---------------------------------------------------------------------------
+# POST /{barcode}/scan — scan-on-read (requer auth)
+# ---------------------------------------------------------------------------
+
+async def test_scan_product_requires_auth(client: AsyncClient, auth_token: str) -> None:
+    await _create_product(client, auth_token)
+    resp = await client.post(f"/api/v1/products/{BARCODE}/scan")
+    assert resp.status_code == 401
+
+
+async def test_scan_product_not_found(client: AsyncClient, auth_token: str) -> None:
+    resp = await client.post(
+        f"/api/v1/products/{BARCODE}/scan",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 404
+
+
+async def test_scan_product_returns_analysis_and_summary(
+    client: AsyncClient, auth_token: str, auth_token_2: str
+) -> None:
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        return_value="Resumo de teste.",
+    ):
+        data = await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+
+        resp = await client.post(
+            f"/api/v1/products/{BARCODE}/scan",
+            headers={"Authorization": f"Bearer {auth_token_2}"},
+        )
+        assert resp.status_code == 200
+        result = resp.json()
+        assert result["barcode"] == BARCODE
+        if data["analysis"] is not None:
+            assert result["analysis"]["natural_language_summary"] == "Resumo de teste."
+
+
+async def test_scan_product_records_history(
+    client: AsyncClient, auth_token: str, auth_token_2: str
+) -> None:
+    await _create_product(
+        client,
+        auth_token,
+        body={"ingredients": {"items": ["sal"]}},
+    )
+    headers_2 = {"Authorization": f"Bearer {auth_token_2}"}
+
+    before = await client.get("/api/v1/users/me/scans", headers=headers_2)
+    assert before.json()["total"] == 0
+
+    resp = await client.post(f"/api/v1/products/{BARCODE}/scan", headers=headers_2)
+    assert resp.status_code == 200
+
+    after = await client.get("/api/v1/users/me/scans", headers=headers_2)
+    assert after.json()["total"] == 1
+
+
+async def test_scan_product_dedupe_moves_to_top_without_duplicating(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Reler um produto já escaneado atualiza o registro existente (sobe ao topo)."""
+    barcode_a = BARCODE
+    barcode_b = "7891234567891"
+    headers = {"Authorization": f"Bearer {auth_token}"}
+
+    await _create_product(client, auth_token, barcode=barcode_a)
+
+    scans_after_a = await client.get("/api/v1/users/me/scans", headers=headers)
+    scan_id_a = scans_after_a.json()["items"][0]["id"]
+
+    await _create_product(client, auth_token, barcode=barcode_b)
+
+    scans_after_b = await client.get("/api/v1/users/me/scans", headers=headers)
+    assert scans_after_b.json()["total"] == 2
+
+    # Reler o produto A via scan-on-read deve atualizar (não duplicar) o registro existente.
+    resp = await client.post(f"/api/v1/products/{barcode_a}/scan", headers=headers)
+    assert resp.status_code == 200
+
+    scans_final = await client.get("/api/v1/users/me/scans", headers=headers)
+    payload_final = scans_final.json()
+    assert payload_final["total"] == 2
+    assert payload_final["items"][0]["id"] == scan_id_a
