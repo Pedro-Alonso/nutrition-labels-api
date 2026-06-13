@@ -1,18 +1,17 @@
-"""Property test P21: postprocess=False → final.txt == final_postprocessed.txt (wave 7, 11.10).
+"""Property test P21: postprocess=False → final_ocr_text == final_postprocessed_text (wave 7, 11.10).
 
 **Validates: P21, R2.5**
 
 Quando ``ReaderOptions.postprocess=False``, o ``NutritionReader`` não deve
-aplicar o ``NutritionTextPostProcessor`` ao texto OCR vencedor. Isso implica:
+aplicar o ``NutritionTextPostProcessor`` ao texto OCR vencedor:
+``outcome.final_ocr_text == outcome.final_postprocessed_text`` — os dois
+campos do ``ReadOutcome`` devem ser idênticos (Requirement R2.5).
 
-1. ``outcome.final_ocr_text == outcome.final_postprocessed_text`` — os dois
-   campos do ``ReadOutcome`` devem ser idênticos (Requirement R2.5).
-2. Os arquivos ``final.txt`` e ``final_postprocessed.txt`` gravados em
-   ``extractions/<input>/`` devem ter conteúdo idêntico.
-
-Esses invariantes garantem que, quando o operador desabilita o
-pós-processamento (para comparar OCR bruto vs. pós-processado), o arquivo
-"pós-processado" seja exatamente uma cópia do bruto, sem nenhuma substituição.
+No backend REST, ``AuditRecorder`` é um no-op (``NullAuditRecorder`` — ver
+``audit/recorder.py``): nenhum arquivo (`final.txt`, `final_postprocessed.txt`)
+é gravado em disco e ``outcome.summary_path`` é sempre o sentinela
+``Path("/dev/null")``. Os testes abaixo verificam apenas os campos em
+memória de ``ReadOutcome`` e o contrato no-op de ``summary_path``.
 
 A property test varia a resposta GCV sintética via ``gcv_response_dict()``
 para cobrir textos longos, textos com caracteres substituíveis pelo
@@ -140,8 +139,8 @@ def test_postprocess_off_both_finals_identical_property(
 
     Para qualquer resposta GCV sintética, quando ``postprocess=False``:
     1. ``outcome.final_ocr_text == outcome.final_postprocessed_text``.
-    2. Os arquivos ``final.txt`` e ``final_postprocessed.txt`` em disco
-       têm conteúdo idêntico.
+    2. ``outcome.summary_path`` é o sentinela do ``NullAuditRecorder``
+       (``Path("/dev/null")``) — nenhum arquivo é gravado em disco.
     """
 
     project_root = tmp_path_factory.mktemp("p21_postprocess_off")
@@ -158,14 +157,8 @@ def test_postprocess_off_both_finals_identical_property(
         f"raw={outcome.final_ocr_text!r:.80}, post={outcome.final_postprocessed_text!r:.80}"
     )
 
-    # Invariante 2: arquivos em disco.
-    assert outcome.summary_path is not None
-    extractions_dir = outcome.summary_path.parent
-    final_txt = (extractions_dir / "final.txt").read_text(encoding="utf-8")
-    final_post = (extractions_dir / "final_postprocessed.txt").read_text(encoding="utf-8")
-    assert final_txt == final_post, (
-        "final.txt e final_postprocessed.txt diferem em disco com postprocess=False"
-    )
+    # Invariante 2: contrato no-op do AuditRecorder — nenhum arquivo gravado.
+    assert outcome.summary_path == Path("/dev/null")
 
 
 # ---------------------------------------------------------------------------
@@ -180,8 +173,9 @@ def test_postprocess_off_deterministic(tmp_path: Path) -> None:
 
     Usa uma resposta cujo texto contém caracteres substituídos pelo
     postprocessor (``O→0``, ``S→5`` via ``_OCR_DIGIT_TABLE``) quando
-    ``postprocess=True``. Com ``postprocess=False``, o texto gravado deve
-    ser o OCR bruto original, sem nenhuma substituição.
+    ``postprocess=True``. Com ``postprocess=False``, ``final_ocr_text`` e
+    ``final_postprocessed_text`` devem ser o OCR bruto original, sem
+    nenhuma substituição.
     """
 
     # Texto com "O" e "S" em posições que o postprocessor substituiria por
@@ -219,10 +213,5 @@ def test_postprocess_off_deterministic(tmp_path: Path) -> None:
         f"obteve {outcome.final_ocr_text!r}"
     )
 
-    # Verificação nos arquivos em disco.
-    assert outcome.summary_path is not None
-    extractions_dir = outcome.summary_path.parent
-    final_txt = (extractions_dir / "final.txt").read_text(encoding="utf-8")
-    final_post = (extractions_dir / "final_postprocessed.txt").read_text(encoding="utf-8")
-    assert final_txt == final_post
-    assert final_txt == raw_ocr_text
+    # Contrato no-op do AuditRecorder — nenhum arquivo gravado.
+    assert outcome.summary_path == Path("/dev/null")
