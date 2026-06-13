@@ -76,7 +76,7 @@ class AnalysisService:
         self,
         image_bytes: bytes,
         category_override: str | None = None,
-        roi_enabled: bool = True,
+        roi_enabled: bool = False,
         stop_on_first_pass: bool = True,
         postprocess: bool = True,
     ) -> ReadOutcome:
@@ -99,7 +99,7 @@ class AnalysisService:
         self,
         image_bytes: bytes,
         category_override: str | None = None,
-        roi_enabled: bool = True,
+        roi_enabled: bool = False,
         stop_on_first_pass: bool = True,
         postprocess: bool = True,
     ) -> dict:
