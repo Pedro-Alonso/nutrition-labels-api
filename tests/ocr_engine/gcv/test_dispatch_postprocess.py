@@ -274,13 +274,15 @@ def test_table_category_does_not_trigger_analyzer(tmp_path: Path) -> None:
 
 
 def test_postprocess_true_applies_postprocessor(tmp_path: Path) -> None:
-    """``postprocess=True`` → ``NutritionTextPostProcessor.postprocess`` é chamado.
+    """``postprocess=True`` → ``GcvTablePostProcessor.postprocess`` é chamado.
 
     **Validates: R13.1**
 
-    Com ``postprocess=True`` (default), o reader deve chamar
-    ``NutritionTextPostProcessor.postprocess`` para cada tentativa de
-    preset e também para o texto vencedor final.
+    Com ``postprocess=True`` (default) e um preset ``cloud_vision`` para a
+    categoria "table", o reader deve chamar
+    ``GcvTablePostProcessor.postprocess`` (não
+    ``NutritionTextPostProcessor.postprocess``) para cada tentativa de preset
+    e também para o texto vencedor final.
     """
 
     reader, image_path = _build_reader(
@@ -290,9 +292,9 @@ def test_postprocess_true_applies_postprocessor(tmp_path: Path) -> None:
     )
 
     with patch.object(
-        reader.text_postprocessor,
+        reader.gcv_postprocessor,
         "postprocess",
-        wraps=reader.text_postprocessor.postprocess,
+        wraps=reader.gcv_postprocessor.postprocess,
     ) as spy:
         reader.read(
             image_path,
@@ -300,7 +302,7 @@ def test_postprocess_true_applies_postprocessor(tmp_path: Path) -> None:
         )
 
     assert spy.call_count >= 1, (
-        f"NutritionTextPostProcessor.postprocess deveria ser chamado ao menos "
+        f"GcvTablePostProcessor.postprocess deveria ser chamado ao menos "
         f"1x com postprocess=True; foi chamado {spy.call_count}x"
     )
 
