@@ -154,6 +154,8 @@ async def record_product_scan(
     user_id: str,
     barcode: str,
     analysis: IngredientAnalysisSchema | None,
+    name: str | None = None,
+    brand: str | None = None,
 ) -> None:
     """Persiste um Scan no histórico do usuário ao criar um produto.
 
@@ -164,6 +166,8 @@ async def record_product_scan(
     """
     result_json = {
         "barcode": barcode,
+        "name": name,
+        "brand": brand,
         "ingredient_analysis": analysis.model_dump() if analysis is not None else None,
         "llm_summary": analysis.natural_language_summary if analysis is not None else None,
         "final_postprocessed_text": "",

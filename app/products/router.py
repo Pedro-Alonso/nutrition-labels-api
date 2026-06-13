@@ -289,7 +289,9 @@ async def create_product(
         )
 
     # Persiste um Scan para o histórico do usuário.
-    await product_service.record_product_scan(db, user_id, barcode, response.analysis)
+    await product_service.record_product_scan(
+        db, user_id, barcode, response.analysis, name=product.name, brand=product.brand
+    )
 
     return response
 
