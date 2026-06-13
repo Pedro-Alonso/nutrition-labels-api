@@ -141,6 +141,8 @@ async def get_product_analysis(
             settings.groq_api_key,
             language_level=getattr(user, "language_level", None),
             diabetes_type=getattr(user, "diabetes_type", None),
+            name=product.name,
+            brand=product.brand,
         )
 
     return analysis
@@ -282,6 +284,8 @@ async def create_product(
             settings.groq_api_key,
             language_level=getattr(user, "language_level", None),
             diabetes_type=getattr(user, "diabetes_type", None),
+            name=product.name,
+            brand=product.brand,
         )
 
     # Persiste um Scan para o histórico do usuário.

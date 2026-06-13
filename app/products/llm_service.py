@@ -77,6 +77,7 @@ REGRAS OBRIGATÓRIAS — sem exceção:
 5. Se "ingredientes_identificados" estiver vazio, informe que nenhum ingrediente de risco foi identificado na análise.
 6. Seja direto e objetivo. Proibido usar: "pode", "talvez", "possivelmente", "provavelmente". Use afirmações factuais.
 7. Máximo 3 frases. Português do Brasil.
+8. Se o nome do produto for informado, cite-o naturalmente no resumo (ex.: "O produto X contém...").
 {language_hint}
 {diabetes_hint}"""
 
@@ -156,6 +157,8 @@ async def generate_summary(
     api_key: str,
     language_level: str | None = None,
     diabetes_type: str | None = None,
+    name: str | None = None,
+    brand: str | None = None,
 ) -> str | None:
     """Gera resumo em linguagem natural. Retorna None em caso de erro."""
     try:
@@ -164,14 +167,17 @@ async def generate_summary(
             diabetes_hint=_DIABETES_HINTS.get(diabetes_type or "", ""),
         )
         client = AsyncGroq(api_key=api_key)
+        product_label = " ".join(p for p in (name, brand) if p)
+        analysis_json = analysis.model_dump_json(exclude={"natural_language_summary"})
+        user_content = (
+            f'Produto: "{product_label}"\n{analysis_json}' if product_label else analysis_json
+        )
         completion = await client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             temperature=0,
             messages=[
                 {"role": "system", "content": system},
-                {"role": "user", "content": analysis.model_dump_json(
-                    exclude={"natural_language_summary"}
-                )},
+                {"role": "user", "content": user_content},
             ],
         )
         return completion.choices[0].message.content
