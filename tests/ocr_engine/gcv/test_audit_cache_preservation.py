@@ -1,19 +1,20 @@
-"""Property test P17: ``AuditRecorder.clean_previous`` preserva ``cache_dir``.
+"""Property test P17: ``AuditRecorder`` (Null) não toca o sistema de arquivos.
 
 Validates: Requirements 7.6
 
-A propriedade afirma que, *para qualquer* conjunto de arquivos ``F`` em
-``extractions/.gcv_cache/`` (ou em qualquer ``cache_dir`` configurado
-desde que esteja **fora** de ``extractions/<input>/``), após instanciar
-``AuditRecorder(project_root, input_path, clean_previous=True)`` o
-conjunto de arquivos em ``cache_dir`` permanece idêntico a ``F``
-(mesmos paths, mesmos bytes).
+No backend REST, ``AuditRecorder`` é um no-op (``NullAuditRecorder`` — ver
+``audit/recorder.py``): o construtor apenas guarda ``input_slug`` e
+``manifest`` em memória, sem criar, limpar ou inspecionar nenhum diretório,
+independentemente de ``clean_previous``.
 
-Como o design coloca o ``cache_dir`` em ``extractions/.gcv_cache/`` —
-irmão de ``extractions/<input_slug>/`` e não filho — o ciclo de limpeza
-do ``AuditRecorder`` (que itera apenas ``extractions/<input_slug>/`` e
-``images/pipeline/<input_slug>/``) é cego ao cache por construção. Esta
-suíte falsifica a invariante exercendo várias topologias possíveis do
+A propriedade afirma que, *para qualquer* conjunto de arquivos ``F`` em
+``extractions/.gcv_cache/`` e em ``extractions/<input_slug>/`` /
+``images/pipeline/<input_slug>/``, após instanciar
+``AuditRecorder(project_root, input_path, clean_previous=True)`` o conjunto
+de arquivos permanece idêntico a ``F`` (mesmos paths, mesmos bytes) — o
+construtor é puramente em memória.
+
+Esta suíte falsifica a invariante exercendo várias topologias possíveis do
 ``cache_dir`` via ``cache_states()`` em ``tests/gcv/strategies.py``,
 incluindo entradas válidas, ``response`` corrompido, ``meta`` corrompido
 e cache vazio.
@@ -102,7 +103,7 @@ def test_clean_previous_preserva_cache_dir(
     tmp_path_factory: pytest.TempPathFactory,
     entries: dict[str, dict[str, Any]],
 ) -> None:
-    """**Property 17**: ``AuditRecorder.clean_previous`` preserva ``cache_dir``.
+    """**Property 17**: ``AuditRecorder`` (Null) não apaga nada do disco.
 
     Validates: Requirements 7.6
     """
@@ -112,18 +113,18 @@ def test_clean_previous_preserva_cache_dir(
     project_root = tmp_path_factory.mktemp("p17_audit_cache_preservation")
     input_slug = "label_subject"
 
-    # Estrutura mínima esperada pelo ``AuditRecorder``.
+    # Estrutura mínima — não é exigida pelo Null recorder, mas reflete o
+    # layout real de um projeto para tornar o teste representativo.
     (project_root / "extractions").mkdir(parents=True, exist_ok=True)
     (project_root / "images" / "pipeline").mkdir(parents=True, exist_ok=True)
 
     # Seed do ``cache_dir`` (irmão de ``extractions/<input_slug>/``).
     cache_dir = project_root / "extractions" / ".gcv_cache"
-    snapshot_before = _materialize_cache(cache_dir, entries)
+    cache_snapshot_before = _materialize_cache(cache_dir, entries)
 
     # Seed de ``extractions/<input_slug>/`` e ``images/pipeline/<input_slug>/``
-    # com conteúdo descartável: se a limpeza realmente atua, esse conteúdo
-    # some — o que serve de sanity check para que o teste não passe
-    # trivialmente em uma situação onde nada foi limpo.
+    # com conteúdo pré-existente — o Null recorder não deve tocar nenhum
+    # desses arquivos, com ``clean_previous=True`` ou não.
     extraction_dir = project_root / "extractions" / input_slug
     pipeline_dir = project_root / "images" / "pipeline" / input_slug
     extraction_dir.mkdir(parents=True, exist_ok=True)
@@ -133,35 +134,44 @@ def test_clean_previous_preserva_cache_dir(
     (extraction_dir / "nested" / "deeper.json").write_bytes(b'{"old": true}')
     (pipeline_dir / "old_stage.png").write_bytes(b"\x89PNG\r\n\x1a\nfake-old")
 
+    extraction_snapshot_before = _snapshot_cache(extraction_dir)
+    extraction_nested_before = (extraction_dir / "nested" / "deeper.json").read_bytes()
+    pipeline_snapshot_before = _snapshot_cache(pipeline_dir)
+
     # Caminho do "subject" que dá origem ao slug — não precisa existir
     # como arquivo real porque o ``AuditRecorder`` apenas usa ``stem``.
     input_path = project_root / "subjects" / f"{input_slug}.png"
 
-    # Instancia em modo limpeza explícita.
-    AuditRecorder(
+    # Instancia com ``clean_previous=True``: o construtor do Null recorder
+    # aceita o parâmetro sem erro, mas não realiza nenhuma limpeza.
+    recorder = AuditRecorder(
         project_root=project_root,
         input_path=input_path,
         clean_previous=True,
     )
+    assert recorder.input_slug == input_slug
 
-    # Sanity check: a limpeza atuou no escopo esperado (descarta a
-    # interpretação trivial em que ``_clean`` seria um no-op).
-    assert not (extraction_dir / "old_artifact.txt").exists()
-    assert not (extraction_dir / "nested").exists()
-    assert not (pipeline_dir / "old_stage.png").exists()
+    # Nada em ``extractions/<input_slug>/`` ou ``images/pipeline/<input_slug>/``
+    # foi removido ou alterado.
+    assert (extraction_dir / "old_artifact.txt").exists()
+    assert (extraction_dir / "nested" / "deeper.json").exists()
+    assert (pipeline_dir / "old_stage.png").exists()
+    assert _snapshot_cache(extraction_dir) == extraction_snapshot_before
+    assert (extraction_dir / "nested" / "deeper.json").read_bytes() == extraction_nested_before
+    assert _snapshot_cache(pipeline_dir) == pipeline_snapshot_before
 
     # Invariante de P17: o ``cache_dir`` permanece byte-idêntico ao snapshot.
-    snapshot_after = _snapshot_cache(cache_dir)
-    assert snapshot_after.keys() == snapshot_before.keys(), (
+    cache_snapshot_after = _snapshot_cache(cache_dir)
+    assert cache_snapshot_after.keys() == cache_snapshot_before.keys(), (
         "conjunto de arquivos do cache_dir mudou: "
-        f"faltando={set(snapshot_before) - set(snapshot_after)} "
-        f"extras={set(snapshot_after) - set(snapshot_before)}"
+        f"faltando={set(cache_snapshot_before) - set(cache_snapshot_after)} "
+        f"extras={set(cache_snapshot_after) - set(cache_snapshot_before)}"
     )
-    for path, expected_bytes in snapshot_before.items():
-        assert snapshot_after[path] == expected_bytes, (
-            f"conteúdo de {path.name} foi alterado por clean_previous"
+    for path, expected_bytes in cache_snapshot_before.items():
+        assert cache_snapshot_after[path] == expected_bytes, (
+            f"conteúdo de {path.name} foi alterado pelo construtor do AuditRecorder"
         )
 
     # O próprio diretório também precisa sobreviver, mesmo quando
     # ``entries`` está vazio (cache pré-existente porém sem entradas).
-    assert cache_dir.is_dir(), "cache_dir foi removido por clean_previous"
+    assert cache_dir.is_dir(), "cache_dir foi removido pelo AuditRecorder"
