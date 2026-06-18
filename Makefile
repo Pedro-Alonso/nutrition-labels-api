@@ -12,7 +12,7 @@ deploy:
 build:
 	@test -f .env || (echo "Missing .env file. Please create one based on .env.example." && exit 1)
 	@echo "Building Docker images..."
-	docker compose build
+	docker compose up --build
 
 clean:
 	@echo "Removing build artifacts and caches..."
