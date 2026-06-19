@@ -548,6 +548,39 @@ ou quando o Groq retorna erro (o endpoint **não falha** nesses casos).
 
 ---
 
+### `GET /api/v1/products/{barcode}/summary`
+
+Retorna resumo personalizado enxuto para um produto. Não requer autenticação.
+
+**Autenticação opcional (soft auth):** se um `Bearer` token válido for enviado, o
+resumo é personalizado com `diabetes_type` e `language_level` do perfil do usuário.
+Sem token (ou quando a LLM falha para o perfil personalizado), retorna o resumo
+genérico cacheado `(barcode, null, null)`.
+
+**Resposta 200**
+
+```json
+{
+  "summary": "Este produto contém açúcar, classificado como ALTO risco...",
+  "diabetes_type": "DM2",
+  "language_level": "leigo",
+  "risco_global": "ALTO"
+}
+```
+
+Todos os campos podem ser `null`: `summary` é `null` quando não há ingredientes,
+o `IngredientAnalyzer` não está disponível, ou a LLM não está configurada e não
+existe cache. `diabetes_type` e `language_level` refletem a personalização
+utilizada (ambos `null` para resumo genérico/anônimo).
+
+**Erros**
+
+| Código | Motivo |
+|---|---|
+| 404 | Produto não encontrado |
+
+---
+
 ## Códigos de Erro Comuns
 
 | Código | Significado | Quando ocorre |

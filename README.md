@@ -64,6 +64,7 @@ Swagger UI (documentação interativa): http://localhost:8000/docs
 | PUT | `/api/v1/products/{barcode}` | JWT | Atualiza produto |
 | POST | `/api/v1/products/{barcode}/ocr` | JWT | Preview OCR (sem persistir) |
 | GET | `/api/v1/products/{barcode}/analysis` | Não | Análise clínica dos ingredientes |
+| GET | `/api/v1/products/{barcode}/summary` | Não | Resumo personalizado enxuto |
 
 Ver [docs/api-reference.md](docs/api-reference.md) para schemas completos.
 
