@@ -10,6 +10,8 @@ from app.products.schemas import NutritionalTableData
 
 logger = logging.getLogger(__name__)
 
+SUMMARY_PROMPT_VERSION = 2
+
 _CLEAN_SYSTEM = """\
 Você recebe texto bruto extraído por OCR de um rótulo alimentício.
 Sua ÚNICA tarefa: retornar exclusivamente os nomes de ingredientes listados.
@@ -78,6 +80,9 @@ REGRAS OBRIGATÓRIAS — sem exceção:
 6. Seja direto e objetivo. Proibido usar: "pode", "talvez", "possivelmente", "provavelmente". Use afirmações factuais.
 7. Máximo 3 frases. Português do Brasil.
 8. Se o nome do produto for informado, cite-o naturalmente no resumo (ex.: "O produto X contém...").
+9. Se uma tabela nutricional for fornecida, use-a APENAS como apoio: aponte contradições entre \
+a tabela e os ingredientes (ex.: rótulo "zero açúcar" com maltodextrina nos ingredientes) e \
+forneça contexto calórico. O cálculo de risco continua baseado EXCLUSIVAMENTE nos ingredientes.
 {language_hint}
 {diabetes_hint}"""
 
@@ -152,6 +157,17 @@ async def clean_nutritional_table(raw_text: str, api_key: str) -> NutritionalTab
         return None
 
 
+def _serialize_nutritional_table(table: NutritionalTableData) -> str:
+    """Serializa a tabela nutricional de forma compacta para inclusão no prompt."""
+    parts: list[str] = []
+    if table.portion_description:
+        parts.append(f"Porção: {table.portion_description}")
+    for row in table.rows:
+        values_str = " | ".join(row.values)
+        parts.append(f"  {row.nutrient}: {values_str}")
+    return "\n".join(parts)
+
+
 async def generate_summary(
     analysis: IngredientAnalysisSchema,
     api_key: str,
@@ -159,6 +175,7 @@ async def generate_summary(
     diabetes_type: str | None = None,
     name: str | None = None,
     brand: str | None = None,
+    nutritional_table: NutritionalTableData | None = None,
 ) -> str | None:
     """Gera resumo em linguagem natural. Retorna None em caso de erro."""
     try:
@@ -172,6 +189,11 @@ async def generate_summary(
         user_content = (
             f'Produto: "{product_label}"\n{analysis_json}' if product_label else analysis_json
         )
+        if nutritional_table is not None and nutritional_table.rows:
+            user_content += (
+                "\n\n--- Tabela Nutricional (apoio) ---\n"
+                + _serialize_nutritional_table(nutritional_table)
+            )
         completion = await client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             temperature=0,

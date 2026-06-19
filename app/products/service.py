@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analysis.models import Scan
 from app.analysis.schemas import IngredientAnalysisSchema, IngredientItemSchema
-from app.products.llm_service import generate_summary
+from app.products.llm_service import SUMMARY_PROMPT_VERSION, generate_summary
 from app.products.models import IngredientList, NutritionalTable, Product, ProductSummary
 from app.products.schemas import (
     IngredientsData,
@@ -164,8 +164,9 @@ async def get_or_create_summary(
     """Retorna o resumo em linguagem natural cacheado ou gera um novo via LLM.
 
     Cache por `(barcode, diabetes_type, language_level)`. Cache-hit é reutilizado
-    apenas se `summary.updated_at >= product.updated_at` — qualquer edição do
-    produto invalida o cache e força regeneração.
+    apenas se `summary.updated_at >= product.updated_at` e o `prompt_version`
+    corresponde ao atual — qualquer edição do produto ou bump de versão de prompt
+    invalida o cache e força regeneração.
     """
     if analysis is None:
         return None
@@ -182,11 +183,22 @@ async def get_or_create_summary(
     )
     cached = result.scalar_one_or_none()
 
-    if cached is not None and cached.updated_at >= product.updated_at:
+    cache_valid = (
+        cached is not None
+        and cached.updated_at >= product.updated_at
+        and cached.prompt_version == SUMMARY_PROMPT_VERSION
+    )
+    if cache_valid:
         return cached.summary
 
     if not api_key:
         return cached.summary if cached is not None else None
+
+    nt_data = (
+        _build_nutritional_table_data(product.nutritional_table)
+        if product.nutritional_table is not None
+        else None
+    )
 
     summary_text = await generate_summary(
         analysis,
@@ -195,6 +207,7 @@ async def get_or_create_summary(
         diabetes_type=diabetes_type,
         name=product.name,
         brand=product.brand,
+        nutritional_table=nt_data,
     )
     if summary_text is None:
         return cached.summary if cached is not None else None
@@ -202,6 +215,7 @@ async def get_or_create_summary(
     now = datetime.now(timezone.utc)
     if cached is not None:
         cached.summary = summary_text
+        cached.prompt_version = SUMMARY_PROMPT_VERSION
         cached.updated_at = now
     else:
         db.add(
@@ -211,6 +225,7 @@ async def get_or_create_summary(
                 diabetes_type=diabetes_type,
                 language_level=language_level,
                 summary=summary_text,
+                prompt_version=SUMMARY_PROMPT_VERSION,
                 updated_at=now,
             )
         )

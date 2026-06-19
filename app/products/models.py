@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, String, Text, UniqueConstraint
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -96,6 +96,7 @@ class ProductSummary(Base):
     diabetes_type: Mapped[str | None] = mapped_column(String, nullable=True)
     language_level: Mapped[str | None] = mapped_column(String, nullable=True)
     summary: Mapped[str] = mapped_column(Text, nullable=False)
+    prompt_version: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
