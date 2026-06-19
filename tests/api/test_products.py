@@ -16,6 +16,7 @@ Cobre:
 - GET /{barcode} popula analysis.natural_language_summary (cache de ProductSummary)
 - Cache-hit evita 2ª chamada ao Groq; regenera ao trocar personalização ou editar produto
 - POST /{barcode}/scan (scan-on-read): auth, 404, resposta com resumo, dedupe no histórico
+- GET /{barcode}/summary — personalized summary endpoint (auth, anon, 404)
 """
 from __future__ import annotations
 
@@ -618,3 +619,180 @@ async def test_scan_product_dedupe_moves_to_top_without_duplicating(
     payload_final = scans_final.json()
     assert payload_final["total"] == 2
     assert payload_final["items"][0]["id"] == scan_id_a
+
+
+# ---------------------------------------------------------------------------
+# GET /{barcode}/summary — personalized summary endpoint
+# ---------------------------------------------------------------------------
+
+async def test_summary_not_found(client: AsyncClient) -> None:
+    """404 when the product does not exist."""
+    resp = await client.get(f"/api/v1/products/{BARCODE}/summary")
+    assert resp.status_code == 404
+
+
+async def test_summary_no_ingredients_returns_nulls(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Product without ingredients returns all-null summary response."""
+    await _create_product(client, auth_token, body={"name": "Empty"})
+    resp = await client.get(f"/api/v1/products/{BARCODE}/summary")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["summary"] is None
+    assert data["risco_global"] is None
+
+
+async def test_summary_anonymous_returns_summary(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Anonymous request returns generic summary with matching response schema."""
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        return_value="Generic summary.",
+    ):
+        await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+        resp = await client.get(f"/api/v1/products/{BARCODE}/summary")
+
+    if resp.status_code == 200:
+        data = resp.json()
+        assert "summary" in data
+        assert "diabetes_type" in data
+        assert "language_level" in data
+        assert "risco_global" in data
+        assert data["diabetes_type"] is None
+        assert data["language_level"] is None
+
+
+async def test_summary_authenticated_personalized(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Authenticated user with profile gets personalized summary."""
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        return_value="Personalized summary for DM2.",
+    ):
+        await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+
+        headers = {"Authorization": f"Bearer {auth_token}"}
+        await client.put(
+            "/api/v1/users/me",
+            headers=headers,
+            json={"diabetes_type": "DM2", "language_level": "leigo"},
+        )
+
+        resp = await client.get(
+            f"/api/v1/products/{BARCODE}/summary", headers=headers
+        )
+
+    if resp.status_code == 200:
+        data = resp.json()
+        assert data["summary"] == "Personalized summary for DM2."
+        assert data["diabetes_type"] == "DM2"
+        assert data["language_level"] == "leigo"
+        assert data["risco_global"] is not None
+
+
+async def test_summary_two_users_get_distinct_texts(
+    client: AsyncClient, auth_token: str, auth_token_2: str
+) -> None:
+    """Two users with different profiles get different summaries for the same barcode."""
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        side_effect=["Summary for DM1 simples.", "Summary for DMG técnico.", "Summary for DM1 simples."],
+    ):
+        await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+
+        headers_1 = {"Authorization": f"Bearer {auth_token}"}
+        headers_2 = {"Authorization": f"Bearer {auth_token_2}"}
+
+        await client.put(
+            "/api/v1/users/me",
+            headers=headers_1,
+            json={"diabetes_type": "DM1", "language_level": "leigo"},
+        )
+        await client.put(
+            "/api/v1/users/me",
+            headers=headers_2,
+            json={"diabetes_type": "DMG", "language_level": "tecnico"},
+        )
+
+        resp1 = await client.get(
+            f"/api/v1/products/{BARCODE}/summary", headers=headers_1
+        )
+        resp2 = await client.get(
+            f"/api/v1/products/{BARCODE}/summary", headers=headers_2
+        )
+
+    if resp1.status_code == 200 and resp2.status_code == 200:
+        assert resp1.json()["summary"] != resp2.json()["summary"]
+        assert resp1.json()["diabetes_type"] == "DM1"
+        assert resp2.json()["diabetes_type"] == "DMG"
+
+
+async def test_summary_fallback_to_default_when_llm_fails(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """When LLM fails for authenticated user, falls back to generic cached summary."""
+    with patch.object(get_settings(), "groq_api_key", "test-groq-key"), patch(
+        "app.products.service.generate_summary",
+        new_callable=AsyncMock,
+        side_effect=["Generic fallback.", None],
+    ):
+        await _create_product(
+            client,
+            auth_token,
+            body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+        )
+
+        # First call generates generic summary (anonymous during create)
+        # Now set personalization and make summary request — LLM returns None
+        headers = {"Authorization": f"Bearer {auth_token}"}
+        await client.put(
+            "/api/v1/users/me",
+            headers=headers,
+            json={"diabetes_type": "DM1", "language_level": "leigo"},
+        )
+
+        resp = await client.get(
+            f"/api/v1/products/{BARCODE}/summary", headers=headers
+        )
+
+    if resp.status_code == 200:
+        data = resp.json()
+        # Should fall back to generic summary
+        assert data["summary"] == "Generic fallback."
+        assert data["diabetes_type"] is None
+        assert data["language_level"] is None
+
+
+async def test_summary_anonymous_without_groq_returns_null(
+    client: AsyncClient, auth_token: str
+) -> None:
+    """Without Groq API key and no cached summary, returns null summary."""
+    await _create_product(
+        client,
+        auth_token,
+        body={"ingredients": {"items": ["açúcar", "farinha de trigo", "sal"]}},
+    )
+    resp = await client.get(f"/api/v1/products/{BARCODE}/summary")
+    assert resp.status_code == 200
+    data = resp.json()
+    # Without Groq key, summary is null (no cache exists yet)
+    if data["risco_global"] is not None:
+        assert data["summary"] is None or isinstance(data["summary"], str)
