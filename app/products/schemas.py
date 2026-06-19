@@ -47,6 +47,13 @@ class ProductUpdateRequest(BaseModel):
     ingredients: IngredientsData | None = None
 
 
+class SummaryResponse(BaseModel):
+    summary: str | None
+    diabetes_type: str | None
+    language_level: str | None
+    risco_global: str | None
+
+
 class OcrPreviewResponse(BaseModel):
     barcode: str
     nutritional_table: NutritionalTableData | None

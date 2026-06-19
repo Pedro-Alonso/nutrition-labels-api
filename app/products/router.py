@@ -22,6 +22,7 @@ from app.products.schemas import (
     ProductCreateRequest,
     ProductResponse,
     ProductUpdateRequest,
+    SummaryResponse,
 )
 
 router = APIRouter()
@@ -139,6 +140,55 @@ async def get_product_analysis(
     )
 
     return analysis
+
+
+# -----------------------------------------------------------------------
+# GET /{barcode}/summary — deve vir ANTES de GET /{barcode}
+# -----------------------------------------------------------------------
+
+@router.get("/{barcode}/summary", response_model=SummaryResponse)
+async def get_product_summary(
+    barcode: str,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """Retorna resumo personalizado enxuto. Auth opcional: personaliza pelo perfil do usuário."""
+    product = await product_service.get_by_barcode(db, barcode)
+    if product is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Produto não encontrado.")
+
+    analyzer = _get_analyzer(request)
+    if analyzer is None or product.ingredient_list is None or not product.ingredient_list.items:
+        return SummaryResponse(summary=None, diabetes_type=None, language_level=None, risco_global=None)
+
+    items = list(product.ingredient_list.items)
+    analysis = product_service._compute_analysis(analyzer, items, barcode)
+    if analysis is None:
+        return SummaryResponse(summary=None, diabetes_type=None, language_level=None, risco_global=None)
+
+    user = await _get_optional_user(request, db)
+    diabetes_type = getattr(user, "diabetes_type", None)
+    language_level = getattr(user, "language_level", None)
+
+    settings = get_settings()
+    summary_text = await product_service.get_or_create_summary(
+        db, product, analysis, user, settings.groq_api_key
+    )
+
+    if summary_text is None and (diabetes_type is not None or language_level is not None):
+        summary_text = await product_service.get_or_create_summary(
+            db, product, analysis, None, settings.groq_api_key
+        )
+        if summary_text is not None:
+            diabetes_type = None
+            language_level = None
+
+    return SummaryResponse(
+        summary=summary_text,
+        diabetes_type=diabetes_type,
+        language_level=language_level,
+        risco_global=analysis.risco_global,
+    )
 
 
 # -----------------------------------------------------------------------
