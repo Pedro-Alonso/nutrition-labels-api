@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Endpoint `GET /products/{barcode}/summary` para resumo personalizado enxuto
+  (auth opcional). Retorna `summary`, `diabetes_type`, `language_level` e
+  `risco_global`. Quando a LLM falha ou o usuário é anônimo, faz fallback
+  para o resumo genérico cacheado `(barcode, null, null)`.
+
 ### Changed
 
 ### Fixed
