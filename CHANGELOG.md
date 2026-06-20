@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-06-19
+
+### Added
+
+- `GET /products/search?q=...&page=1&per_page=20` endpoint for product search
+  with PostgreSQL `pg_trgm` fuzzy matching and `unaccent` accent-insensitive
+  search. Auto-detects barcode queries (EAN-8/EAN-13/UPC-A) and falls back to
+  exact barcode lookup. No authentication required.
+- `DELETE /users/me/scans` endpoint to clear all scan history for the
+  authenticated user (returns 204 No Content).
+- GIN trigram index on `f_unaccent(name || brand)` for fast fuzzy search.
+
 ## [1.3.0] - 2026-06-19
 
 ### Added
