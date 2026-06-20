@@ -58,3 +58,17 @@ class OcrPreviewResponse(BaseModel):
     barcode: str
     nutritional_table: NutritionalTableData | None
     ingredients: IngredientsData | None
+
+
+class ProductSearchItem(BaseModel):
+    barcode: str
+    name: str | None
+    brand: str | None
+    created_at: datetime
+
+
+class PaginatedProducts(BaseModel):
+    items: list[ProductSearchItem]
+    total: int
+    page: int
+    per_page: int

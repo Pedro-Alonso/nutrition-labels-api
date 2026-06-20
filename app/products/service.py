@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
-from sqlalchemy import select
+from sqlalchemy import func as sa_func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analysis.models import Scan
@@ -289,6 +289,81 @@ async def record_product_scan(
         db.add(scan)
 
     await db.commit()
+
+
+_BARCODE_PATTERN = re.compile(r"^\d+$")
+_BARCODE_LENGTHS = {8, 12, 13}
+
+
+async def search_products(
+    db: AsyncSession,
+    query: str,
+    page: int = 1,
+    per_page: int = 20,
+) -> tuple[list[Product], int]:
+    query = query.strip()
+    if len(query) < 2:
+        return ([], 0)
+
+    if _BARCODE_PATTERN.match(query) and len(query) in _BARCODE_LENGTHS:
+        product = await get_by_barcode(db, query)
+        if product is not None:
+            return ([product], 1)
+        return ([], 0)
+
+    combined_col = text("f_unaccent(COALESCE(name, '') || ' ' || COALESCE(brand, ''))")
+    f_query = text("f_unaccent(:query)")
+    offset = (page - 1) * per_page
+
+    if len(query) < 3:
+        where_clause = text(
+            "f_unaccent(COALESCE(name, '') || ' ' || COALESCE(brand, '')) "
+            "ILIKE '%' || f_unaccent(:query) || '%'"
+        )
+        count_stmt = (
+            select(sa_func.count())
+            .select_from(Product)
+            .where(where_clause.bindparams(query=query))
+        )
+        items_stmt = (
+            select(Product)
+            .where(where_clause.bindparams(query=query))
+            .order_by(Product.name)
+            .offset(offset)
+            .limit(per_page)
+        )
+    else:
+        await db.execute(text("SET pg_trgm.word_similarity_threshold = 0.15"))
+        where_clause = text(
+            "f_unaccent(:query) "
+            "%> f_unaccent(COALESCE(name, '') || ' ' || COALESCE(brand, ''))"
+        )
+        order_clause = text(
+            "word_similarity("
+            "f_unaccent(:query), "
+            "f_unaccent(COALESCE(name, '') || ' ' || COALESCE(brand, ''))"
+            ") DESC"
+        )
+        count_stmt = (
+            select(sa_func.count())
+            .select_from(Product)
+            .where(where_clause.bindparams(query=query))
+        )
+        items_stmt = (
+            select(Product)
+            .where(where_clause.bindparams(query=query))
+            .order_by(order_clause.bindparams(query=query))
+            .offset(offset)
+            .limit(per_page)
+        )
+
+    total_result = await db.execute(count_stmt)
+    total = total_result.scalar_one()
+
+    items_result = await db.execute(items_stmt)
+    products = list(items_result.scalars())
+
+    return (products, total)
 
 
 async def get_by_barcode(db: AsyncSession, barcode: str) -> Product | None:
