@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-06-19
+
+### Added
+
+- Field `is_guest` on User model to distinguish guest (anonymous) accounts.
+- `POST /auth/upgrade` endpoint: converts a guest account into a regular account
+  by setting a real email, password, and optional display name. Validates email
+  uniqueness (409), guest-only access (403), and password minimum length (422).
+- `RegisterRequest` accepts optional `is_guest` field (default `false`).
+- `UserResponse` includes `is_guest` field.
+
 ## [1.2.0] - 2026-06-19
 
 ### Added
