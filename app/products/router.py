@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 
-from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, UploadFile, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.analysis.schemas import IngredientAnalysisSchema
@@ -19,8 +19,10 @@ from app.products.llm_service import (
 from app.products.schemas import (
     IngredientsData,
     OcrPreviewResponse,
+    PaginatedProducts,
     ProductCreateRequest,
     ProductResponse,
+    ProductSearchItem,
     ProductUpdateRequest,
     SummaryResponse,
 )
@@ -84,6 +86,36 @@ async def _read_upload(upload: UploadFile, max_bytes: int) -> bytes:
             detail="Formato de arquivo não suportado. Use JPEG, PNG, WEBP ou BMP.",
         )
     return image_bytes
+
+
+# -----------------------------------------------------------------------
+# GET /search — deve vir ANTES de rotas com {barcode}
+# -----------------------------------------------------------------------
+
+@router.get("/search", response_model=PaginatedProducts)
+async def search_products_endpoint(
+    q: str = Query("", min_length=0, max_length=200),
+    page: int = Query(1, ge=1),
+    per_page: int = Query(20, ge=1, le=100),
+    db: AsyncSession = Depends(get_db),
+):
+    products, total = await product_service.search_products(
+        db, q, page=page, per_page=per_page
+    )
+    return PaginatedProducts(
+        items=[
+            ProductSearchItem(
+                barcode=p.barcode,
+                name=p.name,
+                brand=p.brand,
+                created_at=p.created_at,
+            )
+            for p in products
+        ],
+        total=total,
+        page=page,
+        per_page=per_page,
+    )
 
 
 # -----------------------------------------------------------------------
