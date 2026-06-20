@@ -94,6 +94,14 @@ async def get_scan(
     return scan
 
 
+@router.delete("/me/scans", status_code=status.HTTP_204_NO_CONTENT)
+async def clear_my_scans(
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    await user_service.delete_all_scans(db, user_id)
+
+
 @router.delete("/me/scans/{scan_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_scan(
     scan_id: str,

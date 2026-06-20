@@ -46,6 +46,14 @@ async def delete_scan(db: AsyncSession, scan_id: str, user_id: str) -> bool:
     return True
 
 
+async def delete_all_scans(db: AsyncSession, user_id: str) -> int:
+    result = await db.execute(
+        sql_delete(Scan).where(Scan.user_id == user_id)
+    )
+    await db.commit()
+    return result.rowcount
+
+
 async def delete_user(db: AsyncSession, user_id: str) -> None:
     user = await get_user_by_id(db, user_id)
     if user:
