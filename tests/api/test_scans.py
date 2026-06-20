@@ -252,8 +252,8 @@ async def test_clear_all_scans_does_not_affect_other_users(
 ) -> None:
     user_id_1 = await _get_user_id(client, auth_token)
     user_id_2 = await _get_user_id(client, auth_token_2)
-    await _insert_scans(db_session, user_id_1, count=3, image_hash_prefix="u1_")
-    await _insert_scans(db_session, user_id_2, count=4, image_hash_prefix="u2_")
+    await _insert_scans(db_session, user_id_1, count=3, image_hash_prefix="a")
+    await _insert_scans(db_session, user_id_2, count=4, image_hash_prefix="b")
 
     resp = await client.delete(
         "/api/v1/users/me/scans",
