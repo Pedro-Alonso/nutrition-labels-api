@@ -27,6 +27,7 @@ from app.analysis.models import Scan
 from app.core.config import get_settings
 from app.core.database import get_db
 from app.main import app
+from app.products.models import Product
 
 # Engine de teste com NullPool — sem compartilhamento de conexões entre fixtures
 _test_engine = None
@@ -205,3 +206,16 @@ async def _insert_scans(
         scans.append(scan)
     await db.commit()
     return scans
+
+
+async def _insert_product(
+    db: AsyncSession,
+    barcode: str,
+    name: str | None = None,
+    brand: str | None = None,
+) -> Product:
+    product = Product(barcode=barcode, name=name, brand=brand)
+    db.add(product)
+    await db.commit()
+    await db.refresh(product)
+    return product

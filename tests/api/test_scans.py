@@ -210,6 +210,71 @@ async def test_list_scans_without_product_name_returns_null(
 
 
 # ---------------------------------------------------------------------------
+# DELETE /me/scans (clear all)
+# ---------------------------------------------------------------------------
+
+async def test_clear_all_scans_returns_204(
+    client: AsyncClient, auth_token: str, db_session: AsyncSession
+) -> None:
+    user_id = await _get_user_id(client, auth_token)
+    await _insert_scans(db_session, user_id, count=5)
+
+    resp = await client.delete(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 204
+
+    resp2 = await client.get(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp2.status_code == 200
+    assert resp2.json()["total"] == 0
+    assert resp2.json()["items"] == []
+
+
+async def test_clear_all_scans_empty_history_returns_204(
+    client: AsyncClient, auth_token: str
+) -> None:
+    resp = await client.delete(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 204
+
+
+async def test_clear_all_scans_does_not_affect_other_users(
+    client: AsyncClient,
+    auth_token: str,
+    auth_token_2: str,
+    db_session: AsyncSession,
+) -> None:
+    user_id_1 = await _get_user_id(client, auth_token)
+    user_id_2 = await _get_user_id(client, auth_token_2)
+    await _insert_scans(db_session, user_id_1, count=3, image_hash_prefix="u1_")
+    await _insert_scans(db_session, user_id_2, count=4, image_hash_prefix="u2_")
+
+    resp = await client.delete(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token}"},
+    )
+    assert resp.status_code == 204
+
+    resp2 = await client.get(
+        "/api/v1/users/me/scans",
+        headers={"Authorization": f"Bearer {auth_token_2}"},
+    )
+    assert resp2.status_code == 200
+    assert resp2.json()["total"] == 4
+
+
+async def test_clear_all_scans_requires_auth(client: AsyncClient) -> None:
+    resp = await client.delete("/api/v1/users/me/scans")
+    assert resp.status_code == 401
+
+
+# ---------------------------------------------------------------------------
 # Cache hit / miss
 # ---------------------------------------------------------------------------
 
