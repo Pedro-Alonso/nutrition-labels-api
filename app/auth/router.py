@@ -15,6 +15,7 @@ from app.auth.schemas import (
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
+    UpgradeRequest,
 )
 from app.core.database import get_db
 from app.core.dependencies import get_current_user_id, oauth2_scheme
@@ -47,6 +48,7 @@ async def register(request: Request, body: RegisterRequest, db: AsyncSession = D
         display_name=body.display_name,
         diabetes_type=body.diabetes_type,
         language_level=body.language_level,
+        is_guest=body.is_guest,
     )
     return user
 
@@ -124,3 +126,26 @@ async def change_password(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Senha atual incorreta.",
         )
+
+
+@router.post("/upgrade", response_model=UserResponse)
+async def upgrade_guest(
+    body: UpgradeRequest,
+    user_id: str = Depends(get_current_user_id),
+    db: AsyncSession = Depends(get_db),
+):
+    user = await user_service.get_user_by_id(db, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuário não encontrado.")
+    if not user.is_guest:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Apenas contas de visitante podem ser convertidas.",
+        )
+    existing = await auth_service.get_user_by_email(db, body.email)
+    if existing is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="E-mail já cadastrado.")
+    updated = await auth_service.upgrade_guest(
+        db, user, email=body.email, password=body.password, display_name=body.display_name,
+    )
+    return updated

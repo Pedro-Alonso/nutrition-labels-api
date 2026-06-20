@@ -24,18 +24,37 @@ async def create_user(
     display_name: str | None = None,
     diabetes_type: str | None = None,
     language_level: str | None = None,
+    is_guest: bool = False,
 ) -> User:
     user = User(
         id=str(uuid.uuid4()),
         email=email.lower(),
         password_hash=hash_password(password),
         display_name=display_name,
+        is_guest=is_guest,
         diabetes_type=diabetes_type,
         language_level=language_level,
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
     )
     db.add(user)
+    await db.commit()
+    await db.refresh(user)
+    return user
+
+
+async def upgrade_guest(
+    db: AsyncSession,
+    user: User,
+    email: str,
+    password: str,
+    display_name: str | None = None,
+) -> User:
+    user.email = email.lower()
+    user.password_hash = hash_password(password)
+    user.is_guest = False
+    if display_name is not None:
+        user.display_name = display_name
     await db.commit()
     await db.refresh(user)
     return user

@@ -9,6 +9,7 @@ class UserResponse(BaseModel):
     id: str
     email: str
     display_name: str | None
+    is_guest: bool = False
     language_level: str | None = None
     diabetes_type: str | None = None
     created_at: datetime

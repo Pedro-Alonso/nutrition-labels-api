@@ -9,6 +9,20 @@ class RegisterRequest(BaseModel):
     display_name: str | None = None
     diabetes_type: str | None = None
     language_level: str | None = None
+    is_guest: bool = False
+
+    @field_validator("password")
+    @classmethod
+    def password_min_length(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("A senha deve ter pelo menos 8 caracteres.")
+        return v
+
+
+class UpgradeRequest(BaseModel):
+    email: str
+    password: str
+    display_name: str | None = None
 
     @field_validator("password")
     @classmethod
