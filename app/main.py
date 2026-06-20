@@ -63,7 +63,7 @@ settings = get_settings()
 app = FastAPI(
     title="Rótulos Backend",
     description="API de análise de rótulos alimentícios para pacientes diabéticos.",
-    version="1.3.0",
+    version="1.4.0",
     lifespan=lifespan,
 )
 
